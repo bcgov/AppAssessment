@@ -1,0 +1,191 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  app: appassessment-app
+  template: appassessment-template
+message: The application assessment components have been installed into your Tools project.
+metadata:
+  annotations:
+    description: |-
+      This template deploys a suite of BCGOv application assessment components into your <APPID>-tools namespace.  The two primary components are as follows:
+      A cronjob that periodically surveys the <APPID>-prod project, and writes the results in HTML format to a Persistent Volume Claim (pvc)
+      An nginx application to serve the resulting HTML through an OpenShift route.
+      NOTE: You must have admin privilege to the <APPID>-tools and <APPID>-prod projects to deploy this template.
+    openshift.io/display-name: appassessement-app
+  name: appassessment-app
+  namespace: openshift
+objects:
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: appassessement-route
+    namespace: ${APPID}-tools
+  spec:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: appassessement-svc
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: appassessment-pvc
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Mi
+    volumeMode: Filesystem
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: appassessement-web
+    namespace: ${APPID}-tools
+    labels:
+      app: appassessement-app
+      app.kubernetes.io/component: appassessement-web
+      app.kubernetes.io/instance: appassessement-web
+      app.kubernetes.io/part-of: appassessment-app
+      app.openshift.io/runtime: nginx
+      app.openshift.io/runtime-namespace: ${APPID}-tools
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: appassessment-web
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: appassessment-web
+          deploymentconfig: appassessment-web
+      spec:
+        volumes:
+          - name: report-out
+            persistentVolumeClaim:
+              claimName: appassessment-pvc
+        containers:
+          - name: appassessment-web
+            image: >-
+              nginxinc/nginx-unprivileged:latest
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                cpu: 10m
+                memory: 64Mi
+            volumeMounts:
+              - name: report-out
+                readOnly: true
+                mountPath: /usr/share/nginx/html
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            imagePullPolicy: Always
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext: {}
+        schedulerName: default-scheduler
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
+    revisionHistoryLimit: 10
+    progressDeadlineSeconds: 600
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: appassessment-sa
+    namespace: ${APPID}-tools  
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: appassessment-view
+    namespace: ${APPID}-prod
+  subjects:
+  - kind: ServiceAccount
+    name: appassessment-sa
+    namespace: ${APPID}-tools
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: view
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: appassessement-svc
+    namespace: ${APPID}-tools
+  labels:
+      app: appassessement-web
+      app.kubernetes.io/component: appassessement-svc
+      app.kubernetes.io/part-of: appassessment-app
+  spec:
+    ports:
+      - name: 8080-tcp
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+    selector:
+      app: appassessment-web
+      deploymentconfig: appassessment-web
+    type: ClusterIP
+    sessionAffinity: None
+- apiVersion: batch/v1beta1
+  kind: CronJob
+  metadata:
+    name: appassessment-cj
+    namespace: 1test-tools
+    labels:
+      app: appassessment-app
+      app.kubernetes.io/component: appassessment-cj
+      app.kubernetes.io/instance: appassessment
+  spec:
+    schedule: '*/5 * * * *'
+    concurrencyPolicy: Allow
+    suspend: false
+    jobTemplate:
+      metadata:
+        creationTimestamp: null
+      spec:
+        template:
+          metadata:
+            creationTimestamp: null
+          spec:
+            serviceAccountName: appassessment-sa
+            volumes:
+              - name: report-out
+                persistentVolumeClaim:
+                  claimName: appassessment-pvc
+            containers:
+              - name: appassessment-cron
+                image: >-
+                  image-registry.openshift-image-registry.svc:5000/openshift/appassessment
+                env:
+                  - name: TARGET_NAMESPACE
+                    value: ${APPID}-prod
+                resources: {}
+                volumeMounts:
+                  - name: report-out
+                    mountPath: /output/
+                terminationMessagePath: /dev/termination-log
+                terminationMessagePolicy: File
+                imagePullPolicy: Always
+            restartPolicy: OnFailure
+            terminationGracePeriodSeconds: 30
+            dnsPolicy: ClusterFirst
+            securityContext: {}
+            schedulerName: default-scheduler
+    successfulJobsHistoryLimit: 3
+    failedJobsHistoryLimit: 1
+parameters:
+- description: The six character application identifier, commonly referred to the license plate number for your application to be assessed.
+  displayName: Application Identifier
+  name: APPID
+  value: "example: e595b8"

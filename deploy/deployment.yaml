@@ -1,0 +1,57 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nginx-unprivileged
+  namespace: 1test-tools
+  labels:
+    app: nginx-unprivileged
+    app.kubernetes.io/component: nginx-unprivileged
+    app.kubernetes.io/instance: nginx-unprivileged
+    app.kubernetes.io/part-of: appassessment-app
+    app.openshift.io/runtime: nginx
+    app.openshift.io/runtime-namespace: 1test-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-unprivileged
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx-unprivileged
+        deploymentconfig: nginx-unprivileged
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      volumes:
+        - name: report-out
+          persistentVolumeClaim:
+            claimName: output
+      containers:
+        - name: nginx-unprivileged
+          image: >-
+            nginxinc/nginx-unprivileged:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: report-out
+              readOnly: true
+              mountPath: /usr/share/nginx/html
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

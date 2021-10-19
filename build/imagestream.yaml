@@ -1,0 +1,13 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: appassessment
+  namespace: 1test-tools
+  labels:
+    app: appassessment
+    app.kubernetes.io/component: appassessment
+    app.kubernetes.io/instance: appassessment
+    app.kubernetes.io/part-of: appassessment-app
+spec:
+  lookupPolicy:
+    local: false

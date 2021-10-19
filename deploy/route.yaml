@@ -1,0 +1,22 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: web-frontend
+  namespace: 1test-tools
+  labels:
+    app: nginx-unprivileged
+    app.kubernetes.io/component: nginx-unprivileged
+    app.kubernetes.io/instance: nginx-unprivileged
+    app.kubernetes.io/part-of: appassessment-app
+    app.openshift.io/runtime-version: latest
+spec:
+  to:
+    kind: Service
+    name: web-frontend
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

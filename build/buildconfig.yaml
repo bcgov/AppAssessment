@@ -1,0 +1,35 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: appassessment
+  namespace: 1test-tools
+  labels:
+    app: appassessment
+    app.kubernetes.io/component: appassessment
+    app.kubernetes.io/instance: appassessment
+    app.kubernetes.io/part-of: appassessment-app
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'appassessment:latest'
+  resources: 
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 100m
+      memory: 512Mi
+  successfulBuildsHistoryLimit: 1
+  failedBuildsHistoryLimit: 1
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/ShireOrg/appassessment'
+    contextDir: /build
+  runPolicy: Serial
