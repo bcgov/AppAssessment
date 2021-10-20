@@ -29,7 +29,7 @@ spec:
                 image-registry.openshift-image-registry.svc:5000/1test-tools/appassessment
               env:
                 - name: TARGET_NAMESPACE
-                  value: 1test-tools
+                  value: 1test-prod
               resources: {}
               volumeMounts:
                 - name: report-out
