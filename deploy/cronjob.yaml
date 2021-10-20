@@ -2,7 +2,7 @@ kind: CronJob
 apiVersion: batch/v1beta1
 metadata:
   name: appassessment
-  namespace: 1test-tools
+  namespace: ${APPID}-tools
   labels:
     app: appassessment
     app.kubernetes.io/component: appassessment
@@ -26,10 +26,10 @@ spec:
           containers:
             - name: appassessment
               image: >-
-                image-registry.openshift-image-registry.svc:5000/1test-tools/appassessment
+                image-registry.openshift-image-registry.svc:5000/openshift/appassessment
               env:
                 - name: TARGET_NAMESPACE
-                  value: 1test-tools
+                  value: ${APPID}-prod
               resources: {}
               volumeMounts:
                 - name: report-out
