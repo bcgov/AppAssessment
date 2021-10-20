@@ -24,8 +24,8 @@ def rollingUpdateCheck(workloadData):
     retval['color'] = 'green'
     retval['text'] = second[0].value
   else:
-    retval['color'] ='red'
-    retval['text'] = 'spec.strategy.type or spec.updateStrategy.type should be either "Rolling" or "Rolling Update"'
+    retval['color'] ='yellow'
+    retval['text'] = 'In most cases the spec.strategy.type or spec.updateStrategy.type should be either "Rolling" or "RollingUpdate".  In stateful applications this not always possible.'
 
   return retval
 #end
