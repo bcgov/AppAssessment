@@ -31,6 +31,8 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: appassessment-pvc
+    labels:
+      app: appassessment-app
   spec:
     accessModes:
     - ReadWriteOnce
@@ -104,11 +106,15 @@ objects:
   metadata:
     name: appassessment-sa
     namespace: ${APPID}-tools  
+    labels:
+      app: appassessment-app
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
   metadata:
     name: appassessment-view
     namespace: ${APPID}-prod
+    labels:
+      app: appassessment-app
   subjects:
   - kind: ServiceAccount
     name: appassessment-sa
@@ -122,8 +128,8 @@ objects:
   metadata:
     name: appassessment-svc
     namespace: ${APPID}-tools
-  labels:
-      app: appassessment-web
+    labels:
+      app: appassessment-app
       app.kubernetes.io/component: appassessment-svc
       app.kubernetes.io/part-of: appassessment-app
   spec:
