@@ -11,14 +11,14 @@ metadata:
       A cronjob that periodically surveys the <APPID>-prod project, and writes the results in HTML format to a Persistent Volume Claim (pvc)
       An nginx application to serve the resulting HTML through an OpenShift route.
       NOTE: You must have admin privilege to the <APPID>-tools and <APPID>-prod projects to deploy this template.
-    openshift.io/display-name: appassessement-app
+    openshift.io/display-name: App Assessment Tool
   name: appassessment-app
   namespace: openshift
 objects:
 - apiVersion: v1
   kind: Route
   metadata:
-    name: appassessement-route
+    name: appassessment-route
     namespace: ${APPID}-tools
   spec:
     tls:
@@ -26,7 +26,7 @@ objects:
       termination: edge
     to:
       kind: Service
-      name: appassessement-svc
+      name: appassessment-svc
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -41,12 +41,12 @@ objects:
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: appassessement-web
+    name: appassessment-web
     namespace: ${APPID}-tools
     labels:
-      app: appassessement-app
-      app.kubernetes.io/component: appassessement-web
-      app.kubernetes.io/instance: appassessement-web
+      app: appassessment-app
+      app.kubernetes.io/component: appassessment-web
+      app.kubernetes.io/instance: appassessment-web
       app.kubernetes.io/part-of: appassessment-app
       app.openshift.io/runtime: nginx
       app.openshift.io/runtime-namespace: ${APPID}-tools
@@ -147,7 +147,7 @@ objects:
       app.kubernetes.io/component: appassessment-cj
       app.kubernetes.io/instance: appassessment
   spec:
-    schedule: '*/5 * * * *'
+    schedule: '0 0 * * 0'
     concurrencyPolicy: Allow
     suspend: false
     jobTemplate:
