@@ -2,16 +2,6 @@
 
 ![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)
 
-Table of Contents:
-
-
-[TOC]
-
-
-
-## 
-
-
 ## Usage
 
 The app assessment components can be deployed through the OpenShift catalog.  The installer must have a minimum of “admin” role in the -prod namespace (for the rolebinding) and “edit” role in the -tools namespace.
