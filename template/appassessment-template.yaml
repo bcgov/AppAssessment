@@ -147,7 +147,7 @@ objects:
       app.kubernetes.io/component: appassessment-cj
       app.kubernetes.io/instance: appassessment
   spec:
-    schedule: '*/5 * * * *'
+    schedule: '0 0 * * 0'
     concurrencyPolicy: Allow
     suspend: false
     jobTemplate:
