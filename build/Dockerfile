@@ -8,7 +8,7 @@ ENV HOME=/tmp/
 
 RUN pip install -r ./requirements.txt
 # Install OC CLI
-RUN curl https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz --output ./oc.tar.gz
+RUN curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz --output ./oc.tar.gz
 RUN tar -xzf ./oc.tar.gz -C /usr/local/bin/
 RUN chmod 755 /usr/local/bin/oc
 RUN chmod 755 ./startup.sh
