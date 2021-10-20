@@ -68,6 +68,13 @@ oc delete all,pvc,serviceaccount,rolebinding -l app=appassessment-app -n ${APPID
 oc delete all,pvc,serviceaccount,rolebinding -l app=appassessment-app -n ${APPID}-prod
 ```
 
+
+To manually update the report and index.html run the following command:
+
+
+```oc create job --from=cronjob/appassessment-cj manualupdate -n ${APPID}-tools```
+
+
 ## 
 
 
