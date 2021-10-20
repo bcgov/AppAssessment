@@ -60,6 +60,14 @@ Once the blue ring around NGiNX becomes solid, you can click the
 It is recommended to scale the appassessment-web deployment to zero when it is not in use. 
 
 
+To remove the components from the projects run the following commands:
+
+
+```
+oc delete all,pvc,serviceaccount,rolebinding -l app=appassessment-app -n ${APPID}-tools
+oc delete all,pvc,serviceaccount,rolebinding -l app=appassessment-app -n ${APPID}-prod
+```
+
 ## 
 
 
