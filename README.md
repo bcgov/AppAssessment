@@ -51,13 +51,7 @@ You will then see the components deployed on the Topology map.
 
 Once the blue ring around NGiNX becomes solid, you can click the 
 ![alt_text](images/image7.png "image_tooltip")
- to launch the web site, however it will display an error message until the CronJob runs the following Sunday at 0:00:
-
-
-![alt_text](images/image8.png "image_tooltip")
-
-
-After the scheduled job is completed, the webpage will display a report of the -prod namespace:
+ to launch the web site.
 
 
 ![alt_text](images/image9.png "image_tooltip")
