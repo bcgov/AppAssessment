@@ -120,11 +120,11 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: appassessement-svc
+    name: appassessment-svc
     namespace: ${APPID}-tools
   labels:
-      app: appassessement-web
-      app.kubernetes.io/component: appassessement-svc
+      app: appassessment-web
+      app.kubernetes.io/component: appassessment-svc
       app.kubernetes.io/part-of: appassessment-app
   spec:
     ports:
