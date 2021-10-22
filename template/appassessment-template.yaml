@@ -38,7 +38,7 @@ objects:
     - ReadWriteOnce
     resources:
       requests:
-        storage: 1Mi
+        storage: 500Mi
     volumeMode: Filesystem
 - apiVersion: apps/v1
   kind: Deployment
