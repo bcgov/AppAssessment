@@ -210,7 +210,7 @@ objects:
         containers:
           - name: appassessment-cron
             image: >-
-              image-registry.openshift-image-registry.svc:5000/openshift/appassessment
+              image-registry.openshift-image-registry.svc:5000/bcgov/appassessment
             env:
               - name: TARGET_NAMESPACE
                 value: ${APPID}-prod
