@@ -2,7 +2,7 @@ kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
   name: appassessment
-  namespace: 1test-tools
+  namespace: bcgov
   labels:
     app: appassessment
     app.kubernetes.io/component: appassessment
