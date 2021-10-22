@@ -147,7 +147,7 @@ objects:
   kind: CronJob
   metadata:
     name: appassessment-cj
-    namespace: 1test-tools
+    namespace: ${APPID}-tools
     labels:
       app: appassessment-app
       app.kubernetes.io/component: appassessment-cj
