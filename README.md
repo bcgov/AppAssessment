@@ -103,7 +103,7 @@ Namespace (1) components perform the following functions:
     * ImageStream contains the metadata of the image created in the BuildConfig build process
     * BuildConfig contains the references supporting the app assessment image build process, based on a Dockerfile in the source repository.  The BuildConfig is currently manually triggered.
     * ServiceAccount is the default builder created in the project (unmodified).
-* A Template that appears in the cluster catalog, allowing an Application team user a simple method of deploying the app assessment application into their license plate namespaces.
+* The AppAssessment Template in the openshift namespace that appears in the cluster catalog, allowing an Application team user a simple method of deploying the app assessment application into their license plate namespaces.
 
 Namespace (2) describes the components added (bolded lines) to the Application team’s -tool namespace supporting the app assessment application.  The application consists of the following functions:
 
