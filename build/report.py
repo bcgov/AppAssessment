@@ -125,7 +125,7 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
   file.write("\n</tr>\n")
 
   for checkName in results.keys():
-    file.write("<tr>\n<td>"+checkName+"</td>")
+    file.write("<tr>\n<td><a title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td>")
     for workloadName in results[checkName].keys():
       file.write("<td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"></td>")
 
