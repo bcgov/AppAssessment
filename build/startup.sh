@@ -5,3 +5,5 @@ oc login --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --ins
 now=$(date +"%m_%d_%Y")
 # run the python script with the TARGET_NAMESPACE variable and output to the expected PVC
 python ./report.py -n ${TARGET_NAMESPACE} -o /output/index.html
+# copy style.css to the expected PVC
+cp style.css /output/

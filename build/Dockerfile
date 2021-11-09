@@ -4,6 +4,7 @@ ADD ./report.py ./
 ADD ./checks.py ./
 ADD ./requirements.txt ./
 ADD ./startup.sh ./
+ADD ./style.css ./
 ENV HOME=/tmp/
 
 RUN pip install -r ./requirements.txt
