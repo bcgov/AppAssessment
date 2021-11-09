@@ -125,7 +125,7 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
   file.write("\n</tr>\n")
 
   for checkName in results.keys():
-    file.write("<tr>\n<td><a title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td>")
+    file.write("<tr>\n<td><a target='_blank' title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td>")
     for workloadName in results[checkName].keys():
       file.write("<td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"></td>")
 
@@ -138,7 +138,7 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
     file.write("<table>\n<tr><td>Target</td><td>" + workloadName + "</td></tr>\n")
 
     for checkName in results.keys():
-      file.write("<tr><td>"+checkName+"</td><td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"><pre>" + results[checkName][workloadName]['text'] + "</pre></td></tr>\n")
+      file.write("<tr><td><a target='_blank' title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td><td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"><pre>" + results[checkName][workloadName]['text'] + "</pre></td></tr>\n")
     #end
 
     file.write("</table>\n<hr>\n")
