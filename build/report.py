@@ -105,7 +105,7 @@ def pdbCheck(workloadData):
   return retval
 #end
 
-def writeReport(filename, results, serverName, namespace):
+def writeReport(filename, results, serverName, namespace, checksInfo):
   file = open(filename, 'w')
   file.write("<html>\n<head>\n")
   file.write('<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-reboot.min.css" rel="stylesheet">' + "\n")
@@ -206,6 +206,53 @@ cronjobChecks["StatelessCheck"] = notApplicableCheck
 cronjobChecks["HPACheck"] = notApplicableCheck
 cronjobChecks["PDBCheck"] = notApplicableCheck
 
+checksInfo = {
+  "declarativeComponentCheck" : {
+    "title" : "A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html"
+  },
+  "RollingUpdateCheck" : {
+    "title" : "A rolling deployment slowly replaces instances of the previous version of an application with instances of the new version of the application. The rolling strategy is the default deployment strategy used if no strategy is specified on a DeploymentConfig object.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/deployments/deployment-strategies.html#deployments-rolling-strategy_deployment-strategies"
+  },
+  "CPURequestCheck" : {
+    "title" : "The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests"
+  },
+  "MemoryRequestCheck" : {
+    "title" : "By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests"
+  },
+  "CPULimitCheck" : {
+    "title" : "Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits"
+  },
+  "MemoryLimitCheck" : {
+    "title" : "If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits"
+  },
+  "LivenessProbeCheck" : {
+    "title" : "A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"
+  },
+  "ReadinessProbeCheck" : {
+    "title" : "A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"
+  },
+  "StatelessCheck" : {
+    "title" : "A stateless workload should not have PersistentVolumeClaims.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/storage/understanding-persistent-storage.html"
+  },
+  "HPACheck" : {
+    "title" : "As a developer, you can use a horizontal pod autoscaler (HPA) to specify how OpenShift Container Platform should automatically increase or decrease the scale of a replication controller or deployment configuration, based on metrics collected from the pods that belong to that replication controller or deployment configuration.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html"
+  },
+  "PDBCheck" : {
+    "title" : "A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring"
+  }
+}
+
 results = {}
 for checkName in checks.keys():
   results[checkName] = {}
@@ -217,4 +264,4 @@ for checkName in checks.keys():
     else:
       results[checkName][workloadName] = checks[checkName](workload)
 
-writeReport(args.o, results, serverName, namespace)
+writeReport(args.o, results, serverName, namespace, checksInfo)
