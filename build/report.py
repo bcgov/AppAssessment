@@ -43,12 +43,14 @@ def getObjects(type, namespace='default'):
     data = json.loads(oc('get', type, '-n', namespace, '-o', 'json'))
     logging.info("read objects data of type " + type)
   except:
-    logging.error("unable to read object data of type " + type)
+    logging.error("unable to read object data of type " + type + " from namespace " + namespace)
     return []
 
   if "items" in data.keys():
+    logging.info("read " + str(len(data['items'])) + " objects of type " + type + " from namespace " + namespace)
     return data["items"]
 
+  logging.info("didn't find any objects of type " + type + " in namespace " + namespace)
   return []
 #end
 
@@ -103,60 +105,65 @@ def pdbCheck(workloadData):
   return retval
 #end
 
-def writeReport(filename, results, serverName, namespace):
+def writeReport(filename, results, serverName, namespace, checksInfo):
   file = open(filename, 'w')
-  file.write("<html>\n")
-  file.write("<head>\n")
+  file.write("<html>\n<head>\n")
+  file.write('<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-reboot.min.css" rel="stylesheet">' + "\n")
+  file.write('<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">' + "\n")
+  file.write('<link rel="stylesheet" href="style.css">' + "\n")
   file.write("<style>\ntable, th, td {\n  border: 1px solid black;\n}\n</style>\n")
-  file.write("<title>report generated on " + datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + "</title>\n")
-  file.write("</head>\n")
-  file.write("<body>\n")
-
-  file.write("<h1>Workload health check report for namespace " + namespace + " on server " + serverName + "\n")
-  file.write("<hr>\n")
-  file.write("<table>\n")
+  file.write("<title>report generated on " + datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + "</title>\n</head>\n<body>\n")
+  file.write("<header>\n" + '<div class="banner">' + "\n" + '<a href="https://gov.bc.ca">' + "\n")
+  file.write('<img src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" alt="Go to the Government of British Columbia website" height="50px"/>' + "\n")
+  file.write("</a>\n<h1>Hello British Columbia</h1>\n</div>\n" + '<div class="other">' + "\n" + '&nbsp;' + "\n</div>\n</header>\n" + '<p style="padding-top:50px"></p>' + "\n")
+  file.write("<h1>Workload health check report for namespace " + namespace + " on server " + serverName + "\n<hr>\n<table>\n")
 
   workloadNames = results[next(iter(results))].keys()
-  file.write("<tr>\n")
-  file.write("<td>Target</td>")
+  file.write("<tr>\n<td>Target</td>")
   for workloadName in workloadNames:
     file.write("<td>" + workloadName + "</td>")
   file.write("\n</tr>\n")
 
   for checkName in results.keys():
-    file.write("<tr>\n<td>"+checkName+"</td>")
+    file.write("<tr>\n<td><a target='_blank' title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td>")
     for workloadName in results[checkName].keys():
       file.write("<td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"></td>")
 
     file.write("\n</tr>\n")
   #end
 
-  file.write("</table>\n")
-  file.write("<hr>\n")
+  file.write("</table>\n<hr>\n")
 
   for workloadName in workloadNames:
-    file.write("<table>\n")
-    file.write("<tr><td>Target</td><td>" + workloadName + "</td></tr>\n")
+    file.write("<table>\n<tr><td>Target</td><td>" + workloadName + "</td></tr>\n")
 
     for checkName in results.keys():
-      file.write("<tr><td>"+checkName+"</td><td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"><pre>" + results[checkName][workloadName]['text'] + "</pre></td></tr>\n")
+      file.write("<tr><td><a target='_blank' title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td><td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"><pre>" + results[checkName][workloadName]['text'] + "</pre></td></tr>\n")
+    #end
 
-    file.write("</table>\n")
-    file.write("<hr>\n")
+    file.write("</table>\n<hr>\n")
+  #end
 
-  file.write("</body>\n")
-  file.write("</html>\n")
+  file.write('<footer class="footer">' + "\n" + '<div class="container">' + "\n<ul>\n" + '<li><a href=".">Home</a></li>' + "\n" + '<li><a href=".">Disclaimer</a></li>' + "\n")
+  file.write('<li><a href=".">Privacy</a></li>' + "\n" + '<li><a href=".">Accessibility</a></li>' + "\n" + '<li><a href=".">Copyright</a></li>' + "\n")
+  file.write('<li><a href=".">Contact Us</a></li>' + "\n</ul>\n</div>\n</footer>\n</body>\n</html>\n")
   file.close()
 #end
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-l", help="log file name", type=str, default="report.log")
+parser.add_argument("-l", help="log file name", type=str, default="-")
 parser.add_argument("-o", help="output file name", type=str, default="report.html")
 parser.add_argument('-n', help="namespace", type=str, default="default")
 args = parser.parse_args()
 
-logging.basicConfig(filename=args.l, level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%Y-%m-%d-%H:%M:%S')
+logstream = None
+if args.l == '-':
+  logstream = sys.stdout
+else:
+  logstream = open(args.l, 'a')
+
+logging.basicConfig(stream=logstream, level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%Y-%m-%d-%H:%M:%S')
 logging.info("generating report")
 
 namespace = args.n
@@ -199,6 +206,53 @@ cronjobChecks["StatelessCheck"] = notApplicableCheck
 cronjobChecks["HPACheck"] = notApplicableCheck
 cronjobChecks["PDBCheck"] = notApplicableCheck
 
+checksInfo = {
+  "declarativeComponentCheck" : {
+    "title" : "A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html"
+  },
+  "RollingUpdateCheck" : {
+    "title" : "A rolling deployment slowly replaces instances of the previous version of an application with instances of the new version of the application. The rolling strategy is the default deployment strategy used if no strategy is specified on a DeploymentConfig object.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/deployments/deployment-strategies.html#deployments-rolling-strategy_deployment-strategies"
+  },
+  "CPURequestCheck" : {
+    "title" : "The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests"
+  },
+  "MemoryRequestCheck" : {
+    "title" : "By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests"
+  },
+  "CPULimitCheck" : {
+    "title" : "Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits"
+  },
+  "MemoryLimitCheck" : {
+    "title" : "If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy.",
+    "href" : "https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits"
+  },
+  "LivenessProbeCheck" : {
+    "title" : "A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"
+  },
+  "ReadinessProbeCheck" : {
+    "title" : "A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"
+  },
+  "StatelessCheck" : {
+    "title" : "A stateless workload should not have PersistentVolumeClaims.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/storage/understanding-persistent-storage.html"
+  },
+  "HPACheck" : {
+    "title" : "As a developer, you can use a horizontal pod autoscaler (HPA) to specify how OpenShift Container Platform should automatically increase or decrease the scale of a replication controller or deployment configuration, based on metrics collected from the pods that belong to that replication controller or deployment configuration.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html"
+  },
+  "PDBCheck" : {
+    "title" : "A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance.",
+    "href" : "https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring"
+  }
+}
+
 results = {}
 for checkName in checks.keys():
   results[checkName] = {}
@@ -210,4 +264,4 @@ for checkName in checks.keys():
     else:
       results[checkName][workloadName] = checks[checkName](workload)
 
-writeReport(args.o, results, serverName, namespace)
+writeReport(args.o, results, serverName, namespace, checksInfo)
