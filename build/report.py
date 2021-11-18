@@ -8,6 +8,7 @@ from plumbum import local
 import argparse
 import yaml
 from checks import *
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 
 def getServer():
@@ -106,47 +107,22 @@ def pdbCheck(workloadData):
 #end
 
 def writeReport(filename, results, serverName, namespace, checksInfo):
-  file = open(filename, 'w')
-  file.write("<html>\n<head>\n")
-  file.write('<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-reboot.min.css" rel="stylesheet">' + "\n")
-  file.write('<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">' + "\n")
-  file.write('<link rel="stylesheet" href="style.css">' + "\n")
-  file.write("<style>\ntable, th, td {\n  border: 1px solid black;\n}\n</style>\n")
-  file.write("<title>report generated on " + datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + "</title>\n</head>\n<body>\n")
-  file.write("<header>\n" + '<div class="banner">' + "\n" + '<a href="https://gov.bc.ca">' + "\n")
-  file.write('<img src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" alt="Go to the Government of British Columbia website" height="50px"/>' + "\n")
-  file.write("</a>\n<h1>Hello British Columbia</h1>\n</div>\n" + '<div class="other">' + "\n" + '&nbsp;' + "\n</div>\n</header>\n" + '<p style="padding-top:50px"></p>' + "\n")
-  file.write("<h1>Workload health check report for namespace " + namespace + " on server " + serverName + "\n<hr>\n<table>\n")
-
   workloadNames = results[next(iter(results))].keys()
-  file.write("<tr>\n<td>Target</td>")
-  for workloadName in workloadNames:
-    file.write("<td>" + workloadName + "</td>")
-  file.write("\n</tr>\n")
-
-  for checkName in results.keys():
-    file.write("<tr>\n<td><a target='_blank' title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td>")
-    for workloadName in results[checkName].keys():
-      file.write("<td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"></td>")
-
-    file.write("\n</tr>\n")
-  #end
-
-  file.write("</table>\n<hr>\n")
-
-  for workloadName in workloadNames:
-    file.write("<table>\n<tr><td>Target</td><td>" + workloadName + "</td></tr>\n")
-
-    for checkName in results.keys():
-      file.write("<tr><td><a target='_blank' title='"+checksInfo[checkName]['title']+"' href='"+checksInfo[checkName]['href']+"'>"+checkName+"</a></td><td style=\"background-color: " + results[checkName][workloadName]['color'] + "\"><pre>" + results[checkName][workloadName]['text'] + "</pre></td></tr>\n")
-    #end
-
-    file.write("</table>\n<hr>\n")
-  #end
-
-  file.write('<footer class="footer">' + "\n" + '<div class="container">' + "\n<ul>\n" + '<li><a href=".">Home</a></li>' + "\n" + '<li><a href=".">Disclaimer</a></li>' + "\n")
-  file.write('<li><a href=".">Privacy</a></li>' + "\n" + '<li><a href=".">Accessibility</a></li>' + "\n" + '<li><a href=".">Copyright</a></li>' + "\n")
-  file.write('<li><a href=".">Contact Us</a></li>' + "\n</ul>\n</div>\n</footer>\n</body>\n</html>\n")
+  file = open(filename, 'w')
+  
+  env = Environment(
+    loader=PackageLoader("report"),
+    autoescape=select_autoescape()
+  )
+  template = env.get_template("reportTemplate.html")
+  file.write(template.render(
+    datetime =datetime.now().strftime("%Y-%m-%d-%H:%M:%S"),
+    namespace = namespace,
+    serverName = serverName,
+    workloadNames = workloadNames,
+    results = results,
+    checksInfo = checksInfo
+  ))
   file.close()
 #end
 
