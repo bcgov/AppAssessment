@@ -10,7 +10,6 @@ import yaml
 from checks import *
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-
 def getServer():
   currentContext = {}
   server = ""
