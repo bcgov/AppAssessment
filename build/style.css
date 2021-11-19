@@ -2,7 +2,6 @@ header {
   min-height: 66px;
     display: table;
     width: 100%;
-    padding-top: 8px !important;
     line-height: 26px;
     background-color: #036;
     border-bottom: 2px solid #fcba19;
@@ -27,12 +26,19 @@ header .other {
   display: flex;
   flex-grow: 1;
 }
-
+.navBar{
+  padding: 0.5rem 1rem;
+}
+.container h2{
+  margin: 0;
+}
 :focus {
   outline: 4px solid #3B99FC;
   outline-offset: 1px;
 }
-
+.logo{
+  width: 240px;
+}
 /*
   These are sample media queries only. Media queries are quite subjective
   but, in general, should be made for the three different classes of screen
@@ -100,13 +106,7 @@ footer ul {
 .container {
     max-width: 540px;
 }
-.container{
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
+
 footer ul li a {
   font-size: 0.813em;
   font-weight: normal;  /* 400 */
