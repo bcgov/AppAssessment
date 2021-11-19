@@ -107,14 +107,6 @@ footer ul {
     max-width: 540px;
 }
 
-footer ul li a {
-  font-size: 0.813em;
-  font-weight: normal;  /* 400 */
-  color: #fff;
-  border-right: 1px solid #4b5e7e;
-  padding-left: 5px;
-  padding-right: 5px;
-}
 
 a:hover {
   color: #fff;

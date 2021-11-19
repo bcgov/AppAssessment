@@ -2,27 +2,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="./build/style.css" rel="stylesheet">
     <link href="./build/bootstrap-theme.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./build/style.css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <title>report generated on {{  datetime }}</title>
     <style>table, th, td {  border: 1px solid black;}</style>
 </head>
 <body>
     
-    <header id="bcGov">
-        <div class="navBar">
-        <div class="container">
-            <a href="https://gov.bc.ca">
-                <img src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" 
-                alt="Go to the Government of British Columbia website" class="logo"/>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <!-- Navbar content -->
+          <div class="container">
+            <a class="navbar-brand" href="https://www2.gov.bc.ca">
+      
+              <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
             </a>
-            <h2>{{ namespace }} Health Check</h2>
-        </div>
-        <div class="other">&nbsp; 
-        </div>
-    </div>
-    </header>
+            <div class="navbar-brand">
+                {{ namespace }} Health Check
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+          </div>
+        </nav>
+      </header>
     <main role="main">
         <div class="container">
     <h2>Workload health check report for namespace {{ namespace }} on server {{ serverName }}</h2>
@@ -69,18 +74,27 @@
     </main>
 
         <footer class="footer">
+            <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <ul>
-                    <li><a href="https://developer.gov.bc.ca/">Home</a></li>
-                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/disclaimer" class="css-12n52i-Anchor-StyledLink e5psjs41">disclaimer</a></li>
-                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/privacy" class="css-12n52i-Anchor-StyledLink e5psjs41">privacy</a></li>
-                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/accessibility" class="css-12n52i-Anchor-StyledLink e5psjs41">accessibility</a></li>
-                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/copyright" class="css-12n52i-Anchor-StyledLink e5psjs41">copyright</a></li>
-                    <li><a data-testid="ui-link" href="https://github.com/bcgov/devhub-app-web/issues" class="css-12n52i-Anchor-StyledLink e5psjs41">contact us</a></li>
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=79F93E018712422FBC8E674A67A70535" target="_blank">Disclaimer</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=9E890E16955E4FF4BF3B0E07B4722932" target="_blank">Privacy</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=E08E79740F9C41B9B0C484685CC5E412" target="_blank">Accessibility</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=1AAACC9C65754E4D89A118B875E0FBDA" target="_blank">Copyright</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=6A77C17D0CCB48F897F8598CCC019111" target="_blank">Contact Us</a>
+                  </li>
                 </ul>
-            </div>
+              </div>
+            </nav>
         </footer>
-          
-        </body>
 </body>
 </html>
