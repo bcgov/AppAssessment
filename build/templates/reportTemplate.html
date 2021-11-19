@@ -2,24 +2,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-reboot.min.css" rel="stylesheet">
+    <link href="./build/bootstrap-theme.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" href="./build/style.css">
     <title>report generated on {{  datetime }}</title>
     <style>table, th, td {  border: 1px solid black;}</style>
 </head>
 <body>
-    <header>
-        <div class="banner">
+    
+    <header id="bcGov">
+        <div class="container">
             <a href="https://gov.bc.ca">
                 <img src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" alt="Go to the Government of British Columbia website" height="50px"/>
             </a>
-            <h1>{{ namespace }} Health Check</h1>
+            <h2>{{ namespace }} Health Check</h2>
         </div>
         <div class="other">&nbsp; 
         </div>
     </header>
-    <h1>Workload health check report for namespace {{ namespace }} on server {{ serverName }}</h1>
+    <main role="main">
+        <div class="container">
+    <h2>Workload health check report for namespace {{ namespace }} on server {{ serverName }}</h2>
     <hr>
         <table>
             <tr>
@@ -59,15 +62,18 @@
             </table>
             <hr/>
         {% endfor %} 
+    </div>
+    </main>
+
         <footer class="footer">
             <div class="container">
                 <ul>
-                    <li><a href=".">Home</a></li>
-                    <li><a href=".">Disclaimer</a></li>
-                    <li><a href=".">Privacy</a></li>
-                    <li><a href=".">Accessibility</a></li>
-                    <li><a href=".">Copyright</a></li>
-                    <li><a href=".">Contact Us</a></li>
+                    <li><a href="https://developer.gov.bc.ca/">Home</a></li>
+                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/disclaimer" class="css-12n52i-Anchor-StyledLink e5psjs41">disclaimer</a></li>
+                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/privacy" class="css-12n52i-Anchor-StyledLink e5psjs41">privacy</a></li>
+                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/accessibility" class="css-12n52i-Anchor-StyledLink e5psjs41">accessibility</a></li>
+                    <li><a data-testid="ui-link" href="https://www2.gov.bc.ca/gov/content/home/copyright" class="css-12n52i-Anchor-StyledLink e5psjs41">copyright</a></li>
+                    <li><a data-testid="ui-link" href="https://github.com/bcgov/devhub-app-web/issues" class="css-12n52i-Anchor-StyledLink e5psjs41">contact us</a></li>
                 </ul>
             </div>
         </footer>
