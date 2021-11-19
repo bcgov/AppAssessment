@@ -21,7 +21,6 @@ header .container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 0 10px 0 0;
 }
 
 header .other {
@@ -59,6 +58,7 @@ footer {
   border-top: 2px solid #fcba19;
   color: #fff;
   font-family: ‘Noto Sans’, Verdana, Arial, sans-serif; 
+  padding: 0 65px 0 65px;
 }
 
 footer .container {
@@ -78,8 +78,35 @@ footer ul {
   list-style: none;
   align-items: center;
   height: 100%;
+  margin: 10px 0;
 }
 
+.container ul li{
+  padding: 0 9px;
+}
+@media (min-width: 1200px)
+.container {
+    max-width: 1140px;
+}
+@media (min-width: 992px)
+.container {
+    max-width: 960px;
+}
+@media (min-width: 768px)
+.container {
+    max-width: 720px;
+}
+@media (min-width: 576px)
+.container {
+    max-width: 540px;
+}
+.container{
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
 footer ul li a {
   font-size: 0.813em;
   font-weight: normal;  /* 400 */
