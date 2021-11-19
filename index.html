@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="./build/style.css" rel="stylesheet">
+    <link href="./build/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <title>report generated on 2021-11-19-15:00:00</title>
+    <style>table, th, td {  border: 1px solid black;}</style>
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <!-- Navbar content -->
+          <div class="container">
+            <a class="navbar-brand" href="https://www2.gov.bc.ca">
+      
+              <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
+            </a>
+            <div class="navbar-brand">
+                7f8e79-tools Health Check
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+          </div>
+        </nav>
+      </header>
+    <main role="main">
+        <div class="container">
+    <h2>Workload health check report for namespace 7f8e79-tools on server https://api.klab.devops.gov.bc.ca:6443</h2>
+    <hr>
+        <table>
+            <tr>
+                <td>Target</td>
+                
+                    <td>appassessment-cj</td>
+                
+                    <td>appassessment-web</td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob." href="{&#39;title&#39;: &#39;A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html&#39;}">declarativeComponentCheck</a>
+                </td>
+                
+                <td style="background-color: green"></td>
+                
+                <td style="background-color: green"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="A rolling deployment slowly replaces instances of the previous version of an application with instances of the new version of the application. The rolling strategy is the default deployment strategy used if no strategy is specified on a DeploymentConfig object." href="{&#39;title&#39;: &#39;A rolling deployment slowly replaces instances of the previous version of an application with instances of the new version of the application. The rolling strategy is the default deployment strategy used if no strategy is specified on a DeploymentConfig object.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/container-platform/4.9/applications/deployments/deployment-strategies.html#deployments-rolling-strategy_deployment-strategies&#39;}">RollingUpdateCheck</a>
+                </td>
+                
+                <td style="background-color: white"></td>
+                
+                <td style="background-color: green"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use." href="{&#39;title&#39;: &#39;The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests&#39;}">CPURequestCheck</a>
+                </td>
+                
+                <td style="background-color: red"></td>
+                
+                <td style="background-color: green"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request." href="{&#39;title&#39;: &#39;By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests&#39;}">MemoryRequestCheck</a>
+                </td>
+                
+                <td style="background-color: red"></td>
+                
+                <td style="background-color: green"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node." href="{&#39;title&#39;: &#39;Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits&#39;}">CPULimitCheck</a>
+                </td>
+                
+                <td style="background-color: red"></td>
+                
+                <td style="background-color: green"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy." href="{&#39;title&#39;: &#39;If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits&#39;}">MemoryLimitCheck</a>
+                </td>
+                
+                <td style="background-color: red"></td>
+                
+                <td style="background-color: green"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy." href="{&#39;title&#39;: &#39;A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health&#39;}">LivenessProbeCheck</a>
+                </td>
+                
+                <td style="background-color: white"></td>
+                
+                <td style="background-color: red"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints." href="{&#39;title&#39;: &#39;A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health&#39;}">ReadinessProbeCheck</a>
+                </td>
+                
+                <td style="background-color: white"></td>
+                
+                <td style="background-color: red"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="A stateless workload should not have PersistentVolumeClaims." href="{&#39;title&#39;: &#39;A stateless workload should not have PersistentVolumeClaims.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/container-platform/4.9/storage/understanding-persistent-storage.html&#39;}">StatelessCheck</a>
+                </td>
+                
+                <td style="background-color: white"></td>
+                
+                <td style="background-color: yellow"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="As a developer, you can use a horizontal pod autoscaler (HPA) to specify how OpenShift Container Platform should automatically increase or decrease the scale of a replication controller or deployment configuration, based on metrics collected from the pods that belong to that replication controller or deployment configuration." href="{&#39;title&#39;: &#39;As a developer, you can use a horizontal pod autoscaler (HPA) to specify how OpenShift Container Platform should automatically increase or decrease the scale of a replication controller or deployment configuration, based on metrics collected from the pods that belong to that replication controller or deployment configuration.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html&#39;}">HPACheck</a>
+                </td>
+                
+                <td style="background-color: white"></td>
+                
+                <td style="background-color: red"></td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <a target="_blank" title="A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance." href="{&#39;title&#39;: &#39;A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance.&#39;, &#39;href&#39;: &#39;https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring&#39;}">PDBCheck</a>
+                </td>
+                
+                <td style="background-color: white"></td>
+                
+                <td style="background-color: red"></td>
+                
+            </tr>
+            
+        </table>
+        <hr/>
+         
+            <table>
+                <tr>
+                    <td>Target</td>
+                    <td>appassessment-cj</td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob." href="https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html"> declarativeComponentCheck</a>
+                    </td>
+                    <td style="background-color: green">
+                        <pre> CronJob</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A rolling deployment slowly replaces instances of the previous version of an application with instances of the new version of the application. The rolling strategy is the default deployment strategy used if no strategy is specified on a DeploymentConfig object." href="https://docs.openshift.com/container-platform/4.9/applications/deployments/deployment-strategies.html#deployments-rolling-strategy_deployment-strategies"> RollingUpdateCheck</a>
+                    </td>
+                    <td style="background-color: white">
+                        <pre> </pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests"> CPURequestCheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> 0 of 1 containers have CPU requests specified.  All container specifications should include CPU requests</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests"> MemoryRequestCheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> 0 of 1 containers have memory requests specified.  All container specifications should include memory requests</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits"> CPULimitCheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> 0 of 1 containers have CPU limits specified.  All container specifications should include CPU limits</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits"> MemoryLimitCheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> 0 of 1 containers have memory limits specified.  All container specifications should include memory limits</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> LivenessProbeCheck</a>
+                    </td>
+                    <td style="background-color: white">
+                        <pre> </pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> ReadinessProbeCheck</a>
+                    </td>
+                    <td style="background-color: white">
+                        <pre> </pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A stateless workload should not have PersistentVolumeClaims." href="https://docs.openshift.com/container-platform/4.9/storage/understanding-persistent-storage.html"> StatelessCheck</a>
+                    </td>
+                    <td style="background-color: white">
+                        <pre> </pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="As a developer, you can use a horizontal pod autoscaler (HPA) to specify how OpenShift Container Platform should automatically increase or decrease the scale of a replication controller or deployment configuration, based on metrics collected from the pods that belong to that replication controller or deployment configuration." href="https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html"> HPACheck</a>
+                    </td>
+                    <td style="background-color: white">
+                        <pre> </pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance." href="https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring"> PDBCheck</a>
+                    </td>
+                    <td style="background-color: white">
+                        <pre> </pre>
+                    </td>
+                </tr>
+                
+            </table>
+            <hr/>
+         
+            <table>
+                <tr>
+                    <td>Target</td>
+                    <td>appassessment-web</td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob." href="https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html"> declarativeComponentCheck</a>
+                    </td>
+                    <td style="background-color: green">
+                        <pre> Deployment</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A rolling deployment slowly replaces instances of the previous version of an application with instances of the new version of the application. The rolling strategy is the default deployment strategy used if no strategy is specified on a DeploymentConfig object." href="https://docs.openshift.com/container-platform/4.9/applications/deployments/deployment-strategies.html#deployments-rolling-strategy_deployment-strategies"> RollingUpdateCheck</a>
+                    </td>
+                    <td style="background-color: green">
+                        <pre> RollingUpdate</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests"> CPURequestCheck</a>
+                    </td>
+                    <td style="background-color: green">
+                        <pre> - container_name: appassessment-web
+  cpu_request: 10m
+</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests"> MemoryRequestCheck</a>
+                    </td>
+                    <td style="background-color: green">
+                        <pre> - container_name: appassessment-web
+  memory_request: 64Mi
+</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits"> CPULimitCheck</a>
+                    </td>
+                    <td style="background-color: green">
+                        <pre> - container_name: appassessment-web
+  cpu_limit: 10m
+</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits"> MemoryLimitCheck</a>
+                    </td>
+                    <td style="background-color: green">
+                        <pre> - container_name: appassessment-web
+  memory_limit: 64Mi
+</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> LivenessProbeCheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> 0 of 1 containers have a liveness probe defined.  All containers should have one.</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> ReadinessProbeCheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> 0 of 1 containers have a readiness probe defines.  All containers should have one.</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A stateless workload should not have PersistentVolumeClaims." href="https://docs.openshift.com/container-platform/4.9/storage/understanding-persistent-storage.html"> StatelessCheck</a>
+                    </td>
+                    <td style="background-color: yellow">
+                        <pre> stateless application should not need a persistent volume.  The following persistent volume claims were found: 
+- claimName: appassessment-pvc
+</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="As a developer, you can use a horizontal pod autoscaler (HPA) to specify how OpenShift Container Platform should automatically increase or decrease the scale of a replication controller or deployment configuration, based on metrics collected from the pods that belong to that replication controller or deployment configuration." href="https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-autoscaling.html"> HPACheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> unable to find an HPA with the following scaleTargetRef:
+kind: Deployment
+name: appassessment-web
+</pre>
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td>
+                        <a target="_blank" title="A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance." href="https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring"> PDBCheck</a>
+                    </td>
+                    <td style="background-color: red">
+                        <pre> unable to find a matching PDB.  Make sur that spec.selector.matchLabels is defined and that there is a corresponding PDB.</pre>
+                    </td>
+                </tr>
+                
+            </table>
+            <hr/>
+         
+    </div>
+    </main>
+
+        <footer class="footer">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=79F93E018712422FBC8E674A67A70535" target="_blank">Disclaimer</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=9E890E16955E4FF4BF3B0E07B4722932" target="_blank">Privacy</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=E08E79740F9C41B9B0C484685CC5E412" target="_blank">Accessibility</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=1AAACC9C65754E4D89A118B875E0FBDA" target="_blank">Copyright</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=6A77C17D0CCB48F897F8598CCC019111" target="_blank">Contact Us</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+        </footer>
+</body>
+</html>
