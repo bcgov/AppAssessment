@@ -32,11 +32,12 @@
         <div class="container">
     <h2>Workload health check report for namespace {{ namespace }} on server {{ serverName }}</h2>
     <hr>
+        <h3>Summary</h3>
         <table>
             <tr>
-                <td>Target</td>
+                <td><h4>Target</h4></td>
                 {% for workloadName in workloadNames %}
-                    <td>{{ workloadName }}</td>
+                    <td class= workloadSummaryCell title="{{workloadName}}"><h4>{{ workloadName }}</h4></td>
                 {% endfor %}
             </tr>
             {% for checkName in results.keys() %}
@@ -45,17 +46,18 @@
                     <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName] }}">{{ checkName }}</a>
                 </td>
                 {% for workloadName in results[checkName].keys() %}
-                <td style="background-color: {{ results[checkName][workloadName]['color'] }}"></td>
+                <td class= workloadSummaryCell style="background-color: {{ results[checkName][workloadName]['color'] }}"></td>
                 {% endfor %}
             </tr>
             {% endfor %}
         </table>
         <hr/>
+        <h3>Details</h3>
         {% for workloadName in workloadNames %} 
             <table>
                 <tr>
-                    <td>Target</td>
-                    <td>{{ workloadName }}</td>
+                    <td><h4>Target</h4></td>
+                    <td><h4>{{ workloadName }}</h4></td>
                 </tr>
                 {% for checkName in results.keys() %} 
                 <tr>
