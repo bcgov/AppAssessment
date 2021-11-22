@@ -11,21 +11,16 @@
 </head>
 <body>
     
-    <header>
+    <header class="header">
         <nav class="navbar navbar-expand-lg navbar-dark">
           <!-- Navbar content -->
           <div class="container">
             <a class="navbar-brand" href="https://www2.gov.bc.ca">
-      
               <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
             </a>
             <div class="navbar-brand">
                 {{ namespace }} Health Check
             </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
           </div>
         </nav>
       </header>
@@ -34,7 +29,7 @@
     <h2>Workload health check report for namespace {{ namespace }} on server {{ serverName }}</h2>
     <hr>
         <h3>Summary</h3>
-        <table>
+        <table class="table table-bordered">
             <tr>
                 <td><h4>Target</h4></td>
                 {% for workloadName in workloadNames %}
@@ -55,7 +50,7 @@
         <hr/>
         <h3>Details</h3>
         {% for workloadName in workloadNames %} 
-            <table>
+            <table class="table table-bordered">
                 <tr>
                     <td><h4>Target</h4></td>
                     <td><h4>{{ workloadName }}</h4></td>
@@ -66,7 +61,7 @@
                         <a target="_blank" title="{{ checksInfo[checkName].title }}" href="{{ checksInfo[checkName].href }}"> {{ checkName }}</a>
                     </td>
                     <td style="background-color: {{ results[checkName][workloadName]['color'] }}">
-                        <pre> {{ results[checkName][workloadName]['text'] }}</pre>
+                         {{ results[checkName][workloadName]['text'] }}
                     </td>
                 </tr>
                 {% endfor %}
@@ -99,5 +94,16 @@
               </div>
             </nav>
         </footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="/bootstrap-theme/dist/js/bootstrap-theme.min.js"></script>
+        <script>
+          // enable popovers everywhere
+          $(function () {
+            $('[data-toggle="popover"]').popover()
+          })
+        </script>
+        
 </body>
 </html>
