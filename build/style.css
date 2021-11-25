@@ -1,4 +1,17 @@
-.workloadSummaryCell{
+.workload-summary-cell{
   max-width: 40px;
   overflow: hidden;
+}
+
+.red, .green{
+  color: white;
+}
+.red{
+  background-color: red;
+}
+.green{
+  background-color: green;
+}
+.yellow{
+  background-color: yellow;
 }

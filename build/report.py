@@ -113,9 +113,9 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
     loader=PackageLoader("report"),
     autoescape=select_autoescape()
   )
-  template = env.get_template("reportTemplate.html")
+  template = env.get_template("reportTemplate.html.j2")
   file.write(template.render(
-    datetime =datetime.now().strftime("%Y-%m-%d-%H:%M:%S"),
+    datetime = datetime.now().strftime("%Y-%m-%d-%H:%M:%S"),
     namespace = namespace,
     serverName = serverName,
     workloadNames = workloadNames,

@@ -5,6 +5,7 @@ ADD ./checks.py ./
 ADD ./requirements.txt ./
 ADD ./startup.sh ./
 ADD ./style.css ./
+ADD ./bootstrap-theme.min.css ./
 ENV HOME=/tmp/
 
 RUN pip install -r ./requirements.txt
