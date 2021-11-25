@@ -15,3 +15,7 @@
 .yellow{
   background-color: yellow;
 }
+
+table tr td{
+  padding: 8px;
+}
