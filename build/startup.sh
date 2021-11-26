@@ -6,4 +6,6 @@ now=$(date +"%m_%d_%Y")
 # run the python script with the TARGET_NAMESPACE variable and output to the expected PVC
 python ./report.py -n ${TARGET_NAMESPACE} -o /output/index.html
 # copy style.css to the expected PVC
-cp style.css /output/
+mkdir /output/static/
+cp /static/style.css /output/static/
+cp /static/bootstrap-theme.min.css /output/static/
