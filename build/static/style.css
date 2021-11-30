@@ -1,21 +1,21 @@
-.workload-summary-cell{
-  max-width: 40px;
+.workload-summary-cell {
+  max-width: 60px;
   overflow: hidden;
 }
 
-.red, .green{
+.red, .green {
   color: white;
 }
-.red{
+.red {
   background-color: red;
 }
-.green{
+.green {
   background-color: green;
 }
-.yellow{
+.yellow {
   background-color: yellow;
 }
 
-table tr td{
+td {
   padding: 8px;
 }
