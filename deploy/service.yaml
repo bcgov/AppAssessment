@@ -3,7 +3,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: web-frontend
-  namespace: 1test-tools
   labels:
     app: nginx-unprivileged
     app.kubernetes.io/component: nginx-unprivileged
