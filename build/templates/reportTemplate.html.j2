@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <link href="/static/style.css" rel="stylesheet">
+      <link href="/static/bootstrap-theme.min.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+      <title>Report generated on {{ datetime }}</title>
+   </head>
+   <body>
+      <header class="header">
+         <nav class="navbar navbar-expand-lg navbar-dark">
+            <!-- Navbar content -->
+            <div class="container">
+               <a class="navbar-brand" href="https://www2.gov.bc.ca">
+                  <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
+               </a>
+               <div class="navbar-brand">
+                  {{ namespace }} Health Check
+               </div>
+            </div>
+         </nav>
+      </header>Config assessment report for the namespace <BLAH> in <Cluster Name>
+      <main role="main">
+         <div class="container">
+            <h2>Config assessment report for the namespace {{ namespace }} in {{ serverName }}</h2>
+            <hr>
+            <h3>Summary</h3>
+            <table class="table-bordered">
+               <tr>
+                  <td>
+                     <h4>Target</h4>
+                  </td>
+                  {% for workloadName in workloadNames %}
+                  <td class= workload-summary-cell title="{{workloadName}}">
+                     <h4>{{ workloadName }}</h4>
+                  </td>
+                  {% endfor %}
+               </tr>
+               {% for checkName in results.keys() %}
+               <tr>
+                  <td>
+                     <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName] }}">{{ checkName }}</a>
+                  </td>
+                  {% for workloadName in results[checkName].keys() %} <!-- the background color attribute below should be done in css -->
+                  <td class="workload-summary-cell {{ results[checkName][workloadName]['color'] }}"></td>
+                  {% endfor %}
+               </tr>
+               {% endfor %}
+            </table>
+            <hr/>
+            <h3>Details</h3>
+            {% for workloadName in workloadNames %} 
+            <table class="table-bordered">
+               <tr>
+                  <td>
+                     <h4>Target</h4>
+                  </td>
+                  <td>
+                     <h4>{{ workloadName }}</h4>
+                  </td>
+               </tr>
+               {% for checkName in results.keys() %} 
+               <tr>
+                  <td>
+                     <a target="_blank" title="{{ checksInfo[checkName].title }}" href="{{ checksInfo[checkName].href }}"> {{ checkName }}</a>
+                  </td>
+                  <td class="{{ results[checkName][workloadName]['color'] }}">
+                     {{ results[checkName][workloadName]['text'] }}
+                  </td>
+               </tr>
+               {% endfor %}
+            </table>
+            <hr/>
+            {% endfor %} 
+         </div>
+      </main>
+      <footer class="footer">
+         <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+               <ul class="navbar-nav">
+                  <li class="nav-item">
+                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=79F93E018712422FBC8E674A67A70535" target="_blank">Disclaimer</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=9E890E16955E4FF4BF3B0E07B4722932" target="_blank">Privacy</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=E08E79740F9C41B9B0C484685CC5E412" target="_blank">Accessibility</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=1AAACC9C65754E4D89A118B875E0FBDA" target="_blank">Copyright</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=6A77C17D0CCB48F897F8598CCC019111" target="_blank">Contact Us</a>
+                  </li>
+               </ul>
+            </div>
+         </nav>
+      </footer>
+   </body>
+</html>

@@ -1,3 +1,4 @@
 jsonpath-ng
 plumbum
 PyYAML
+jinja2

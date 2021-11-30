@@ -1,0 +1,21 @@
+.workload-summary-cell {
+  max-width: 60px;
+  overflow: hidden;
+}
+
+.red, .green {
+  color: white;
+}
+.red {
+  background-color: red;
+}
+.green {
+  background-color: green;
+}
+.yellow {
+  background-color: yellow;
+}
+
+td {
+  padding: 8px;
+}

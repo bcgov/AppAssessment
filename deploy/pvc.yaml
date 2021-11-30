@@ -2,7 +2,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: output
-  namespace: 1test-tools
   finalizers:
     - kubernetes.io/pvc-protection
 spec:
