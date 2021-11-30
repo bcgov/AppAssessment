@@ -1,0 +1,25 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  app: appassessment-app
+  template: appassessment-template
+objects:
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: ingress
+    namespace: ${NAMESPACE}
+  spec:
+    ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              network.openshift.io/policy-group: ingress
+    podSelector: {}
+    policyTypes:
+    - Ingress
+parameters:
+- description: Namespace name
+  displayName: Namespace
+  name: NAMESPACE 
+  value: abc-tools
