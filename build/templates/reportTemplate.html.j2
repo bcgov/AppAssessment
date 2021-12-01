@@ -42,7 +42,23 @@
                      <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName] }}">{{ checkName }}</a>
                   </td>
                   {% for workloadName in results[checkName].keys() %}
-                  <td class="workload-summary-cell {{ results[checkName][workloadName]['status'] }}"></td>
+                     <td class="workload-summary-cell">
+                        {% if results[checkName][workloadName]['status'] == 'fail' %}
+                           <div class="status-icon fail">
+                              X
+                           </div>
+                        {% endif %}
+                        {% if results[checkName][workloadName]['status'] == 'warning' %}
+                           <div class="status-icon warning">
+                              !
+                           </div>
+                        {% endif %}
+                        {% if results[checkName][workloadName]['status'] == 'pass' %}
+                           <div class="status-icon pass">
+                              &#10004
+                           </div>
+                        {% endif %}
+                     </td>
                   {% endfor %}
                </tr>
                {% endfor %}

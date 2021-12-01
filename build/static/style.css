@@ -3,17 +3,22 @@
   overflow: hidden;
 }
 
-.fail, .pass {
-  color: white;
+.status-icon {
+  text-align: center;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #fff
 }
+
 .fail {
-  background-color: red;
+  background-color: #D8292F;
 }
 .pass{
-  background-color: green;
+  background-color: #2E8540;
+  border-color: #2E8540;
 }
 .warning{
-  background-color: yellow;
+  background-color: #f9ca54;
 }
 
 td {
