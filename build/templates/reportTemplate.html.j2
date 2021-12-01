@@ -12,14 +12,14 @@
             <!-- Navbar content -->
             <div class="container">
                <a class="navbar-brand" href="https://www2.gov.bc.ca">
-                  <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
+               <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
                </a>
                <div class="navbar-brand">
                   {{ namespace }} Health Check
                </div>
             </div>
          </nav>
-      </header>Config assessment report for the namespace <BLAH> in <Cluster Name>
+      </header>
       <main role="main">
          <div class="container">
             <h2>Config assessment report for the namespace {{ namespace }} in {{ serverName }}</h2>
@@ -42,23 +42,23 @@
                      <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName] }}">{{ checkName }}</a>
                   </td>
                   {% for workloadName in results[checkName].keys() %}
-                     <td class="workload-summary-cell">
-                        {% if results[checkName][workloadName]['status'] == 'fail' %}
-                           <div class="status-icon fail">
-                              X
-                           </div>
-                        {% endif %}
-                        {% if results[checkName][workloadName]['status'] == 'warning' %}
-                           <div class="status-icon warning">
-                              !
-                           </div>
-                        {% endif %}
-                        {% if results[checkName][workloadName]['status'] == 'pass' %}
-                           <div class="status-icon pass">
-                              &#10004
-                           </div>
-                        {% endif %}
-                     </td>
+                  <td class="workload-summary-cell">
+                     {% if results[checkName][workloadName]['status'] == 'fail' %}
+                     <div class="status-icon fail">
+                        X
+                     </div>
+                     {% endif %}
+                     {% if results[checkName][workloadName]['status'] == 'warning' %}
+                     <div class="status-icon warning">
+                        !
+                     </div>
+                     {% endif %}
+                     {% if results[checkName][workloadName]['status'] == 'pass' %}
+                     <div class="status-icon pass">
+                        &#10004
+                     </div>
+                     {% endif %}
+                  </td>
                   {% endfor %}
                </tr>
                {% endfor %}
@@ -80,8 +80,25 @@
                   <td>
                      <a target="_blank" title="{{ checksInfo[checkName].title }}" href="{{ checksInfo[checkName].href }}"> {{ checkName }}</a>
                   </td>
-                  <td class="{{ results[checkName][workloadName]['status'] }}">
-                     {{ results[checkName][workloadName]['text'] }}
+                  <td>
+                     <div class="check-details">
+                        {% if results[checkName][workloadName]['status'] == 'fail' %}
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        {% endif %}
+                        {% if results[checkName][workloadName]['status'] == 'warning' %}
+                        <div class="status-icon warning">
+                           !
+                        </div>
+                        {% endif %}
+                        {% if results[checkName][workloadName]['status'] == 'pass' %}
+                        <div class="status-icon pass">
+                           &#10004
+                        </div>
+                        {% endif %}
+                        <div class="check-detail"a>{{ results[checkName][workloadName]['text'] }}</div>
+                     </div>
                   </td>
                </tr>
                {% endfor %}

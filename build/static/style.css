@@ -7,7 +7,9 @@
   text-align: center;
   border-radius: 10px;
   font-weight: 600;
-  color: #fff
+  color: #fff;
+  width: 40px;
+  display: inline-block;
 }
 
 .fail {
@@ -23,4 +25,8 @@
 
 td {
   padding: 8px;
+}
+
+.check-detail {
+  display: inline;
 }
