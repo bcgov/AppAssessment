@@ -56,10 +56,10 @@ def getObjects(type, namespace='default'):
 
 def hpaCheck(workloadData):
   requiredScaleTargetRef = {'kind': workloadData['kind'], 'name': workloadData['metadata']['name']}
-  retval = {'color': 'red', 'text': "unable to find an HPA with the following scaleTargetRef:\n" + yaml.dump(requiredScaleTargetRef)}
+  retval = {'status': 'fail', 'text': "unable to find an HPA with the following scaleTargetRef:\n" + yaml.dump(requiredScaleTargetRef)}
   jsonpath_expr = parse('spec.scaleTargetRef')
   for hpa in hpaObjects:
-    if retval['color'] == 'green':
+    if retval['status'] == 'pass':
       break
     #end
 
@@ -67,7 +67,7 @@ def hpaCheck(workloadData):
     for match in matches:
       try: 
         if (match.value['kind'] == workloadData['kind']) and (match.value['name'] == workloadData['metadata']['name']):
-          retval['color'] = 'green'
+          retval['status'] = 'pass'
           retval['text'] = yaml.dump(match.value)
           break
         #end
@@ -81,10 +81,10 @@ def hpaCheck(workloadData):
 #end
 
 def pdbCheck(workloadData):
-  retval = {'color': 'red', 'text': "unable to find a matching PDB.  Make sur that spec.selector.matchLabels is defined and that there is a corresponding PDB."}
+  retval = {'status': 'fail', 'text': "unable to find a matching PDB.  Make sur that spec.selector.matchLabels is defined and that there is a corresponding PDB."}
   jsonpath_expr = parse('spec.selector.matchLabels')
   for pdb in pdbObjects:
-    if retval['color'] == 'green':
+    if retval['status'] == 'pass':
       break
     #end
 
@@ -92,7 +92,7 @@ def pdbCheck(workloadData):
     for match in matches:
       try: 
         if (match.value == workloadData['spec']['selector']['matchLabels']):
-          retval['color'] = 'green'
+          retval['status'] = 'pass'
           retval['text'] = yaml.dump(match.value)
           break
         #end

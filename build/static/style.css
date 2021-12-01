@@ -3,16 +3,16 @@
   overflow: hidden;
 }
 
-.red, .green {
+.fail, .pass {
   color: white;
 }
-.red {
+.fail {
   background-color: red;
 }
-.green {
+.pass{
   background-color: green;
 }
-.yellow {
+.warning{
   background-color: yellow;
 }
 

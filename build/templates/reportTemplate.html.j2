@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <link href="/static/style.css" rel="stylesheet">
-      <link href="/static/bootstrap-theme.min.css" rel="stylesheet">
+      <link href="./static/style.css" rel="stylesheet">
+      <link href="./static/bootstrap-theme.min.css" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
       <title>Report generated on {{ datetime }}</title>
    </head>
@@ -41,8 +41,8 @@
                   <td>
                      <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName] }}">{{ checkName }}</a>
                   </td>
-                  {% for workloadName in results[checkName].keys() %} <!-- the background color attribute below should be done in css -->
-                  <td class="workload-summary-cell {{ results[checkName][workloadName]['color'] }}"></td>
+                  {% for workloadName in results[checkName].keys() %}
+                  <td class="workload-summary-cell {{ results[checkName][workloadName]['status'] }}"></td>
                   {% endfor %}
                </tr>
                {% endfor %}
@@ -64,7 +64,7 @@
                   <td>
                      <a target="_blank" title="{{ checksInfo[checkName].title }}" href="{{ checksInfo[checkName].href }}"> {{ checkName }}</a>
                   </td>
-                  <td class="{{ results[checkName][workloadName]['color'] }}">
+                  <td class="{{ results[checkName][workloadName]['status'] }}">
                      {{ results[checkName][workloadName]['text'] }}
                   </td>
                </tr>
