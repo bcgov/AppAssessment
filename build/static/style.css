@@ -30,3 +30,11 @@ td {
 .check-detail {
   display: inline;
 }
+
+.summary-table, .table-legend {
+  display: inline-grid;
+}
+
+.table-legend {
+  margin-left: 10%;
+}
