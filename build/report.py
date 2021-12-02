@@ -81,7 +81,7 @@ def hpaCheck(workloadData):
 #end
 
 def pdbCheck(workloadData):
-  retval = {'status': 'fail', 'text': "unable to find a matching PDB.  Make sur that spec.selector.matchLabels is defined and that there is a corresponding PDB."}
+  retval = {'status': 'fail', 'text': "unable to find a matching PDB.  Make sure that spec.selector.matchLabels is defined and that there is a corresponding PDB."}
   jsonpath_expr = parse('spec.selector.matchLabels')
   for pdb in pdbObjects:
     if retval['status'] == 'pass':
@@ -117,7 +117,6 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
   file.write(template.render(
     datetime = datetime.now().strftime("%Y-%m-%d-%H:%M:%S"),
     namespace = namespace,
-    serverName = serverName,
     workloadNames = workloadNames,
     results = results,
     checksInfo = checksInfo
@@ -157,29 +156,30 @@ pdbObjects = getObjects('poddisruptionbudgets', namespace)
 
 checks = {}
 checks["declarativeComponentCheck"] = declarativeComponentCheck
-checks["RollingUpdateCheck"] = rollingUpdateCheck
+#checks["RollingUpdateCheck"] = rollingUpdateCheck #not our business to tell people how to update (best practice for stateless)
 checks["CPURequestCheck"] = cpuRequestCheck
 checks["MemoryRequestCheck"] = memoryRequestCheck
 checks["CPULimitCheck"] = cpuLimitCheck
 checks["MemoryLimitCheck"] = memoryLimitCheck
 checks["LivenessProbeCheck"] = livenessProbeCheck
 checks["ReadinessProbeCheck"] = readinessProbeCheck
-checks["StatelessCheck"] = statelessCheck
-checks["HPACheck"] = hpaCheck
-checks["PDBCheck"] = pdbCheck
+#checks["StatelessCheck"] = statelessCheck #lots of apps are not stateless, and presenting a warning everytime there is a persistent volume is not appropriate
+#checks["HPACheck"] = hpaCheck   #Not always needed, and if it is, we need to know more about what we're trying to say is good or bad
+#checks["PDBCheck"] = pdbCheck   #pdbCheck is not always needed, and if it's needed, make sure we're not creating 'no disruption scenarios'
+#pdb and hpa checks are attainable with some extra work
 
 cronjobChecks = {}
 cronjobChecks["declarativeComponentCheck"] = declarativeComponentCheck
-cronjobChecks["RollingUpdateCheck"] = notApplicableCheck
+#cronjobChecks["RollingUpdateCheck"] = notApplicableCheck
 cronjobChecks["CPURequestCheck"] = cronjobCpuRequestCheck
 cronjobChecks["MemoryRequestCheck"] = cronjobMemoryRequestCheck
 cronjobChecks["CPULimitCheck"] = cronjobCpuLimitCheck
 cronjobChecks["MemoryLimitCheck"] = cronjobMemoryLimitCheck
 cronjobChecks["LivenessProbeCheck"] = notApplicableCheck
 cronjobChecks["ReadinessProbeCheck"] = notApplicableCheck
-cronjobChecks["StatelessCheck"] = notApplicableCheck
-cronjobChecks["HPACheck"] = notApplicableCheck
-cronjobChecks["PDBCheck"] = notApplicableCheck
+#cronjobChecks["StatelessCheck"] = notApplicableCheck
+#cronjobChecks["HPACheck"] = notApplicableCheck
+#cronjobChecks["PDBCheck"] = notApplicableCheck
 
 checksInfo = {
   "declarativeComponentCheck" : {
