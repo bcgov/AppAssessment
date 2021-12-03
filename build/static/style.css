@@ -38,3 +38,6 @@ td {
 .table-legend {
   margin-left: 10%;
 }
+.table-header-label {
+  text-align: center;
+}
