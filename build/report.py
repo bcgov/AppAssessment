@@ -36,6 +36,25 @@ def getServer():
   return server
 #end
 
+def getCluster():
+  currentContext = {}
+  clusterName = ""
+  try:
+    oc = local['oc']
+    data = json.loads(oc('config', 'view', '-o', 'json'))
+    for context in data['contexts']:
+      if context['name'] == data['current-context']:
+        currentContext = context['context']
+        break
+      #end
+    #end
+  except:
+    logging.error("unable to determine cluster name")
+  #end
+
+  return currentContext['cluster']
+#end
+  
 
 def getObjects(type, namespace='default'):
   try: 
@@ -117,6 +136,7 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
   file.write(template.render(
     datetime = datetime.now().strftime("%Y-%m-%d-%H:%M:%S"),
     namespace = namespace,
+    clusterName = getCluster(),
     workloadNames = workloadNames,
     results = results,
     checksInfo = checksInfo
