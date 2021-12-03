@@ -29,18 +29,20 @@
                   <h3>Summary</h3>
                   <table class="table-bordered">
                      <thead> 
+                        <colgroup></colgroup>
+                        <colgroup span="{{ workloadNames|length }}"></colspan>
                         <tr>
-                           <td>
-                              
-                           </td>
-                           <td>
+                           <th colspan="1" scope="colgroup">
+                              Config Setting
+                           </th>
+                           <th colspan="{{ workloadNames|length }}" scope="colgroup">
                               Pods
-                           </td>
+                           </th>
                         </tr>
                      </thead>
                      <tr>
                         <td>
-                        Config Setting
+                        
                         </td>
                         {% for workloadName in workloadNames %}
                         <td class= workload-summary-cell title="{{workloadName}}">
