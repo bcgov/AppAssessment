@@ -36,6 +36,25 @@ def getServer():
   return server
 #end
 
+def getCluster():
+  currentContext = {}
+  clusterName = ""
+  try:
+    oc = local['oc']
+    data = json.loads(oc('config', 'view', '-o', 'json'))
+    for context in data['contexts']:
+      if context['name'] == data['current-context']:
+        currentContext = context['context']
+        break
+      #end
+    #end
+  except:
+    logging.error("unable to determine cluster name")
+  #end
+
+  return currentContext['cluster']
+#end
+  
 
 def getObjects(type, namespace='default'):
   try: 
@@ -56,10 +75,10 @@ def getObjects(type, namespace='default'):
 
 def hpaCheck(workloadData):
   requiredScaleTargetRef = {'kind': workloadData['kind'], 'name': workloadData['metadata']['name']}
-  retval = {'color': 'red', 'text': "unable to find an HPA with the following scaleTargetRef:\n" + yaml.dump(requiredScaleTargetRef)}
+  retval = {'status': 'fail', 'text': "unable to find an HPA with the following scaleTargetRef:\n" + yaml.dump(requiredScaleTargetRef)}
   jsonpath_expr = parse('spec.scaleTargetRef')
   for hpa in hpaObjects:
-    if retval['color'] == 'green':
+    if retval['status'] == 'pass':
       break
     #end
 
@@ -67,7 +86,7 @@ def hpaCheck(workloadData):
     for match in matches:
       try: 
         if (match.value['kind'] == workloadData['kind']) and (match.value['name'] == workloadData['metadata']['name']):
-          retval['color'] = 'green'
+          retval['status'] = 'pass'
           retval['text'] = yaml.dump(match.value)
           break
         #end
@@ -81,10 +100,10 @@ def hpaCheck(workloadData):
 #end
 
 def pdbCheck(workloadData):
-  retval = {'color': 'red', 'text': "unable to find a matching PDB.  Make sur that spec.selector.matchLabels is defined and that there is a corresponding PDB."}
+  retval = {'status': 'fail', 'text': "unable to find a matching PDB.  Make sure that spec.selector.matchLabels is defined and that there is a corresponding PDB."}
   jsonpath_expr = parse('spec.selector.matchLabels')
   for pdb in pdbObjects:
-    if retval['color'] == 'green':
+    if retval['status'] == 'pass':
       break
     #end
 
@@ -92,7 +111,7 @@ def pdbCheck(workloadData):
     for match in matches:
       try: 
         if (match.value == workloadData['spec']['selector']['matchLabels']):
-          retval['color'] = 'green'
+          retval['status'] = 'pass'
           retval['text'] = yaml.dump(match.value)
           break
         #end
@@ -117,7 +136,7 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
   file.write(template.render(
     datetime = datetime.now().strftime("%Y-%m-%d-%H:%M:%S"),
     namespace = namespace,
-    serverName = serverName,
+    clusterName = getCluster(),
     workloadNames = workloadNames,
     results = results,
     checksInfo = checksInfo
@@ -157,29 +176,30 @@ pdbObjects = getObjects('poddisruptionbudgets', namespace)
 
 checks = {}
 checks["declarativeComponentCheck"] = declarativeComponentCheck
-checks["RollingUpdateCheck"] = rollingUpdateCheck
+#checks["RollingUpdateCheck"] = rollingUpdateCheck #not our business to tell people how to update (best practice for stateless)
 checks["CPURequestCheck"] = cpuRequestCheck
 checks["MemoryRequestCheck"] = memoryRequestCheck
 checks["CPULimitCheck"] = cpuLimitCheck
 checks["MemoryLimitCheck"] = memoryLimitCheck
 checks["LivenessProbeCheck"] = livenessProbeCheck
 checks["ReadinessProbeCheck"] = readinessProbeCheck
-checks["StatelessCheck"] = statelessCheck
-checks["HPACheck"] = hpaCheck
-checks["PDBCheck"] = pdbCheck
+#checks["StatelessCheck"] = statelessCheck #lots of apps are not stateless, and presenting a warning everytime there is a persistent volume is not appropriate
+#checks["HPACheck"] = hpaCheck   #Not always needed, and if it is, we need to know more about what we're trying to say is good or bad
+#checks["PDBCheck"] = pdbCheck   #pdbCheck is not always needed, and if it's needed, make sure we're not creating 'no disruption scenarios'
+#pdb and hpa checks are attainable with some extra work
 
 cronjobChecks = {}
 cronjobChecks["declarativeComponentCheck"] = declarativeComponentCheck
-cronjobChecks["RollingUpdateCheck"] = notApplicableCheck
+#cronjobChecks["RollingUpdateCheck"] = notApplicableCheck
 cronjobChecks["CPURequestCheck"] = cronjobCpuRequestCheck
 cronjobChecks["MemoryRequestCheck"] = cronjobMemoryRequestCheck
 cronjobChecks["CPULimitCheck"] = cronjobCpuLimitCheck
 cronjobChecks["MemoryLimitCheck"] = cronjobMemoryLimitCheck
 cronjobChecks["LivenessProbeCheck"] = notApplicableCheck
 cronjobChecks["ReadinessProbeCheck"] = notApplicableCheck
-cronjobChecks["StatelessCheck"] = notApplicableCheck
-cronjobChecks["HPACheck"] = notApplicableCheck
-cronjobChecks["PDBCheck"] = notApplicableCheck
+#cronjobChecks["StatelessCheck"] = notApplicableCheck
+#cronjobChecks["HPACheck"] = notApplicableCheck
+#cronjobChecks["PDBCheck"] = notApplicableCheck
 
 checksInfo = {
   "declarativeComponentCheck" : {

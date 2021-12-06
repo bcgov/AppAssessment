@@ -3,19 +3,42 @@
   overflow: hidden;
 }
 
-.red, .green {
-  color: white;
+.status-icon {
+  text-align: center;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #fff;
+  width: 40px;
+  display: inline-block;
 }
-.red {
-  background-color: red;
+
+.fail {
+  background-color: #D8292F;
 }
-.green {
-  background-color: green;
+.pass {
+  background-color: #2E8540;
+  border-color: #2E8540;
 }
-.yellow {
-  background-color: yellow;
+.warning { 
+  background-color: #f9ca54;
 }
 
 td {
   padding: 8px;
+}
+
+.check-detail {
+  display: inline;
+}
+
+.summary-table, .table-legend {
+  display: inline-grid;
+}
+
+.table-legend {
+  margin-left: 10%;
+  max-width: 50%;
+}
+.table-header-label {
+  text-align: center;
 }

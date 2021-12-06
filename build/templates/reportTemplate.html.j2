@@ -15,45 +15,119 @@
                   <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
                </a>
                <div class="navbar-brand">
-                  {{ namespace }} Health Check
+                  {{ namespace }} Config Check
                </div>
             </div>
          </nav>
-      </header>Config assessment report for the namespace <BLAH> in <Cluster Name>
+      </header>
       <main role="main">
          <div class="container">
-            <h2>Config assessment report for the namespace {{ namespace }} in {{ serverName }}</h2>
+            <h2>Config assessment report for the namespace {{ namespace }} in cluster {{ clusterName }}</h2>
             <hr>
-            <h3>Summary</h3>
-            <table class="table-bordered">
-               <tr>
-                  <td>
-                     <h4>Target</h4>
-                  </td>
-                  {% for workloadName in workloadNames %}
-                  <td class= workload-summary-cell title="{{workloadName}}">
-                     <h4>{{ workloadName }}</h4>
-                  </td>
-                  {% endfor %}
-               </tr>
-               {% for checkName in results.keys() %}
-               <tr>
-                  <td>
-                     <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName] }}">{{ checkName }}</a>
-                  </td>
-                  {% for workloadName in results[checkName].keys() %} <!-- the background color attribute below should be done in css -->
-                  <td class="workload-summary-cell {{ results[checkName][workloadName]['color'] }}"></td>
-                  {% endfor %}
-               </tr>
-               {% endfor %}
-            </table>
+            <div>
+               <div class="summary-table">
+                  <h3>Summary</h3>
+                  <table class="table-bordered">
+                     <thead>
+                        <colgroup></colgroup>
+                        <colgroup span="{{ workloadNames|length }}"></colspan>
+                        <tr>
+                           <td class="table-header-label" colspan="1" scope="colgroup">
+                              Config Setting
+                           </td>
+                           <td class="table-header-label" colspan="{{ workloadNames|length }}" scope="colgroup">
+                              Pods
+                           </td>
+                        </tr>
+                     </thead>
+                     <tr>
+                        <td>
+                        </td>
+                        {% for workloadName in workloadNames %}
+                        <td class= workload-summary-cell title="{{workloadName}}">
+                           <h4>{{ workloadName }}</h4>
+                        </td>
+                        {% endfor %}
+                     </tr>
+                     {% for checkName in results.keys() %}
+                     <tr>
+                        <td>
+                           <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName]['href'] }}">{{ checkName }}</a>
+                        </td>
+                        {% for workloadName in results[checkName].keys() %}
+                        <td class="workload-summary-cell">
+                           {% if results[checkName][workloadName]['status'] == 'fail' %}
+                           <div class="status-icon fail">
+                              X
+                           </div>
+                           {% elif results[checkName][workloadName]['status'] == 'warning' %}
+                           <div class="status-icon warning">
+                              !
+                           </div>
+                           {% elif results[checkName][workloadName]['status'] == 'pass' %}
+                           <div class="status-icon pass">
+                              &#10004
+                           </div>
+                           {% else %}
+                           N/A
+                           {% endif %}
+                        </td>
+                        {% endfor %}
+                     </tr>
+                     {% endfor %}
+                  </table>
+               </div>
+               <div class="table-legend">
+                  <h3>Legend</h3>
+                  <table>
+                     <tr>
+                        <td>
+                           <div class="status-icon pass">
+                              &#10004
+                           </div>
+                        </td>
+                        <td>
+                           Setting is applicable and is correct
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <div class="status-icon warning">
+                              !
+                           </div>
+                        </td>
+                        <td>
+                           Setting may or may not be applicable, or the value may or may not be correct. Refer to documentation for more detail.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <div class="status-icon fail">
+                              X
+                           </div>
+                        </td>
+                        <td>
+                           Either inapplicable or incorrect
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           N/A
+                        </td>
+                        <td>
+                           Setting is not applicable for this deployment type
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
             <hr/>
             <h3>Details</h3>
             {% for workloadName in workloadNames %} 
             <table class="table-bordered">
                <tr>
                   <td>
-                     <h4>Target</h4>
+                     <h4>Config Setting</h4>
                   </td>
                   <td>
                      <h4>{{ workloadName }}</h4>
@@ -64,8 +138,25 @@
                   <td>
                      <a target="_blank" title="{{ checksInfo[checkName].title }}" href="{{ checksInfo[checkName].href }}"> {{ checkName }}</a>
                   </td>
-                  <td class="{{ results[checkName][workloadName]['color'] }}">
-                     {{ results[checkName][workloadName]['text'] }}
+                  <td>
+                     <div class="check-details">
+                        {% if results[checkName][workloadName]['status'] == 'fail' %}
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        {% elif results[checkName][workloadName]['status'] == 'warning' %}
+                        <div class="status-icon warning">
+                           !
+                        </div>
+                        {% elif results[checkName][workloadName]['status'] == 'pass' %}
+                        <div class="status-icon pass">
+                           &#10004
+                        </div>
+                        {% else %}
+                        N/A
+                        {% endif %}
+                        <div class="check-detail"a>{{ results[checkName][workloadName]['text'] }}</div>
+                     </div>
                   </td>
                </tr>
                {% endfor %}
