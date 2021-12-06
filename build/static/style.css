@@ -15,11 +15,11 @@
 .fail {
   background-color: #D8292F;
 }
-.pass{
+.pass {
   background-color: #2E8540;
   border-color: #2E8540;
 }
-.warning{
+.warning { 
   background-color: #f9ca54;
 }
 
