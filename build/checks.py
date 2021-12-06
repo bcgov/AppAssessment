@@ -2,7 +2,7 @@ from jsonpath_ng import jsonpath, parse
 import yaml
 
 def notApplicableCheck(workloadData):
-  return {'status': 'white', 'text': ''}
+  return {'status': 'notApplicable', 'text': ''}
 #end
 
 def declarativeComponentCheck(workloadData):
@@ -14,7 +14,7 @@ def declarativeComponentCheck(workloadData):
 #end
 
 def rollingUpdateCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   first = parse('spec.strategy.type').find(workloadData)
   second = parse('spec.updateStrategy.type').find(workloadData)
   if ((len(first) == 1) and ((first[0].value == "RollingUpdate") or (first[0].value == "Rolling"))):
@@ -31,7 +31,7 @@ def rollingUpdateCheck(workloadData):
 #end
 
 def cpuRequestCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -48,7 +48,7 @@ def cpuRequestCheck(workloadData):
 #end
 
 def memoryRequestCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].resources.requests.memory').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -65,7 +65,7 @@ def memoryRequestCheck(workloadData):
 #end
 
 def cpuLimitCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -82,7 +82,7 @@ def cpuLimitCheck(workloadData):
 #end
 
 def memoryLimitCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].resources.limits.memory').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -99,7 +99,7 @@ def memoryLimitCheck(workloadData):
 #end
 
 def cronjobCpuRequestCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -116,7 +116,7 @@ def cronjobCpuRequestCheck(workloadData):
 #end
 
 def cronjobMemoryRequestCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.requests.memory').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -133,7 +133,7 @@ def cronjobMemoryRequestCheck(workloadData):
 #end
 
 def cronjobCpuLimitCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -150,7 +150,7 @@ def cronjobCpuLimitCheck(workloadData):
 #end
 
 def cronjobMemoryLimitCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.limits.memory').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -168,7 +168,7 @@ def cronjobMemoryLimitCheck(workloadData):
 
 
 def livenessProbeCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].livenessProbe').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   noEmptyProbes = True
@@ -190,7 +190,7 @@ def livenessProbeCheck(workloadData):
 #end
 
 def readinessProbeCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].readinessProbe').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   noEmptyProbes = True
@@ -212,7 +212,7 @@ def readinessProbeCheck(workloadData):
 #end
 
 def statelessCheck(workloadData):
-  retval = {'status': 'white', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.volumes[*].persistentVolumeClaim').find(workloadData)
   if (len(matches) > 0):
     retval['status'] = 'warning'
