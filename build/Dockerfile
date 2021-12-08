@@ -6,6 +6,7 @@ ADD ./requirements.txt ./
 ADD ./startup.sh ./
 ADD ./static/style.css ./
 ADD ./static/bootstrap-theme.min.css ./
+ADD ./requirements.txt ./
 
 ENV HOME=/tmp/
 
