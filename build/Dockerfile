@@ -4,7 +4,8 @@ ADD ./report.py ./
 ADD ./checks.py ./
 ADD ./requirements.txt ./
 ADD ./startup.sh ./
-ADD ./static/ ./
+ADD ./static/style.css ./
+ADD ./static/bootstrap-theme.min.css ./
 
 ENV HOME=/tmp/
 
