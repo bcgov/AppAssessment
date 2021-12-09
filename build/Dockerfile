@@ -2,6 +2,7 @@ FROM registry.access.redhat.com/ubi8/python-36:1-155
 USER root
 ADD ./report.py ./
 ADD ./checks.py ./
+ADD ./templates/reportTemplate.html.j2 ./
 ADD ./requirements.txt ./
 ADD ./startup.sh ./
 ADD ./static/style.css ./
