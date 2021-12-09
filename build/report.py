@@ -1,5 +1,5 @@
 import json
-from os import write
+from os import write, path
 import sys
 import logging
 from datetime import datetime
@@ -8,7 +8,7 @@ from plumbum import local
 import argparse
 import yaml
 from checks import *
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, PackageLoader, select_autoescape, FileSystemLoader
 
 def getServer():
   currentContext = {}
@@ -129,8 +129,9 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
   file = open(filename, 'w')
   
   env = Environment(
-    loader=PackageLoader("report"),
-    autoescape=select_autoescape()
+    #loader=PackageLoader("report"), #error here in OpenShift 'ValueError: The ‘report’ package was not installed in a way that PackageLoader understands.'
+    autoescape=select_autoescape(),
+    loader=FileSystemLoader(path.join(path.dirname(__file__), 'templates'))
   )
   template = env.get_template("reportTemplate.html.j2")
   file.write(template.render(
