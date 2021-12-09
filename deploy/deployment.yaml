@@ -38,9 +38,6 @@ spec:
             - name: report-out
               readOnly: true
               mountPath: /usr/share/nginx/html
-            - name: jinja-templates
-              readOnly: true
-              mountPath: /usr/share/nginx/html
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
@@ -56,4 +53,3 @@ spec:
       maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
-  
