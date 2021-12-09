@@ -1,15 +1,13 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: nginx-unprivileged
-  namespace: 1test-tools
+  name: appassessment-web
   labels:
     app: nginx-unprivileged
     app.kubernetes.io/component: nginx-unprivileged
     app.kubernetes.io/instance: nginx-unprivileged
     app.kubernetes.io/part-of: appassessment-app
-    app.openshift.io/runtime: nginx
-    app.openshift.io/runtime-namespace: 1test-tools
+    app.openshift.io/runtime: nginxxz
 spec:
   replicas: 1
   selector:
@@ -27,7 +25,7 @@ spec:
       volumes:
         - name: report-out
           persistentVolumeClaim:
-            claimName: output
+            claimName: appassessment-pvc
       containers:
         - name: nginx-unprivileged
           image: >-
@@ -38,6 +36,9 @@ spec:
           resources: {}
           volumeMounts:
             - name: report-out
+              readOnly: true
+              mountPath: /usr/share/nginx/html
+            - name: jinja-templates
               readOnly: true
               mountPath: /usr/share/nginx/html
           terminationMessagePath: /dev/termination-log
@@ -55,3 +56,4 @@ spec:
       maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
+  
