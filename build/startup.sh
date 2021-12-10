@@ -7,8 +7,6 @@ now=$(date +"%m_%d_%Y")
 python ./report.py -n ${TARGET_NAMESPACE} -o /output/index.html
 # copy style.css to the expected PVC
 mkdir /output/static/
-mkdir /templates/
 
 cp ./style.css /output/static/
 cp ./bootstrap-theme.min.css /output/static/
-cp ./reportTemplate.html.j2 /templates/

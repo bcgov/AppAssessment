@@ -184,9 +184,6 @@ objects:
                 volumeMounts:
                   - name: report-out
                     mountPath: /output/
-                volumeMounts:
-                  - name: jinja-templates
-                    mountPath: /templates/
                 terminationMessagePath: /dev/termination-log
                 terminationMessagePolicy: File
                 imagePullPolicy: Always
@@ -232,9 +229,6 @@ objects:
               - name: report-out
                 mountPath: /output/
                 subpath: output
-              - name: report-out
-                mountPath: /templates/
-                subpath: templates
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
             imagePullPolicy: Always
