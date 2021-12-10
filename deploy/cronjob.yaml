@@ -23,10 +23,6 @@ spec:
             - name: report-out
               persistentVolumeClaim:
                 claimName: appassessment-pvc
-          volumes:
-            - name: jinja-templates
-              persistentVolumeClaim:
-                claimName: appassessment-pvc
           containers:
             - name: appassessment
               image: >-
@@ -38,9 +34,11 @@ spec:
               volumeMounts:
                 - name: report-out
                   mountPath: /output/
+                  subpath: output
               volumeMounts:
-                - name: jinja-templates
+                - name: report-out
                   mountPath: /templates/
+                  subpath: templates
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
               imagePullPolicy: Always
