@@ -35,7 +35,6 @@ spec:
                 - name: report-out
                   mountPath: /output/
                   subpath: output
-              volumeMounts:
                 - name: report-out
                   mountPath: /templates/
                   subpath: templates

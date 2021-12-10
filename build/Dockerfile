@@ -12,6 +12,7 @@ ADD ./requirements.txt ./
 
 ENV HOME=/tmp/
 
+RUN mkdir /templates
 RUN pip install -r ./requirements.txt
 # Install OC CLI
 RUN curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz --output ./oc.tar.gz

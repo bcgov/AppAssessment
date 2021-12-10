@@ -38,10 +38,6 @@ spec:
             - name: report-out
               readOnly: true
               mountPath: /usr/share/nginx/html
-          volumeMounts:
-            - name: report-out
-              readOnly: true
-              mountPath: /usr/share/nginx/templates
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
