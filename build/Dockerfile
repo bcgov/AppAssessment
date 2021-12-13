@@ -4,10 +4,15 @@ ADD ./report.py ./
 ADD ./checks.py ./
 ADD ./requirements.txt ./
 ADD ./startup.sh ./
-ADD ./static/ ./
+ADD ./static/style.css ./
+ADD ./static/bootstrap-theme.min.css ./
+ADD ./requirements.txt ./   
+
 
 ENV HOME=/tmp/
 
+RUN mkdir templates
+ADD ./templates/reportTemplate.html.j2 ./templates
 RUN pip install -r ./requirements.txt
 # Install OC CLI
 RUN curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz --output ./oc.tar.gz

@@ -2,7 +2,6 @@ kind: CronJob
 apiVersion: batch/v1beta1
 metadata:
   name: appassessment
-  namespace: 1test-tools
   labels:
     app: appassessment
     app.kubernetes.io/component: appassessment
@@ -19,21 +18,23 @@ spec:
         metadata:
           creationTimestamp: null
         spec:
+          serviceAccountName: appassessment-sa
           volumes:
             - name: report-out
               persistentVolumeClaim:
-                claimName: output
+                claimName: appassessment-pvc
           containers:
             - name: appassessment
               image: >-
-                image-registry.openshift-image-registry.svc:5000/1test-tools/appassessment
+                image-registry.openshift-image-registry.svc:5000/7f8e79-tools/appassessment
               env:
                 - name: TARGET_NAMESPACE
-                  value: 1test-prod
+                  value: 7f8e79-prod
               resources: {}
               volumeMounts:
                 - name: report-out
                   mountPath: /output/
+                  subpath: output
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
               imagePullPolicy: Always
