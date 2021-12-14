@@ -86,10 +86,6 @@ objects:
               - name: report-out
                 readOnly: true
                 mountPath: /usr/share/nginx/html
-            volumeMounts:
-              - name: jinga-templates
-                readOnly: true
-                mountPath: /usr/share/nginx/html
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
             imagePullPolicy: Always
