@@ -82,8 +82,14 @@
             </div>
             <hr/>
             <h3>Details</h3>
+            <div id="quick-links">
+            Jump to: 
+            {% for workloadName in workloadNames %}
+               <a href="#{{ workloadName }}">{{ workloadName }} </a>
+            {% endfor %}
+            </div>
             {% for workloadName in workloadNames %} 
-            <table class="table-bordered">
+            <table class="table-bordered" id="{{ workloadName }}">
                <tr>
                   <td>
                      <h4>Config Setting</h4>

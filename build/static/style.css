@@ -44,3 +44,10 @@ td {
 #report-explanation {
   font-size: 0.9em;
 }
+#quick-links {
+  margin-bottom: 20px;
+  margin-left: 16px;
+}
+#quick-links a {
+  margin-left: 4px;
+}
