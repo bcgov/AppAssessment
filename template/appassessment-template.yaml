@@ -176,6 +176,8 @@ objects:
                 env:
                   - name: TARGET_NAMESPACE
                     value: ${APPID}-prod
+                  - name: CLUSTER_NAME
+                    value: ${CLUSTERNAME}
                 resources: {}
                 volumeMounts:
                   - name: report-out
@@ -214,6 +216,8 @@ objects:
             env:
               - name: TARGET_NAMESPACE
                 value: ${APPID}-prod
+              - name: CLUSTER_NAME
+                value: ${CLUSTERNAME}
             resources:
               requests:
                 cpu: 100m

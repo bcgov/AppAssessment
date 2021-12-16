@@ -1,5 +1,5 @@
 import json
-from os import write, path
+from os import write, path, environ
 import sys
 import logging
 from datetime import datetime
@@ -35,26 +35,6 @@ def getServer():
 
   return server
 #end
-
-def getCluster():
-  currentContext = {}
-  clusterName = ""
-  try:
-    oc = local['oc']
-    data = json.loads(oc('config', 'view', '-o', 'json'))
-    for context in data['contexts']:
-      if context['name'] == data['current-context']:
-        currentContext = context['context']
-        break
-      #end
-    #end
-  except:
-    logging.error("unable to determine cluster name")
-  #end
-
-  return currentContext['cluster']
-#end
-  
 
 def getObjects(type, namespace='default'):
   try: 
@@ -124,7 +104,7 @@ def pdbCheck(workloadData):
   return retval
 #end
 
-def writeReport(filename, results, serverName, namespace, checksInfo):
+def writeReport(filename, results, namespace, checksInfo, clusterName):
   workloadNames = results[next(iter(results))].keys()
   file = open(filename, 'w')
   
@@ -136,8 +116,8 @@ def writeReport(filename, results, serverName, namespace, checksInfo):
   template = env.get_template("reportTemplate.html.j2")
   file.write(template.render(
     datetime = datetime.now().strftime("%Y-%m-%d-%H:%M:%S"),
+    clusterName = clusterName,
     namespace = namespace,
-    clusterName = getCluster(),
     workloadNames = workloadNames,
     results = results,
     checksInfo = checksInfo
@@ -150,6 +130,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-l", help="log file name", type=str, default="-")
 parser.add_argument("-o", help="output file name", type=str, default="report.html")
 parser.add_argument('-n', help="namespace", type=str, default="default")
+parser.add_argument('-c', help="cluster name", type=str, default="default cluser name")
 args = parser.parse_args()
 
 logstream = None
@@ -162,6 +143,7 @@ logging.basicConfig(stream=logstream, level=logging.INFO, format='[%(asctime)s] 
 logging.info("generating report")
 
 namespace = args.n
+clusterName = args.c
 serverName = getServer()
 
 workloadObjects = getObjects('cronjobs', namespace) + getObjects('daemonset', namespace) + getObjects('deployment', namespace) + getObjects('statefulset', namespace) + getObjects('deploymentconfig', namespace)
@@ -260,4 +242,4 @@ for checkName in checks.keys():
     else:
       results[checkName][workloadName] = checks[checkName](workload)
 
-writeReport(args.o, results, serverName, namespace, checksInfo)
+writeReport(args.o, results, namespace, checksInfo, clusterName)
