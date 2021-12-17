@@ -31,5 +31,6 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/bcgov/appassessment'
+      ref: 'UI/UX-improvements-for-the-Assessment-App'
     contextDir: /build
   runPolicy: Serial
