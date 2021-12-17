@@ -239,7 +239,7 @@ objects:
               claimName: appassessment-pvc
         dnsPolicy: ClusterFirst
 parameters:
-- description: The six character application identifier, commonly referred to the license plate number for your application to be assessed.
+- description: The six character application identifier, commonly referred to the license plate number for your application to be assessed. "example e595b8"
   displayName: Application Identifier
   name: APPID
   value: "example: e595b8"
