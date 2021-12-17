@@ -27,7 +27,7 @@
                <p>The AppAssessment tool assesses configuration of pods within a specific Openshift namespace and identifies the misconfigured 
                or missing settings based on what is considered best practices by RedHat and the Platform Services Team.
                Checks are performed through the calls to Openshift API, and compared to expected values. Documentation on application health 
-               checks can be found <a href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html">here</a>. 
+               checks can be found <a href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html" target="_blank">here</a>. 
                If your team is aware of additional checks that can be added to the list, please, ping us in #devops-operations channel in 
                Rocketchat. Configuring applications pods in acccordance with best practices improves the resiliency, performance and security 
                posture of the application.</p>
@@ -95,7 +95,7 @@
                      <h4>Config Setting</h4>
                   </td>
                   <td>
-                     <h4>{{ workloadName }}</h4>
+                     <h4>Pod: {{ workloadName }}</h4>
                   </td>
                </tr>
                {% for checkName in results.keys() %} 
