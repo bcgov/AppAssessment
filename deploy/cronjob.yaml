@@ -26,10 +26,12 @@ spec:
           containers:
             - name: appassessment
               image: >-
-                image-registry.openshift-image-registry.svc:5000/7f8e79-tools/appassessment
+                image-registry.openshift-image-registry.svc:5000/bcgov/appassessment
               env:
                 - name: TARGET_NAMESPACE
                   value: 7f8e79-prod
+                - name: CLUSTER_NAME
+                  value: Kamloops-Lab
               resources: {}
               volumeMounts:
                 - name: report-out
