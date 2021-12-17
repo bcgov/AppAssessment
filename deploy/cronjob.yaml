@@ -30,6 +30,8 @@ spec:
               env:
                 - name: TARGET_NAMESPACE
                   value: 7f8e79-prod
+                - name: CLUSTER_NAME
+                  value: K-Lab
               resources: {}
               volumeMounts:
                 - name: report-out
