@@ -245,5 +245,5 @@ parameters:
   value: "example: e595b8"
 - description: The name of the Cluster in which this tool operates
   displayName: Cluster Name
-  name: APPID
+  name: CLUSTERNAME
   value: "example: Silver"
