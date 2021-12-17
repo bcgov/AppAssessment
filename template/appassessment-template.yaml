@@ -242,7 +242,8 @@ parameters:
 - description: The six character application identifier, commonly referred to the license plate number for your application to be assessed. "example e595b8"
   displayName: Application Identifier
   name: APPID
-- description: The name of the Cluster in which this tool operates, "example Silver"
+  value: "example: e595b8"
+- description: The name of the Cluster in which this tool operates
   displayName: Cluster Name
   name: CLUSTERNAME
-  value: "silver"
+  value: "example: Silver"
