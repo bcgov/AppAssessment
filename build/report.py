@@ -130,7 +130,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-l", help="log file name", type=str, default="-")
 parser.add_argument("-o", help="output file name", type=str, default="report.html")
 parser.add_argument('-n', help="namespace", type=str, default="default")
-parser.add_argument('-c', help="cluster name", type=str, default="default cluser name")
+parser.add_argument('-c', help="cluster name", type=str, default="silver")
 args = parser.parse_args()
 
 logstream = None
