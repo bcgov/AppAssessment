@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <link href="/static/style.css" rel="stylesheet">
-      <link href="/static/bootstrap-theme.min.css" rel="stylesheet">
+      <link href="./static/style.css" rel="stylesheet">
+      <link href="./static/bootstrap-theme.min.css" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
       <title>Report generated on {{ datetime }}</title>
    </head>
@@ -15,7 +15,7 @@
                   <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
                </a>
                <div class="navbar-brand">
-                  {{ namespace }} Config Check
+                  {{ namespace }} OpenShift Config Check
                </div>
             </div>
          </nav>
@@ -23,60 +23,19 @@
       <main role="main">
          <div class="container">
             <h2>Config assessment report for the namespace {{ namespace }} in cluster {{ clusterName }}</h2>
+            <div class="report-explanation">
+               <p>The AppAssessment tool assesses configuration of pods within a specific Openshift namespace and identifies the misconfigured 
+               or missing settings based on what is considered best practices by RedHat and the Platform Services Team.
+               Checks are performed through the calls to Openshift API, and compared to expected values. Documentation on application health 
+               checks can be found <a href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html">here</a>. 
+               If your team is aware of additional checks that can be added to the list, please, ping us in #devops-operations channel in 
+               Rocketchat. Configuring applications pods in acccordance with best practices improves the resiliency, performance and security 
+               posture of the application.</p>
+
+               <strong>Note: The report produced by the AppAssessment tool provides recommendations only, it is the responsibility of the product team to review the recommendations and implement as necessary.</strong>
+            </div>
             <hr>
             <div>
-               <div class="summary-table">
-                  <h3>Summary</h3>
-                  <table class="table-bordered">
-                     <thead>
-                        <colgroup></colgroup>
-                        <colgroup span="{{ workloadNames|length }}"></colspan>
-                        <tr>
-                           <td class="table-header-label" colspan="1" scope="colgroup">
-                              Config Setting
-                           </td>
-                           <td class="table-header-label" colspan="{{ workloadNames|length }}" scope="colgroup">
-                              Pods
-                           </td>
-                        </tr>
-                     </thead>
-                     <tr>
-                        <td>
-                        </td>
-                        {% for workloadName in workloadNames %}
-                        <td class= workload-summary-cell title="{{workloadName}}">
-                           <h4>{{ workloadName }}</h4>
-                        </td>
-                        {% endfor %}
-                     </tr>
-                     {% for checkName in results.keys() %}
-                     <tr>
-                        <td>
-                           <a target="_blank" title="{{ checksInfo[checkName]['title'] }}" href="{{ checksInfo[checkName]['href'] }}">{{ checkName }}</a>
-                        </td>
-                        {% for workloadName in results[checkName].keys() %}
-                        <td class="workload-summary-cell">
-                           {% if results[checkName][workloadName]['status'] == 'fail' %}
-                           <div class="status-icon fail">
-                              X
-                           </div>
-                           {% elif results[checkName][workloadName]['status'] == 'warning' %}
-                           <div class="status-icon warning">
-                              !
-                           </div>
-                           {% elif results[checkName][workloadName]['status'] == 'pass' %}
-                           <div class="status-icon pass">
-                              &#10004
-                           </div>
-                           {% else %}
-                           N/A
-                           {% endif %}
-                        </td>
-                        {% endfor %}
-                     </tr>
-                     {% endfor %}
-                  </table>
-               </div>
                <div class="table-legend">
                   <h3>Legend</h3>
                   <table>
@@ -123,8 +82,14 @@
             </div>
             <hr/>
             <h3>Details</h3>
+            <div id="quick-links">
+            Jump to: 
+            {% for workloadName in workloadNames %}
+               <a href="#{{ workloadName }}">{{ workloadName }} </a>
+            {% endfor %}
+            </div>
             {% for workloadName in workloadNames %} 
-            <table class="table-bordered">
+            <table class="table-bordered" id="{{ workloadName }}">
                <tr>
                   <td>
                      <h4>Config Setting</h4>

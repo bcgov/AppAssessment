@@ -35,7 +35,7 @@ objects:
       app: appassessment-app
   spec:
     accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
     resources:
       requests:
         storage: 500Mi
@@ -172,10 +172,12 @@ objects:
             containers:
               - name: appassessment-cron
                 image: >-
-                  image-registry.openshift-image-registry.svc:5000/bcgov/appassessment
+                  image-registry.openshift-image-registry.svc:5000/bcgov/app-assessment
                 env:
                   - name: TARGET_NAMESPACE
                     value: ${APPID}-prod
+                  - name: CLUSTER_NAME
+                    value: ${CLUSTERNAME}
                 resources: {}
                 volumeMounts:
                   - name: report-out
@@ -210,10 +212,12 @@ objects:
         containers:
           - name: appassessment-cron
             image: >-
-              image-registry.openshift-image-registry.svc:5000/bcgov/appassessment
+              image-registry.openshift-image-registry.svc:5000/bcgov/app-assessment
             env:
               - name: TARGET_NAMESPACE
                 value: ${APPID}-prod
+              - name: CLUSTER_NAME
+                value: ${CLUSTERNAME}
             resources:
               requests:
                 cpu: 100m
