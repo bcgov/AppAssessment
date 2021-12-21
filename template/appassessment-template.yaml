@@ -15,6 +15,20 @@ metadata:
   name: appassessment-app
   namespace: openshift
 objects:
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: ingress
+    namespace: ${LICENSE_PLATE}-tools
+  spec:
+    ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              network.openshift.io/policy-group: ingress
+    podSelector: {}
+    policyTypes:
+    - Ingress
 - apiVersion: v1
   kind: Route
   metadata:
@@ -191,20 +205,6 @@ objects:
             schedulerName: default-scheduler
     successfulJobsHistoryLimit: 3
     failedJobsHistoryLimit: 1
-  - apiVersion: networking.k8s.io/v1
-  kind: NetworkPolicy
-  metadata:
-    name: ingress
-    namespace: ${LICENSE_PLATE}
-  spec:
-    ingress:
-      - from:
-        - namespaceSelector:
-            matchLabels:
-              network.openshift.io/policy-group: ingress
-    podSelector: {}
-    policyTypes:
-    - Ingress
 parameters:
 - description: The six character application identifier, commonly referred to the license plate number for your application to be assessed. "example e595b8"
   displayName: Application Identifier
