@@ -32,3 +32,15 @@ spec:
       uri: 'https://github.com/bcgov/appassessment'
     contextDir: /build
   runPolicy: Serial
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  creationTimestamp: null
+  name: appassessment
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: ""
+
