@@ -30,6 +30,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/bcgov/appassessment'
+      ref: template-improvements
     contextDir: /build
   runPolicy: Serial
 ---
