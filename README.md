@@ -13,7 +13,7 @@ To install the AppAssessment utility in your namespace, use the command terminal
 \<License Plate\> must be replaced by the **_six character_** license plate information for your application. Do not include the -tools or -prod information.
  \<Cluster Name\> must be the user-friendly name of the cluster, like "Kamloops-Silver". **_Please note that at the moment cluster names with spaces are not supported_**. This is an issue with how the paramters are read by the python script, and it should be fixed soon. For now, please use dashes. 
 
-You will then see the components deployed on the Topology map.
+You should then see the components deployed on the Topology map.
 
 
 ![alt_text](images/image6.png "image_tooltip")
@@ -23,7 +23,7 @@ Once the blue ring around NGiNX becomes solid, you can click the
 ![alt_text](images/image7.png "image_tooltip")
  to launch the web site.
 
-
+###### Example Output:
 ![alt_text](images/image9.png "image_tooltip")
 
 
