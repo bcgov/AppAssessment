@@ -6,12 +6,12 @@
 
 ## Usage
 
-To install the AppAssessment utility in your namespace, use the command terminal. Login to your project namespace and use the following commmand to intall:
+To install the AppAssessment utility in your namespace, use the command terminal. Login to your project namespace and use the following commmand to install:
 
 `oc process -f https://raw.githubusercontent.com/bcgov/AppAssessment/main/template/appassessment-template.yaml -p LICENSE_PLATE=<License Plate> -p CLUSTER_NAME="<Cluster Name>" -p APP_ASSESSMENT_IMAGE=image-registry.openshift-image-registry.svc:5000/bcgov/app-assessment | oc apply -f -`
 
-where <License Plate> is replaced by he **_six character_** license plate information for your application. Do not include the -tools or -prod information.
- <Cluster Name> is the user-friendly name of the cluster, like "Kamloops-Silver". **_Please note that at the moment cluster names with spaces are not supported_**. This is an issue with how the paramters are read by the python script, and it should be fixed soon. For now, please use dashes. 
+where \<License Plate\> is replaced by he **_six character_** license plate information for your application. Do not include the -tools or -prod information.
+ \<Cluster Name\> is the user-friendly name of the cluster, like "Kamloops-Silver". **_Please note that at the moment cluster names with spaces are not supported_**. This is an issue with how the paramters are read by the python script, and it should be fixed soon. For now, please use dashes. 
 
 You will then see the components deployed on the Topology map.
 
