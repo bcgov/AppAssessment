@@ -2,7 +2,6 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   name: appassessment
-  namespace: bcgov
   labels:
     app: appassessment
     app.kubernetes.io/component: appassessment

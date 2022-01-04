@@ -30,5 +30,18 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/bcgov/appassessment'
+      ref: template-improvements
     contextDir: /build
   runPolicy: Serial
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  creationTimestamp: null
+  name: appassessment
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: ""
+
