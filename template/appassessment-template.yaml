@@ -42,77 +42,6 @@ objects:
       kind: Service
       name: appassessment-svc
 - apiVersion: v1
-  kind: ServiceAccount
-  metadata:
-    name: proxy
-    annotations:
-      serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"proxy"}}'
-# Create a secure connection to the proxy via a route
-- apiVersion: v1
-  kind: Route
-  metadata:
-    name: proxy
-  spec:
-    to:
-      kind: Service
-      name: proxy
-    tls:
-      termination: Reencrypt
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: proxy
-    annotations:
-      service.alpha.openshift.io/serving-cert-secret-name: proxy-tls
-  spec:
-    ports:
-    - name: proxy
-      port: 443
-      targetPort: 8443
-    selector:
-      app: proxy
-# Launch a proxy as a sidecar
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: proxy
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: proxy
-    template:
-      metadata:
-        labels:
-          app: proxy
-      spec:
-        serviceAccountName: proxy
-        containers:
-        - name: oauth-proxy
-          image: openshift/oauth-proxy:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-          - containerPort: 8443
-            name: public
-          args:
-          - --https-address=:8443
-          - --provider=openshift
-          - --openshift-service-account=proxy
-          - --upstream=http://localhost:8080
-          - --tls-cert=/etc/tls/private/tls.crt
-          - --tls-key=/etc/tls/private/tls.key
-          - --cookie-secret=SECRET
-          volumeMounts:
-          - mountPath: /etc/tls/private
-            name: proxy-tls
-
-        - name: app
-          image: openshift/hello-openshift:latest
-        volumes:
-        - name: proxy-tls
-          secret:
-            secretName: proxy-tls
-- apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
     name: appassessment-pvc
@@ -270,25 +199,25 @@ objects:
                 terminationMessagePolicy: File
                 imagePullPolicy: Always
               - name: oauth-proxy 
-                args:
-                  - -provider=openshift
-                  - -https-address=:8888
-                  - -http-address=
-                  - -email-domain=*
-                  - -upstream=http://localhost:8080
-                  - -tls-cert=/etc/tls/private/tls.crt
-                  - -tls-key=/etc/tls/private/tls.key
-                  - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
-                  - -cookie-secret-file=/etc/proxy/secrets/session_secret
-                  - -openshift-service-account=appassessment-authent
-                  - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-                  - -skip-auth-regex=^/metrics
-                image: quay.io/openshift/origin-oauth-proxy:4.1
-                imagePullPolicy: IfNotPresent
-                ports:
-                  - name: oauth-proxy
-                    containerPort: 8888    
-                    protocol: TCP
+           args:
+             - -provider=openshift
+             - -https-address=:8888
+             - -http-address=
+             - -email-domain=*
+             - -upstream=http://localhost:8080
+             - -tls-cert=/etc/tls/private/tls.crt
+             - -tls-key=/etc/tls/private/tls.key
+             - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
+             - -cookie-secret-file=/etc/proxy/secrets/session_secret
+             - -openshift-service-account=reversewords
+             - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+             - -skip-auth-regex=^/metrics
+           image: quay.io/openshift/origin-oauth-proxy:4.1
+           imagePullPolicy: IfNotPresent
+           ports:
+             - name: oauth-proxy
+               containerPort: 8888    
+               protocol: TCP
             restartPolicy: OnFailure
             terminationGracePeriodSeconds: 30
             dnsPolicy: ClusterFirst
