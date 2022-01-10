@@ -269,6 +269,26 @@ objects:
                 terminationMessagePath: /dev/termination-log
                 terminationMessagePolicy: File
                 imagePullPolicy: Always
+              - name: oauth-proxy 
+                args:
+                  - -provider=openshift
+                  - -https-address=:8888
+                  - -http-address=
+                  - -email-domain=*
+                  - -upstream=http://localhost:8080
+                  - -tls-cert=/etc/tls/private/tls.crt
+                  - -tls-key=/etc/tls/private/tls.key
+                  - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
+                  - -cookie-secret-file=/etc/proxy/secrets/session_secret
+                  - -openshift-service-account=appassessment-authent
+                  - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                  - -skip-auth-regex=^/metrics
+                image: quay.io/openshift/origin-oauth-proxy:4.1
+                imagePullPolicy: IfNotPresent
+                ports:
+                  - name: oauth-proxy
+                    containerPort: 8888    
+                    protocol: TCP
             restartPolicy: OnFailure
             terminationGracePeriodSeconds: 30
             dnsPolicy: ClusterFirst
