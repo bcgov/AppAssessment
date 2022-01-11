@@ -37,7 +37,7 @@ objects:
   spec:
     tls:
       insecureEdgeTerminationPolicy: Redirect
-      termination: edge
+      termination: Reencrypt
     to:
       kind: Service
       name: appassessment-svc
@@ -45,6 +45,9 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: appassessment-pvc
+    labels:
+      app: appassessment-app
+    name: appassessment-cert-pvc
     labels:
       app: appassessment-app
   spec:
@@ -82,9 +85,9 @@ objects:
           - name: report-out
             persistentVolumeClaim:
               claimName: appassessment-pvc
-          - name: cert
-            persistentVolumeClaim:
-              claimName: appassessment-pvc
+          - name: appassessment-tls
+            secret:
+              secretName: appassessment-tls
         containers:
           - name: appassessment-web
             image: >-
@@ -108,30 +111,23 @@ objects:
             imagePullPolicy: Always
           - name: oauth-proxy 
             args:
-              - -provider=openshift
-              - -https-address=:8888
-              - -http-address=
-              - -email-domain=*
-              - -upstream=http://localhost:8080
-              - -tls-cert=/etc/tls/private/tls.crt
-              - -tls-key=/etc/tls/private/tls.key
-              - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
-              - -cookie-secret-file=/etc/proxy/secrets/session_secret
-              - -openshift-service-account=appassessment-sa
-              - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-              - -skip-auth-regex=^/metrics
+              - --https-address=:8888
+              - --provider=openshift
+              - --openshift-service-account=proxy
+              - --upstream=http://localhost:8080
+              - --tls-cert=/etc/tls/private/tls.crt
+              - --tls-key=/etc/tls/private/tls.key
+              - --cookie-secret=SECRET
             image: quay.io/openshift/origin-oauth-proxy:4.1
+            imagePullPolicy: IfNotPresent
             volumeMounts:
-              - name: cert
+              - name: appassessment-tls
                 mountPath: /etc/tls/private
-            # [ your application container placeholder ]
             serviceAccount: appassessment-sa
             serviceAccountName: appassessment-sa
             volumes:
             - secret:
-                name: appassessment-tls
-              name: cert
-            imagePullPolicy: IfNotPresent
+              name: appassessment-tls #should this be SECRET?
             ports:
               - name: oauth-proxy
                 containerPort: 8888    
@@ -177,7 +173,7 @@ objects:
   metadata:
     name: appassessment-svc
     annotations:
-    service.alpha.openshift.io/serving-cert-secret-name: appassessment-tls
+      service.alpha.openshift.io/serving-cert-secret-name: appassessment-tls
     namespace: ${LICENSE_PLATE}-tools
     labels:
       app: appassessment-app
@@ -185,10 +181,10 @@ objects:
       app.kubernetes.io/part-of: appassessment-app
   spec:
     ports:
-      - name: 8080-tcp
+      - name: 8888-tcp
         protocol: TCP
-        port: 8080
-        targetPort: 8080
+        port: 8888
+        targetPort: 8888
     selector:
       app: appassessment-web
       deploymentconfig: appassessment-web
