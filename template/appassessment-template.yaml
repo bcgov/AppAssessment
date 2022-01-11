@@ -119,6 +119,8 @@ objects:
   kind: ServiceAccount
   metadata:
     name: appassessment-sa
+    annotations:
+      serviceaccounts.openshift.io/oauth-redirectreference.my-app: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"appassessment-route"}}'
     namespace: ${LICENSE_PLATE}-tools  
     labels:
       app: appassessment-app
@@ -199,25 +201,35 @@ objects:
                 terminationMessagePolicy: File
                 imagePullPolicy: Always
               - name: oauth-proxy 
-           args:
-             - -provider=openshift
-             - -https-address=:8888
-             - -http-address=
-             - -email-domain=*
-             - -upstream=http://localhost:8080
-             - -tls-cert=/etc/tls/private/tls.crt
-             - -tls-key=/etc/tls/private/tls.key
-             - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
-             - -cookie-secret-file=/etc/proxy/secrets/session_secret
-             - -openshift-service-account=reversewords
-             - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-             - -skip-auth-regex=^/metrics
-           image: quay.io/openshift/origin-oauth-proxy:4.1
-           imagePullPolicy: IfNotPresent
-           ports:
-             - name: oauth-proxy
-               containerPort: 8888    
-               protocol: TCP
+                args:
+                  - -provider=openshift
+                  - -https-address=:8888
+                  - -http-address=
+                  - -email-domain=*
+                  - -upstream=http://localhost:8080
+                  - -tls-cert=/etc/tls/private/tls.crt
+                  - -tls-key=/etc/tls/private/tls.key
+                  - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
+                  - -cookie-secret-file=/etc/proxy/secrets/session_secret
+                  - -openshift-service-account=appassessment-sa
+                  - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                  - -skip-auth-regex=^/metrics
+                image: quay.io/openshift/origin-oauth-proxy:4.1
+                volumeMounts:
+                  - name: cert
+                    path: /etc/tls/private
+                # [ your application container placeholder ]
+                serviceAccount: appassessment-sa
+                serviceAccountName: appassessment
+                volumes:
+                - secret:
+                    name: my-app-tls
+                  name: cert
+                imagePullPolicy: IfNotPresent
+                ports:
+                  - name: oauth-proxy
+                    containerPort: 8888    
+                    protocol: TCP
             restartPolicy: OnFailure
             terminationGracePeriodSeconds: 30
             dnsPolicy: ClusterFirst
