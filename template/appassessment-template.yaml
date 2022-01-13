@@ -81,6 +81,7 @@ objects:
           app: appassessment-web
           deploymentconfig: appassessment-web
       spec:
+        serviceAccountName: proxy
         volumes:
           - name: report-out
             persistentVolumeClaim:
@@ -118,16 +119,15 @@ objects:
               - --tls-cert=/etc/tls/private/tls.crt
               - --tls-key=/etc/tls/private/tls.key
               - --cookie-secret=SECRET
+              - --openshift-sar={"resource":"services","verb":"get"}
             image: quay.io/openshift/origin-oauth-proxy:4.1
             imagePullPolicy: IfNotPresent
             volumeMounts:
               - name: appassessment-tls
                 mountPath: /etc/tls/private
-            serviceAccount: appassessment-sa
-            serviceAccountName: appassessment-sa
             volumes:
             - secret:
-              name: appassessment-tls #should this be SECRET?
+              name: appassessment-tls
             ports:
               - name: oauth-proxy
                 containerPort: 8888    
@@ -149,7 +149,7 @@ objects:
   metadata:
     name: appassessment-sa
     annotations:
-      serviceaccounts.openshift.io/oauth-redirectreference.my-app: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"appassessment-route"}}'
+      serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"appassessment-route"}}'
     namespace: ${LICENSE_PLATE}-tools  
     labels:
       app: appassessment-app
