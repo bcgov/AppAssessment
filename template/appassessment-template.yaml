@@ -120,7 +120,7 @@ objects:
               - --tls-key=/etc/tls/private/tls.key
               - --cookie-secret=SECRET
               - --openshift-sar={"namespace":"${LICENSE_PLATE}-tools","resource":"services","verb":"get"}
-            image: quay.io/openshift/origin-oauth-proxy:4.1
+            image: quay.io/openshift/origin-oauth-proxy:4.7
             imagePullPolicy: IfNotPresent
             volumeMounts:
               - name: appassessment-tls
