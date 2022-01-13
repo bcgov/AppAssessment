@@ -30,7 +30,6 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/bcgov/appassessment'
-      ref: oauth-proxy
     contextDir: /build
   runPolicy: Serial
 ---
