@@ -26,7 +26,7 @@ Once the blue ring around NGiNX becomes solid, you can click the
  to launch the web site.
 
 The AppAssessment utility has authorization handled by OAuth Proxy (https://github.com/openshift/oauth-proxy), and users will be required to authorize before viewing reports. 
-![alt_text](images/image11.png "image_tooltip" | width:50%)
+![alt_text](images/image11.png "image_tooltip" | width=50)
 
 ###### Example Output:
 ![alt_text](images/image9.png "image_tooltip")
