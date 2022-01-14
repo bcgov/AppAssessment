@@ -78,7 +78,7 @@ objects:
           app: appassessment-web
           deploymentconfig: appassessment-web
       spec:
-        serviceAccountName: proxy
+        serviceAccountName: appassessment-sa
         volumes:
           - name: report-out
             persistentVolumeClaim:
@@ -111,7 +111,7 @@ objects:
             args:
               - --https-address=:8888
               - --provider=openshift
-              - --openshift-service-account=proxy
+              - --openshift-service-account=appassessment-sa
               - --upstream=http://localhost:8080
               - --tls-cert=/etc/tls/private/tls.crt
               - --tls-key=/etc/tls/private/tls.key
