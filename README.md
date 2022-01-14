@@ -25,20 +25,18 @@ Once the blue ring around NGiNX becomes solid, you can click the
 ![alt_text](images/image7.png "image_tooltip")
  to launch the web site.
 
-The AppAssessment utility has authorization handled by OAuth Proxy (https://github.com/openshift/oauth-proxy), and users will be required to authorize before viewing reports. 
-<img src="images/image11.png" width="50%">
-
-###### Example Output:
-![alt_text](images/image9.png "image_tooltip")
-
-
-To manually update the report and index.html run the following command, replacing the ${APPID} string with your application license plate:
+ To manually update the report and index.html run the following command, replacing the ${APPID} string with your application license plate:
 
 
 ```
 oc create job --from=cronjob/appassessment-cj manualupdate -n ${APPID}-tools
 ```
 
+The AppAssessment utility has authorization handled by OAuth Proxy (https://github.com/openshift/oauth-proxy), and users will be required to authorize before viewing reports. 
+<img src="images/image11.png" width="50%">
+
+###### Example Output:
+![alt_text](images/image9.png "image_tooltip")
 
 It is recommended to scale the appassessment-web deployment to zero, or remove the components when it is not in use.
 
