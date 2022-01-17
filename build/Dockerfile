@@ -19,6 +19,5 @@ RUN curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/opensh
 RUN tar -xzf ./oc.tar.gz -C /usr/local/bin/
 RUN chmod 755 /usr/local/bin/oc
 RUN chmod 755 ./startup.sh
-RUN chmod 755 /usr/share/nginx/html
 USER 1001
 CMD ["./startup.sh"]
