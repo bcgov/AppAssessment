@@ -17,9 +17,7 @@ RUN pip install -r ./requirements.txt
 # Install OC CLI
 RUN curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz --output ./oc.tar.gz
 RUN tar -xzf ./oc.tar.gz -C /usr/local/bin/
-RUN tar -xzf ./oc.tar.gz -C /usr/share/nginx/html
 RUN chmod 755 /usr/local/bin/oc
 RUN chmod 755 ./startup.sh
-RUN chmod 755 /usr/share/nginx/html
 USER 1001
 CMD ["./startup.sh"]
