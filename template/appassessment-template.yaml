@@ -255,6 +255,8 @@ objects:
             env:
               - name: TARGET_NAMESPACE
                 value: ${LICENSE_PLATE}-prod
+              - name: CLUSTER_NAME
+                value: ${CLUSTER_NAME}
             resources:
               requests:
                 cpu: 100m
