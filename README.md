@@ -16,14 +16,14 @@ oc process -f https://raw.githubusercontent.com/bcgov/AppAssessment/main/templat
 
  \<Cluster Name\> must be the user-friendly name of the cluster, like "Kamloops-Silver". **_Please note that at the moment cluster names with spaces are not supported_**. This is an issue with how the paramters are read by the python script, and hopefully will be fixed soon. For now, please use dashes.
 
- By default, the report will be generated against your prod namespace, i.e. "abc123-prod". If you require testing against another namespace, an additional parameter can be added to the command above: 
+ By default, **_the report will be generated against pods in your prod namespace_**, i.e. "abc123-prod". If you require testing against another namespace, an additional parameter can be added to the command above: 
 
  ```
  -p TARGET=<namespace>
  ```
  where \<namespace>\ is "dev", or "test", or whatever you require. 
 
-You should then see the components deployed on the Topology map.
+Once you run the command, you should see the components deployed on the Topology map.
 
 
 ![alt_text](images/image6.png "image_tooltip")
