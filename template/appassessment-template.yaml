@@ -151,7 +151,7 @@ objects:
   kind: RoleBinding
   metadata:
     name: appassessment-view
-    namespace: ${LICENSE_PLATE}-prod
+    namespace: ${LICENSE_PLATE}-${TARGET}
     labels:
       app: appassessment-app
   subjects:
@@ -215,7 +215,7 @@ objects:
                 image: ${APP_ASSESSMENT_IMAGE}
                 env:
                   - name: TARGET_NAMESPACE
-                    value: ${LICENSE_PLATE}-prod
+                    value: ${LICENSE_PLATE}-${TARGET}
                   - name: CLUSTER_NAME
                     value: ${CLUSTER_NAME}
                 resources: {}
@@ -254,7 +254,7 @@ objects:
             image: ${APP_ASSESSMENT_IMAGE}
             env:
               - name: TARGET_NAMESPACE
-                value: ${LICENSE_PLATE}-prod
+                value: ${LICENSE_PLATE}-${TARGET}
               - name: CLUSTER_NAME
                 value: ${CLUSTER_NAME}
             resources:
@@ -288,3 +288,6 @@ parameters:
 - description: AppAssessment image. The fully qualified image reference. 
   name: APP_ASSESSMENT_IMAGE
   value: image-registry.openshift-image-registry.svc:5000/bcgov/app-assessment
+- description: Target namespace for testing. Default is "prod", but you can supply "dev", etc.
+  name: TARGET
+  value: "prod"
