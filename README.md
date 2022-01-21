@@ -12,8 +12,16 @@ To install the AppAssessment utility in your namespace, use the command terminal
 oc process -f https://raw.githubusercontent.com/bcgov/AppAssessment/main/template/appassessment-template.yaml -p LICENSE_PLATE=<License Plate> -p CLUSTER_NAME="<Cluster Name>" -p APP_ASSESSMENT_IMAGE=image-registry.openshift-image-registry.svc:5000/bcgov/app-assessment | oc apply -f -
 ```
 
-\<License Plate\> must be replaced by the **_six character_** license plate information for your application. Do not include the -tools or -prod information.
- \<Cluster Name\> must be the user-friendly name of the cluster, like "Kamloops-Silver". **_Please note that at the moment cluster names with spaces are not supported_**. This is an issue with how the paramters are read by the python script, and hopefully will be fixed soon. For now, please use dashes. 
+\<License Plate\> must be replaced by the **_six character_** license plate information for your application. Do not include the -tools or -prod information as part of this parameter.
+
+ \<Cluster Name\> must be the user-friendly name of the cluster, like "Kamloops-Silver". **_Please note that at the moment cluster names with spaces are not supported_**. This is an issue with how the paramters are read by the python script, and hopefully will be fixed soon. For now, please use dashes.
+
+ By default, the report will be generated against your prod namespace, i.e. "abc123-prod". If you require testing against another namespace, an additional parameter can be added to the command above: 
+
+ ```
+ -p TARGET=<namespace>
+ ```
+ where \<namespace>\ is "dev", or "test", or whatever you require. 
 
 You should then see the components deployed on the Topology map.
 
