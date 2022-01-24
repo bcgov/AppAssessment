@@ -21,7 +21,7 @@ oc process -f https://raw.githubusercontent.com/bcgov/AppAssessment/main/templat
  ```
  -p TARGET=<namespace>
  ```
- where \<namespace>\ is "dev", or "test", or whatever you require. 
+ where \<namespace> is "dev", or "test", or whatever you require. 
 
 Once you run the command, you should see the components deployed on the Topology map.
 

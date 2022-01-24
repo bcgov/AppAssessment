@@ -1,14 +1,14 @@
 import json
-from os import write, path, environ
+from os import path
 import sys
 import logging
 from datetime import datetime
-from jsonpath_ng import jsonpath, parse
+from jsonpath_ng import parse
 from plumbum import local
 import argparse
 import yaml
 from checks import *
-from jinja2 import Environment, PackageLoader, select_autoescape, FileSystemLoader
+from jinja2 import Environment, select_autoescape, FileSystemLoader
 
 def getServer():
   currentContext = {}
@@ -104,12 +104,11 @@ def pdbCheck(workloadData):
   return retval
 #end
 
-def writeReport(filename, results, namespace, checksInfo, clusterName):
+def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithFailedChecks):
   workloadNames = results[next(iter(results))].keys()
   file = open(filename, 'w')
-  
+
   env = Environment(
-    #loader=PackageLoader("report"), #error here in OpenShift 'ValueError: The ‘report’ package was not installed in a way that PackageLoader understands.'
     autoescape=select_autoescape(),
     loader=FileSystemLoader(path.join(path.dirname(__file__), 'templates'))
   )
@@ -120,7 +119,8 @@ def writeReport(filename, results, namespace, checksInfo, clusterName):
     namespace = namespace,
     workloadNames = workloadNames,
     results = results,
-    checksInfo = checksInfo
+    checksInfo = checksInfo,
+    podsWithFailedChecks = podsWithFailedChecks
   ))
   file.close()
 #end
@@ -232,6 +232,7 @@ checksInfo = {
 }
 
 results = {}
+podsWithFailedChecks = []
 for checkName in checks.keys():
   results[checkName] = {}
   for workload in workloadObjects:
@@ -241,5 +242,7 @@ for checkName in checks.keys():
       results[checkName][workloadName] = cronjobChecks[checkName](workload)
     else:
       results[checkName][workloadName] = checks[checkName](workload)
+    if results[checkName][workloadName]['status'] != 'pass' and not podsWithFailedChecks.__contains__(workloadName):
+      podsWithFailedChecks.append(workloadName)
 
-writeReport(args.o, results, namespace, checksInfo, clusterName)
+writeReport(args.o, results, namespace, checksInfo, clusterName, podsWithFailedChecks)
