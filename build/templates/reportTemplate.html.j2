@@ -82,11 +82,19 @@
             </div>
             <hr/>
             <h3>Details</h3>
+            <div id="imagestream-info">
+               There {{ 'is' if imagestreams|length == 1 else 'are'}} {{ imagestreams|length }} 
+               imagestream{{'' if imagestreams|length == 1 else 's'}} running in namespace {{ namespace }}
+            </div>
             <div id="quick-links">
-            Jump to: 
-            {% for workloadName in workloadNames %}
-               <a href="#{{ workloadName }}">{{ workloadName }} </a>
-            {% endfor %}
+            {% if podsWithFailedChecks|length == 0 %}
+               Hurray! All pods have passed all their status checks!
+            {% else %}
+               Jump to pods with errors or warnings: 
+               {% for podWithFailedCheck in podsWithFailedChecks %}
+                  <a href="#{{ podWithFailedCheck }}">{{ podWithFailedCheck }} </a>
+               {% endfor %}
+            {% endif %}
             </div>
             {% for workloadName in workloadNames %} 
             <table class="table-bordered" id="{{ workloadName }}">
