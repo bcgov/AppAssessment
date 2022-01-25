@@ -141,3 +141,32 @@ Arctiq development of report.py and checks.py was originally developed and maint
 Continued development of the report.py and checks.py should be maintained here:
 
 [https://github.com/bcgov/AppAssessment/tree/main/build](https://github.com/bcgov/AppAssessment/tree/main/build)
+
+### What checks are done?
+The checks are mostly concerned with whether or not best practices are being followed in terms of service reliability and resource use. 
+
+#### Declarative Component 
+Checks that a declarative approach to deployment has been used. The workload is using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob
+https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html      
+#### CPU Request 
+The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use.
+https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests
+
+#### Memory Request
+By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request.
+https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests
+
+#### CPU Limit
+Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node.",
+https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits
+#### Memory Limit
+If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy.
+https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits
+
+#### Liveness Probe 
+A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy.
+https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health
+
+#### Readiness Probe
+A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints.
+https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health
