@@ -145,7 +145,7 @@ Continued development of the report.py and checks.py should be maintained here:
 ### What checks are done?
 The checks are mostly concerned with whether or not best practices are being followed in terms of service reliability and resource use. 
 
-#### Declarative Component 
+#####ß Declarative Component 
 Checks that a declarative approach to deployment has been used. The workload is using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob
 https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html      
 #### Requests
