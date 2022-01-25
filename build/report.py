@@ -120,7 +120,8 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
     workloadNames = workloadNames,
     results = results,
     checksInfo = checksInfo,
-    podsWithFailedChecks = podsWithFailedChecks
+    podsWithFailedChecks = podsWithFailedChecks,
+    imagestreams = getObjects('imagestreams', namespace)
   ))
   file.close()
 #end
@@ -156,7 +157,6 @@ if len(workloadObjects) == 0:
 
 hpaObjects = getObjects('hpa', namespace)
 pdbObjects = getObjects('poddisruptionbudgets', namespace)
-
 checks = {}
 checks["declarativeComponentCheck"] = declarativeComponentCheck
 #checks["RollingUpdateCheck"] = rollingUpdateCheck #not our business to tell people how to update (best practice for stateless)
