@@ -53,6 +53,19 @@ def getObjects(type, namespace='default'):
   return []
 #end
 
+def getImageStreamSize(namespace='default'):
+  oc = local["oc"]
+  imagestreams = json.loads(oc('get', 'imagestreams', '-n', namespace, '-o', 'json'))
+  print('PRINTING IMAGE STREAMS')
+
+  for imagestream in imagestreams['items']:
+    for imagestreamTag in imagestream['status']['tags']:
+      for imagestreamImage in imagestreamTag['items']:
+        print(imagestreamImage['image'])
+    
+
+#end
+
 def hpaCheck(workloadData):
   requiredScaleTargetRef = {'kind': workloadData['kind'], 'name': workloadData['metadata']['name']}
   retval = {'status': 'fail', 'text': "unable to find an HPA with the following scaleTargetRef:\n" + yaml.dump(requiredScaleTargetRef)}
@@ -107,7 +120,7 @@ def pdbCheck(workloadData):
 def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithFailedChecks):
   workloadNames = results[next(iter(results))].keys()
   file = open(filename, 'w')
-
+  getImageStreamSize(namespace)
   env = Environment(
     autoescape=select_autoescape(),
     loader=FileSystemLoader(path.join(path.dirname(__file__), 'templates'))
