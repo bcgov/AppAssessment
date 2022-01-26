@@ -152,12 +152,12 @@ https://docs.openshift.com/container-platform/4.9/applications/deployments/what-
 #### Requests
 
 ##### CPU
-Checks that a minimum amount CPU allocation been rquested for the container. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use.
+Checks that a minimum amount CPU allocation has been requested for the container. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use.
 
 https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests
 
 ##### Request
-In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request.
+In order to improve the placement of the pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request.
 
 https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests
 
