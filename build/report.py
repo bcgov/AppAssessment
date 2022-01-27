@@ -54,16 +54,23 @@ def getObjects(type, namespace='default'):
 #end
 
 def getImageStreamSize(namespace='default'):
+  totalSize = 0
   oc = local["oc"]
   imagestreams = json.loads(oc('get', 'imagestreams', '-n', namespace, '-o', 'json'))
-  print('PRINTING IMAGE STREAMS')
 
   for imagestream in imagestreams['items']:
+    name = imagestream['metadata']['name']
     for imagestreamTag in imagestream['status']['tags']:
-      for imagestreamImage in imagestreamTag['items']:
-        print(imagestreamImage['image'])
-    
+      for imagestreamTagItem in imagestreamTag['items']:
+        image = imagestreamTagItem['image']
+        imagestreamImages = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}'))
+        for imageLayer in imagestreamImages['image']['dockerImageLayers']:
+          totalSize += float(imageLayer['size'])
 
+  print('TOTAL SIZE: ' + str(totalSize / 1000000) + ' MB, over ' + str(len(getObjects('imagestreams', namespace))) + ' imagestreams.')
+
+
+# ISTJSON=$(oc get --raw="/apis/image.openshift.io/v1/namespaces/${NS}/imagestreamimages/${IMAGESTREAM}@${IMAGE}")
 #end
 
 def hpaCheck(workloadData):
