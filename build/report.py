@@ -70,6 +70,7 @@ def getImageStreamSize(namespace='default'):
         logging.info('Imagestream: ' + name + '.  Size: ' + str(streamsize / 1000000) + ' MB')
 
   logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
+  return totalSize
 
 #end
 
@@ -127,7 +128,7 @@ def pdbCheck(workloadData):
 def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithFailedChecks):
   workloadNames = results[next(iter(results))].keys()
   file = open(filename, 'w')
-  getImageStreamSize(namespace)
+  imagestreamSize = getImageStreamSize(namespace)
   env = Environment(
     autoescape=select_autoescape(),
     loader=FileSystemLoader(path.join(path.dirname(__file__), 'templates'))
@@ -141,7 +142,8 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
     results = results,
     checksInfo = checksInfo,
     podsWithFailedChecks = podsWithFailedChecks,
-    imagestreams = getObjects('imagestreams', namespace)
+    imagestreams = getObjects('imagestreams', namespace),
+    imagestreamSize = str(round(float(imagestreamSize / 1000000), 2))
   ))
   file.close()
 #end
