@@ -65,9 +65,8 @@ def getImageStreamSize(namespace='default'):
       for imagestreamTagItem in imagestreamTag['items']:
         image = imagestreamTagItem['image']
         imagestreamImages = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}'))
-        streamsize = float(imagestreamImages['image']['dockerImageMetadata']['Size'])
-        totalSize += streamsize
-        logging.info('Imagestream: ' + name + '.  Size: ' + str(streamsize / 1000000) + ' MB')
+        for imageLayer in imagestreamImages['image']['dockerImageLayers']:
+          totalSize += float(imageLayer['size'])
 
   logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
   return totalSize
