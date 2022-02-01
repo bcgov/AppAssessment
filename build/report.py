@@ -69,8 +69,22 @@ def getImageStreamSize(namespace='default'):
           totalSize += float(imageLayer['size'])
 
   logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
-  return totalSize
 
+  return totalSize
+#end
+
+def checkForJenkins():
+  podswithJenkins = []
+  logging.info('Namespace includes -tools. Checking for Jenkins pods...')
+  oc = local["oc"]
+  pods = oc('get', 'pods', '-o', 'custom-columns=POD:.metadata.name', '--no-headers')
+
+  for pod in  pods.split():
+    podDescription = oc('get', 'pod', pod)
+    if 'jenkins' in podDescription.lower():
+      podswithJenkins.append(pod)
+
+  return podswithJenkins
 #end
 
 def hpaCheck(workloadData):
@@ -128,6 +142,13 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
   workloadNames = results[next(iter(results))].keys()
   file = open(filename, 'w')
   imagestreamSize = getImageStreamSize(namespace)
+  jenkinsPods = []
+  if '-tools' in namespace:
+    jenkinsPods = checkForJenkins()
+
+  if "-tools" in namespace:
+    logging.info("This appears to be a -tools namespace")
+    #check for Jenkins in tools namespace
   env = Environment(
     autoescape=select_autoescape(),
     loader=FileSystemLoader(path.join(path.dirname(__file__), 'templates'))
@@ -142,7 +163,8 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
     checksInfo = checksInfo,
     podsWithFailedChecks = podsWithFailedChecks,
     imagestreams = getObjects('imagestreams', namespace),
-    imagestreamSize = str(round(float(imagestreamSize / 1000000), 2))
+    imagestreamSize = str(round(float(imagestreamSize / 1000000), 2)),
+    jenkinsPods = jenkinsPods
   ))
   file.close()
 #end
