@@ -83,14 +83,16 @@
             <hr/>
             <h3>Details</h3>
             <div id="imagestream-info">
+               <h4>Imagestreams</h4>
                There {{ 'is' if imagestreams|length == 1 else 'are'}} {{ imagestreams|length }} 
-               imagestream{{'' if imagestreams|length == 1 else 's'}} running in namespace {{ namespace }}
+               imagestream{{'' if imagestreams|length == 1 else 's'}} running in namespace {{ namespace }} <p/>
+               Total size of imagestreams: {{ imagestreamSize }} MB
             </div>
             <div id="quick-links">
             {% if podsWithFailedChecks|length == 0 %}
                Hurray! All pods have passed all their status checks!
             {% else %}
-               Jump to pods with errors or warnings: 
+               <h4>Jump to pods with errors or warnings:</h4>
                {% for podWithFailedCheck in podsWithFailedChecks %}
                   <a href="#{{ podWithFailedCheck }}">{{ podWithFailedCheck }} </a>
                {% endfor %}

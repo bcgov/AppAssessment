@@ -53,6 +53,26 @@ def getObjects(type, namespace='default'):
   return []
 #end
 
+def getImageStreamSize(namespace='default'):
+  totalSize = 0
+  oc = local["oc"]
+  imagestreams = json.loads(oc('get', 'imagestreams', '-n', namespace, '-o', 'json'))
+  logging.info("Number of image streams: " + str(len(imagestreams['items'])))
+
+  for imagestream in imagestreams['items']:
+    name = imagestream['metadata']['name']
+    for imagestreamTag in imagestream['status']['tags']:
+      for imagestreamTagItem in imagestreamTag['items']:
+        image = imagestreamTagItem['image']
+        imagestreamImages = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}'))
+        for imageLayer in imagestreamImages['image']['dockerImageLayers']:
+          totalSize += float(imageLayer['size'])
+
+  logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
+  return totalSize
+
+#end
+
 def hpaCheck(workloadData):
   requiredScaleTargetRef = {'kind': workloadData['kind'], 'name': workloadData['metadata']['name']}
   retval = {'status': 'fail', 'text': "unable to find an HPA with the following scaleTargetRef:\n" + yaml.dump(requiredScaleTargetRef)}
@@ -107,7 +127,7 @@ def pdbCheck(workloadData):
 def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithFailedChecks):
   workloadNames = results[next(iter(results))].keys()
   file = open(filename, 'w')
-
+  imagestreamSize = getImageStreamSize(namespace)
   env = Environment(
     autoescape=select_autoescape(),
     loader=FileSystemLoader(path.join(path.dirname(__file__), 'templates'))
@@ -121,7 +141,8 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
     results = results,
     checksInfo = checksInfo,
     podsWithFailedChecks = podsWithFailedChecks,
-    imagestreams = getObjects('imagestreams', namespace)
+    imagestreams = getObjects('imagestreams', namespace),
+    imagestreamSize = str(round(float(imagestreamSize / 1000000), 2))
   ))
   file.close()
 #end
