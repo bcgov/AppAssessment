@@ -83,16 +83,18 @@
             <hr/>
             <h3>Details</h3>
             {% if jenkinsPods|length > 0 %}
-               <h4>Jenkins Pods</h4>
-                It looks like one or more Jenkins instances has been found in your tools namespace. <strong>Use of Jenkins is highly discouraged on the Platform due to
-                its high resource consumption.</strong> Please consider switching to other modern and more secure 
-                <a href="https://developer.gov.bc.ca/CICD-with-Pipeline-Automation" target="_blank">automation technologies available on the
-               Platform..</a>
-               <p/><p/>
-               Pods: 
-               {% for pod in   jenkinsPods %}
-                  {{ pod }}
-               {% endfor %}
+               <div id="jenkins-warning">
+                  <h4>Jenkins Pods</h4>
+                  It looks like one or more Jenkins instances has been found in your tools namespace. <strong>Use of Jenkins is highly discouraged on the Platform due to
+                  its high resource consumption.</strong> Please consider switching to other modern and more secure 
+                  <a href="https://developer.gov.bc.ca/CICD-with-Pipeline-Automation" target="_blank">automation technologies available on the
+                  Platform..</a>
+                  <p/><p/>
+                  Pods: 
+                  {% for pod in   jenkinsPods %}
+                     {{ pod }}
+                  {% endfor %}
+               </div>
             {% endif %}
             <div id="imagestream-info">
                <h4>Imagestreams</h4>
