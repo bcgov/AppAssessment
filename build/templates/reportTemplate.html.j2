@@ -91,32 +91,32 @@
                   Platform..</a>
                   <p/><p/>
                </div>
+               <div id=jenkins-best-practices>
+                  Your Jenkins instance(s) should be configured to match the resource settings recommended in the 
+                  <a href="https://developer.gov.bc.ca/Resource-Tuning-Recommendations#recommended-configuration"  target="_blank">Jenkins Resource Configuration 
+                  Best Practices</a>. Please refer to this <a href="https://www.youtube.com/watch?v=npMbAtJZSO0" target="_blank">how-to video</a> for step by step instructions for updating the Jenkins resource settings.
+               </div>
                Pods: 
                {% for pod in   jenkinsPods %}
                   <h4>Pod: {{ pod['name'] }}</h4>
                   <table class="table-bordered" id="{{ workloadName }}">
                      <tr>
                         <td>
-                           Config point
+                           <h4>Config Setting</h4>
                         </td>
                         <td>
-                           Allocation
+                           <h4>Allocation</h4>
                         </td>
                         <td>
-                           Recommended
+                           <h4>Recommended</h4>
                         </td>
                         <td>
-                           Meets best pratices?
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           Limits
+                           <h4>Meets best pratices?</h4>
                         </td>
                      </tr>
                      <tr>
                         <td>
-                           CPU 
+                           CPU Limit
                         </td>
                         <td>
                            {{ pod['cpuLimit'] }}
@@ -140,7 +140,7 @@
                      </tr>
                      <tr>
                         <td>
-                           memory 
+                           Memory Limit
                         </td>
                         <td>
                            {{ pod['memoryLimit'] }}
@@ -164,12 +164,7 @@
                      </tr>
                      <tr>
                         <td>
-                           Requests
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           CPU 
+                           CPU Request
                         </td>
                         <td>
                            {{ pod['cpuRequest'] }}
@@ -193,7 +188,7 @@
                      </tr>
                      <tr>
                         <td>
-                           memory 
+                           Memory Request
                         </td>
                         <td>
                            {{ pod['memoryRequest'] }}
@@ -216,6 +211,7 @@
                         </td>
                      </tr>
                   </table>
+                  <p/>
                {% endfor %}
             {% endif %}
             <div id="imagestream-info">

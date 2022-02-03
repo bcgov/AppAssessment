@@ -98,7 +98,6 @@ def checkForJenkins():
         'memReqMeestBP': compareValuesForBestPractice(podResources['requests']['memory'],  '512m')
       }
       podsWithJenkins.append(jenkinsPod)   
-      print(jenkinsPod)
   return podsWithJenkins
 #end
 
@@ -183,8 +182,6 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
   if '-tools' in namespace:
     jenkinsPods = checkForJenkins()
 
-  if "-tools" in namespace:
-    logging.info("This appears to be a -tools namespace")
     #check for Jenkins in tools namespace
   env = Environment(
     autoescape=select_autoescape(),
