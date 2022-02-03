@@ -117,7 +117,7 @@ def compareValuesForBestPractice(val, recommended, lower = -1):
     if  'gb' in str.lower(recommended):
       recommendedAsNumber *= 1000
 
-    return val  < recommended and val > lower
+    return val <= recommended and val >= lower
   
   else:
     return str.lower(val) == str.lower(recommended)
