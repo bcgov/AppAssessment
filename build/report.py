@@ -1,3 +1,4 @@
+
 import json
 from os import path
 import sys
@@ -88,13 +89,39 @@ def checkForJenkins():
       jenkinsPod  = {
         'name': pod,
         'cpuLimit': podResources['limits']['cpu'],
+        'cpuLimitMeetsBP':  compareValuesForBestPractice(podResources['limits']['cpu'], '1000m'),
         'memoryLimit': podResources['limits']['memory'],
+        'memLimitMeetsBP': compareValuesForBestPractice(podResources['limits']['memory'], '2Gb', '1Gb'),
         'cpuRequest': podResources['requests']['cpu'],
-        'memoryRequest': podResources['requests']['memory']
+        'cpuReqMeetsBP': compareValuesForBestPractice(podResources['requests']['cpu'], '100m'),
+        'memoryRequest': podResources['requests']['memory'],
+        'memReqMeestBP': compareValuesForBestPractice(podResources['requests']['memory'],  '512m')
       }
       podsWithJenkins.append(jenkinsPod)   
-
+      print(jenkinsPod)
   return podsWithJenkins
+#end
+
+def compareValuesForBestPractice(val, recommended, lower = -1):
+  lowerAsNumber = -1
+  if lower != -1:
+    numeric_filter = filter(str.isdigit, lower)
+    lowerAsNumber = int("".join(numeric_filter))
+    if  'gb' in str.lower(lower):
+      lowerAsNumber *= 1000
+    numeric_filter = filter(str.isdigit, val)
+    valAsNumber = int("".join(numeric_filter))
+    if  'gb' in str.lower(val):
+      valAsNumber *= 1000
+    numeric_filter = filter(str.isdigit, recommended)
+    recommendedAsNumber = int("".join(numeric_filter))
+    if  'gb' in str.lower(recommended):
+      recommendedAsNumber *= 1000
+
+    return val  < recommended and val > lower
+  
+  else:
+    return str.lower(val) == str.lower(recommended)
 #end
 
 def hpaCheck(workloadData):
