@@ -74,17 +74,27 @@ def getImageStreamSize(namespace='default'):
 #end
 
 def checkForJenkins():
-  podswithJenkins = []
+  podsWithJenkins = []
   logging.info('Namespace includes -tools. Checking for Jenkins pods...')
   oc = local["oc"]
   pods = oc('get', 'pods', '-o', 'custom-columns=POD:.metadata.name', '--no-headers')
-
+  
   for pod in  pods.split():
     podDescription = oc('get', 'pod', pod)
-    if 'jenkins' in podDescription.lower():
-      podswithJenkins.append(pod)
+    if 'jenkins' in podDescription:
+      podDescription = json.loads(oc('get', 'pod', pod, '-o', 'json'))
+      logging.info('Found Jenkins pod: ' + pod)
+      podResources = podDescription['spec']['containers'][0]['resources']
+      jenkinsPod  = {
+        'name': pod,
+        'cpuLimit': podResources['limits']['cpu'],
+        'memoryLimit': podResources['limits']['memory'],
+        'cpuRequest': podResources['requests']['cpu'],
+        'memoryRequest': podResources['requests']['memory']
+      }
+      podsWithJenkins.append(jenkinsPod)   
 
-  return podswithJenkins
+  return podsWithJenkins
 #end
 
 def hpaCheck(workloadData):

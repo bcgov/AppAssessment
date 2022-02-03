@@ -90,11 +90,55 @@
                   <a href="https://developer.gov.bc.ca/CICD-with-Pipeline-Automation" target="_blank">automation technologies available on the
                   Platform..</a>
                   <p/><p/>
-                  Pods: 
-                  {% for pod in   jenkinsPods %}
-                     {{ pod }}
-                  {% endfor %}
                </div>
+               Pods: 
+               {% for pod in   jenkinsPods %}
+                  <h4>Pod: {{ pod['name'] }}</h4>
+                  <table class="table-bordered" id="{{ workloadName }}">
+                     <tr>
+                        <td>
+                           Limits
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           CPU 
+                        </td>
+                        <td>
+                           {{ pod['cpuLimit'] }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           memory 
+                        </td>
+                        <td>
+                           {{ pod['memoryLimit'] }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           Requests
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           CPU 
+                        </td>
+                        <td>
+                           {{ pod['cpuRequest'] }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           memory 
+                        </td>
+                        <td>
+                           {{ pod['memoryRequest'] }}
+                        </td>
+                     </tr>
+                  </table>
+               {% endfor %}
             {% endif %}
             <div id="imagestream-info">
                <h4>Imagestreams</h4>
