@@ -1,3 +1,4 @@
+
 import json
 from os import path
 import sys
@@ -69,8 +70,57 @@ def getImageStreamSize(namespace='default'):
           totalSize += float(imageLayer['size'])
 
   logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
-  return totalSize
 
+  return totalSize
+#end
+
+def checkForJenkins():
+  podsWithJenkins = []
+  logging.info('Namespace includes -tools. Checking for Jenkins pods...')
+  oc = local["oc"]
+  pods = oc('get', 'pods', '-o', 'custom-columns=POD:.metadata.name', '--no-headers')
+  
+  for pod in  pods.split():
+    podDescription = oc('get', 'pod', pod)
+    if 'jenkins' in podDescription:
+      podDescription = json.loads(oc('get', 'pod', pod, '-o', 'json'))
+      logging.info('Found Jenkins pod: ' + pod)
+      podResources = podDescription['spec']['containers'][0]['resources']
+      jenkinsPod  = {
+        'name': pod,
+        'cpuLimit': podResources['limits']['cpu'],
+        'cpuLimitMeetsBP':  compareValuesForBestPractice(podResources['limits']['cpu'], '1000m'),
+        'memoryLimit': podResources['limits']['memory'],
+        'memLimitMeetsBP': compareValuesForBestPractice(podResources['limits']['memory'], '2Gb', '1Gb'),
+        'cpuRequest': podResources['requests']['cpu'],
+        'cpuReqMeetsBP': compareValuesForBestPractice(podResources['requests']['cpu'], '100m'),
+        'memoryRequest': podResources['requests']['memory'],
+        'memReqMeestBP': compareValuesForBestPractice(podResources['requests']['memory'],  '512m')
+      }
+      podsWithJenkins.append(jenkinsPod)   
+  return podsWithJenkins
+#end
+
+def compareValuesForBestPractice(val, recommended, lower = -1):
+  lowerAsNumber = -1
+  if lower != -1:
+    numeric_filter = filter(str.isdigit, lower)
+    lowerAsNumber = int("".join(numeric_filter))
+    if  'gb' in str.lower(lower):
+      lowerAsNumber *= 1000
+    numeric_filter = filter(str.isdigit, val)
+    valAsNumber = int("".join(numeric_filter))
+    if  'gb' in str.lower(val):
+      valAsNumber *= 1000
+    numeric_filter = filter(str.isdigit, recommended)
+    recommendedAsNumber = int("".join(numeric_filter))
+    if  'gb' in str.lower(recommended):
+      recommendedAsNumber *= 1000
+
+    return val <= recommended and val >= lower
+  
+  else:
+    return str.lower(val) == str.lower(recommended)
 #end
 
 def hpaCheck(workloadData):
@@ -128,6 +178,11 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
   workloadNames = results[next(iter(results))].keys()
   file = open(filename, 'w')
   imagestreamSize = getImageStreamSize(namespace)
+  jenkinsPods = []
+  if '-tools' in namespace:
+    jenkinsPods = checkForJenkins()
+
+    #check for Jenkins in tools namespace
   env = Environment(
     autoescape=select_autoescape(),
     loader=FileSystemLoader(path.join(path.dirname(__file__), 'templates'))
@@ -142,7 +197,8 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
     checksInfo = checksInfo,
     podsWithFailedChecks = podsWithFailedChecks,
     imagestreams = getObjects('imagestreams', namespace),
-    imagestreamSize = str(round(float(imagestreamSize / 1000000), 2))
+    imagestreamSize = str(round(float(imagestreamSize / 1000000), 2)),
+    jenkinsPods = jenkinsPods
   ))
   file.close()
 #end
