@@ -56,10 +56,7 @@ def getObjects(type, namespace='default'):
 def getImageStreamSize(namespace='default'):
   totalSize = 0
   oc = local["oc"]
-  #imagestreams for this namespace
-  #$(oc -n ${NS} get ImageStreams -o=custom-columns=NAME:.metadata.name --no-headers)
   imagestreams = json.loads(oc('get', 'imagestreams', '-n', namespace, '-o', 'json'))
-  #imagestreams = json.loads(oc('get' f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreams/${IMAGESTREAM}'))
   logging.info("Number of image streams: " + str(len(imagestreams['items'])))
 
 # Loop through the ImageStreams
@@ -69,7 +66,7 @@ def getImageStreamSize(namespace='default'):
   # Loop through the ImageStreamTags
     # Initialize a dictionary of layers for this ImageStreamTag
     # If the image has no tags, break out
-  tagLayers = {}
+  imageLayers = {}
   for imagestream in imagestreams['items']:
     name = imagestream['metadata']['name']
     imagestream = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreams/{name}'))
@@ -79,10 +76,10 @@ def getImageStreamSize(namespace='default'):
         image = item['image']
         imagestreamImages = (json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}')))
         for dockerImageLayer in imagestreamImages['image']['dockerImageLayers']:
-          tagLayers[dockerImageLayer['name']] = dockerImageLayer['size']
+          imageLayers[dockerImageLayer['name']] = dockerImageLayer['size']
 
-  for tagLayer in tagLayers.values():
-    totalSize +=  float(tagLayer)
+  for imageLayerSize in imageLayers.values():
+    totalSize +=  float(imageLayerSize)
     
   logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
   return totalSize
