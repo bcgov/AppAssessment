@@ -240,6 +240,7 @@ checks["declarativeComponentCheck"] = declarativeComponentCheck
 checks["CPURequestCheck"] = cpuRequestCheck
 checks["MemoryRequestCheck"] = memoryRequestCheck
 checks["CPULimitCheck"] = cpuLimitCheck
+checks["CPULimitRequestRatio"] = cpuLimitRequestRatio
 checks["MemoryLimitCheck"] = memoryLimitCheck
 checks["LivenessProbeCheck"] = livenessProbeCheck
 checks["ReadinessProbeCheck"] = readinessProbeCheck
@@ -257,6 +258,7 @@ cronjobChecks["CPULimitCheck"] = cronjobCpuLimitCheck
 cronjobChecks["MemoryLimitCheck"] = cronjobMemoryLimitCheck
 cronjobChecks["LivenessProbeCheck"] = notApplicableCheck
 cronjobChecks["ReadinessProbeCheck"] = notApplicableCheck
+cronjobChecks["CPULimitRequestRatio"] = notApplicableCheck
 #cronjobChecks["StatelessCheck"] = notApplicableCheck
 #cronjobChecks["HPACheck"] = notApplicableCheck
 #cronjobChecks["PDBCheck"] = notApplicableCheck
@@ -305,6 +307,10 @@ checksInfo = {
   "PDBCheck" : {
     "title" : "A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance.",
     "href" : "https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring"
+  },
+  "CPULimitRequestRatio" : {
+    "title" : "CPU Limit/Request ratio",
+    "href" : "https://docs.openshift.com/"
   }
 }
 

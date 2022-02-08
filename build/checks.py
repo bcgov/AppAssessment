@@ -81,6 +81,22 @@ def cpuLimitCheck(workloadData):
   return retval
 #end
 
+def cpuLimitRequestRatio(workloadData):
+  retval = {'status': 'notApplicable', 'text': ''}
+  matchesLimit = parse('spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
+  print(matchesLimit)
+  matchesRequest  = parse('spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
+  print(matchesRequest)
+  numContainers = len(workloadData['spec']['template']['spec']['containers'])
+  if ((len(matchesLimit)and len(matchesRequest)) > 0) and (len(matchesLimit) == numContainers):
+    retval['status'] = 'pass'
+    retval['text'] = "Awesome good job"
+  else:
+    retval['status'] = 'fail'
+    retval['text'] = "Could not find both a cpu limit and request"
+  return retval
+#def
+
 def memoryLimitCheck(workloadData):
   retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].resources.limits.memory').find(workloadData)
