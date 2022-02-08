@@ -309,8 +309,8 @@ checksInfo = {
     "href" : "https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring"
   },
   "CPULimitRequestRatio" : {
-    "title" : "CPU Limit/Request ratio",
-    "href" : "https://docs.openshift.com/"
+    "title" : "A 3:1 ratio or less of CPU Limit over Request is prefered where the requested CPU amount is the minimum of what your application needs. It may be appropriate to decrease the ratio based on what stage of development your application is in.",
+    "href" : "https://developer.gov.bc.ca/Resource-Tuning-Recommendations#setting-requests-and-limits"
   }
 }
 

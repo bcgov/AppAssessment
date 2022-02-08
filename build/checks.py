@@ -1,5 +1,6 @@
 from jsonpath_ng import jsonpath, parse
 import yaml
+from fractions import Fraction
 
 def notApplicableCheck(workloadData):
   return {'status': 'notApplicable', 'text': ''}
@@ -84,16 +85,18 @@ def cpuLimitCheck(workloadData):
 def cpuLimitRequestRatio(workloadData):
   retval = {'status': 'notApplicable', 'text': ''}
   matchesLimit = parse('spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
-  print(matchesLimit)
   matchesRequest  = parse('spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
-  print(matchesRequest)
+
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if ((len(matchesLimit)and len(matchesRequest)) > 0) and (len(matchesLimit) == numContainers):
+    for container in workloadData['spec']['template']['spec']['containers']:
+      cpuLimit = int(container['resources']['limits']['cpu'])
+      cpuRequest = int(container['resources']['requests']['cpu'])
+      retval['text']  = "Ratio: " + str(Fraction(cpuLimit, cpuRequest))
     retval['status'] = 'pass'
-    retval['text'] = "Awesome good job"
   else:
     retval['status'] = 'fail'
-    retval['text'] = "Could not find both a cpu limit and request"
+    retval['text'] = "Could not find both a cpu limit and request limit"
   return retval
 #def
 
