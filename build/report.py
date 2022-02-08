@@ -69,7 +69,6 @@ def getImageStreamSize(namespace='default'):
   # Loop through the ImageStreamTags
     # Initialize a dictionary of layers for this ImageStreamTag
     # If the image has no tags, break out
-  images = []
   tagLayers = {}
   for imagestream in imagestreams['items']:
     name = imagestream['metadata']['name']
@@ -77,27 +76,16 @@ def getImageStreamSize(namespace='default'):
 
     for tag in imagestream['status']['tags']:
       for item in tag['items']:
-        images.append(item['image'])
         image = item['image']
         imagestreamImages = (json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}')))
-        print(imagestreamImages['image']['dockerImageMetadata']['Size'])
-        print(str(image) + ': '  + str(float(imagestreamImages['image']['dockerImageMetadata']['Size'])/1000000))
         for dockerImageLayer in imagestreamImages['image']['dockerImageLayers']:
           tagLayers[dockerImageLayer['name']] = dockerImageLayer['size']
-    # for imagestreamTag in imagestream['status']['tags']:
-    #   for imagestreamTagItem in imagestreamTag['items']:
-    #     image = imagestreamTagItem['image']
-    #     imagestreamImages = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}'))
 
-    #     for imageLayer in imagestreamImages['image']['dockerImageMetadata']:
-    #        print (imageLayer)
-        #   totalSize += float(imageLayer['size'])
   for tagLayer in tagLayers.values():
     totalSize +=  float(tagLayer)
     
   logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
   return totalSize
-
 #end
 
 def hpaCheck(workloadData):
