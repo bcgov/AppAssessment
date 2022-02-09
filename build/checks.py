@@ -1,5 +1,6 @@
 from jsonpath_ng import jsonpath, parse
 import yaml
+from fractions import Fraction
 
 def notApplicableCheck(workloadData):
   return {'status': 'notApplicable', 'text': ''}
@@ -80,6 +81,29 @@ def cpuLimitCheck(workloadData):
 
   return retval
 #end
+
+def cpuLimitRequestRatio(workloadData):
+  retval = {'status': 'notApplicable', 'text': ''}
+  matchesLimit = parse('spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
+  matchesRequest  = parse('spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
+
+  numContainers = len(workloadData['spec']['template']['spec']['containers'])
+  if ((len(matchesLimit)and len(matchesRequest)) > 0) and (len(matchesLimit) == numContainers):
+    for container in workloadData['spec']['template']['spec']['containers']:
+      numeric_filter = filter(str.isdigit, container['resources']['limits']['cpu'])
+      cpuLimit = int("".join(numeric_filter))
+      numeric_filter = filter(str.isdigit, container['resources']['requests']['cpu'])
+      cpuRequest = int("".join(numeric_filter))
+      retval['text']  = "Ratio: " + str(Fraction(cpuLimit, cpuRequest))
+      retval['status'] = 'pass'
+      if(float(cpuLimit / cpuRequest) > 3):
+        retval['status'] = 'warning'
+  
+  else:
+    retval['status'] = 'fail'
+    retval['text'] = "Could not find both a cpu limit and request limit"
+  return retval
+#def
 
 def memoryLimitCheck(workloadData):
   retval = {'status': 'notApplicable', 'text': ''}
@@ -166,6 +190,28 @@ def cronjobMemoryLimitCheck(workloadData):
   return retval
 #end
 
+def cronjobCpuLimitRequestRatio(workloadData):
+  retval = {'status': 'notApplicable', 'text': ''}
+  matchesLimit = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
+  matchesRequest  = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
+
+  numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
+  if ((len(matchesLimit)and len(matchesRequest)) > 0) and (len(matchesLimit) == numContainers):
+    for container in workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers']:
+      numeric_filter = filter(str.isdigit, container['resources']['limits']['cpu'])
+      cpuLimit = int("".join(numeric_filter))
+      numeric_filter = filter(str.isdigit, container['resources']['requests']['cpu'])
+      cpuRequest = int("".join(numeric_filter))
+      retval['text']  = "Ratio: " + str(Fraction(cpuLimit, cpuRequest))
+      retval['status'] = 'pass'
+      if(float(cpuLimit / cpuRequest) > 3):
+        retval['status'] = 'warning'
+  
+  else:
+    retval['status'] = 'fail'
+    retval['text'] = "Could not find both a cpu limit and request limit"
+  return retval
+#def
 
 def livenessProbeCheck(workloadData):
   retval = {'status': 'notApplicable', 'text': ''}

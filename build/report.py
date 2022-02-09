@@ -254,6 +254,7 @@ checks["declarativeComponentCheck"] = declarativeComponentCheck
 checks["CPURequestCheck"] = cpuRequestCheck
 checks["MemoryRequestCheck"] = memoryRequestCheck
 checks["CPULimitCheck"] = cpuLimitCheck
+checks["CPULimitRequestRatio"] = cpuLimitRequestRatio
 checks["MemoryLimitCheck"] = memoryLimitCheck
 checks["LivenessProbeCheck"] = livenessProbeCheck
 checks["ReadinessProbeCheck"] = readinessProbeCheck
@@ -269,6 +270,7 @@ cronjobChecks["CPURequestCheck"] = cronjobCpuRequestCheck
 cronjobChecks["MemoryRequestCheck"] = cronjobMemoryRequestCheck
 cronjobChecks["CPULimitCheck"] = cronjobCpuLimitCheck
 cronjobChecks["MemoryLimitCheck"] = cronjobMemoryLimitCheck
+cronjobChecks["CPULimitRequestRatio"]  = cronjobCpuLimitRequestRatio
 cronjobChecks["LivenessProbeCheck"] = notApplicableCheck
 cronjobChecks["ReadinessProbeCheck"] = notApplicableCheck
 #cronjobChecks["StatelessCheck"] = notApplicableCheck
@@ -319,6 +321,10 @@ checksInfo = {
   "PDBCheck" : {
     "title" : "A pod disruption budget is part of the Kubernetes API, which can be managed with oc commands like other object types. They allow the specification of safety constraints on pods during operations, such as draining a node for maintenance.",
     "href" : "https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configuring.html#nodes-pods-configuring-pod-distruption-about_nodes-pods-configuring"
+  },
+  "CPULimitRequestRatio" : {
+    "title" : "A 3:1 ratio or less of CPU Limit over Request is prefered where the requested CPU amount is the minimum of what your application needs. It may be appropriate to decrease the ratio based on what stage of development your application is in.",
+    "href" : "https://developer.gov.bc.ca/Resource-Tuning-Recommendations#setting-requests-and-limits"
   }
 }
 
