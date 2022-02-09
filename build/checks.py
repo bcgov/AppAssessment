@@ -93,7 +93,10 @@ def cpuLimitRequestRatio(workloadData):
       cpuLimit = int(container['resources']['limits']['cpu'])
       cpuRequest = int(container['resources']['requests']['cpu'])
       retval['text']  = "Ratio: " + str(Fraction(cpuLimit, cpuRequest))
-    retval['status'] = 'pass'
+      retval['status'] = 'pass'
+      if(float(cpuLimit / cpuRequest) > 3):
+        retval['status'] = 'warning'
+  
   else:
     retval['status'] = 'fail'
     retval['text'] = "Could not find both a cpu limit and request limit"
