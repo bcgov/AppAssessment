@@ -60,15 +60,28 @@ def getImageStreamSize(namespace='default'):
   imagestreams = json.loads(oc('get', 'imagestreams', '-n', namespace, '-o', 'json'))
   logging.info("Number of image streams: " + str(len(imagestreams['items'])))
 
+# Loop through the ImageStreams
+  # Initialize a dictionary of layers for this ImageStream
+  # Get the raw json of the ImageStream
+  # Parse out the list of tags
+  # Loop through the ImageStreamTags
+    # Initialize a dictionary of layers for this ImageStreamTag
+    # If the image has no tags, break out
+  imageLayers = {}
   for imagestream in imagestreams['items']:
     name = imagestream['metadata']['name']
-    for imagestreamTag in imagestream['status']['tags']:
-      for imagestreamTagItem in imagestreamTag['items']:
-        image = imagestreamTagItem['image']
-        imagestreamImages = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}'))
-        for imageLayer in imagestreamImages['image']['dockerImageLayers']:
-          totalSize += float(imageLayer['size'])
+    imagestream = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreams/{name}'))
 
+    for tag in imagestream['status']['tags']:
+      for item in tag['items']:
+        image = item['image']
+        imagestreamImages = (json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreamimages/{name}@{image}')))
+        for dockerImageLayer in imagestreamImages['image']['dockerImageLayers']:
+          imageLayers[dockerImageLayer['name']] = dockerImageLayer['size']
+
+  for imageLayerSize in imageLayers.values():
+    totalSize +=  float(imageLayerSize)
+    
   logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
 
   return totalSize
@@ -121,6 +134,7 @@ def compareValuesForBestPractice(val, recommended, lower = -1):
   
   else:
     return str.lower(val) == str.lower(recommended)
+
 #end
 
 def hpaCheck(workloadData):
