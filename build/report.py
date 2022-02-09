@@ -211,7 +211,7 @@ def writeReport(filename, results, namespace, checksInfo, clusterName, podsWithF
     checksInfo = checksInfo,
     podsWithFailedChecks = podsWithFailedChecks,
     imagestreams = getObjects('imagestreams', namespace),
-    imagestreamSize = str(round(float(imagestreamSize / 1000000), 2)),
+    imagestreamSize = str(round(float(imagestreamSize / 1024000), 2)),
     jenkinsPods = jenkinsPods
   ))
   file.close()
