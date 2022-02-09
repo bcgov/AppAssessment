@@ -82,7 +82,7 @@ def getImageStreamSize(namespace='default'):
   for imageLayerSize in imageLayers.values():
     totalSize +=  float(imageLayerSize)
     
-  logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1000000) + ' MB.')
+  logging.info('TOTAL IMAGESTREAM SIZE: ' + str(totalSize / 1024000) + ' MB.')
 
   return totalSize
 #end
