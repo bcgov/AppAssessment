@@ -50,3 +50,9 @@ td {
 #quick-links a {
   margin-left: 4px;
 }
+#jenkins-warning{
+  color: #D8292F;
+}
+#jenkins-best-practices{
+  margin-bottom: 8px;
+}
