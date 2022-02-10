@@ -212,7 +212,7 @@ objects:
                   claimName: appassessment-pvc
             containers:
               - name: appassessment-cron
-                image: ${APP_ASSESSMENT_IMAGE}:latest
+                image: ${APP_ASSESSMENT_IMAGE}
                 env:
                   - name: TARGET_NAMESPACE
                     value: ${LICENSE_PLATE}-${TARGET}
@@ -251,7 +251,7 @@ objects:
         securityContext: {}
         containers:
           - name: appassessment-cron
-            image: ${APP_ASSESSMENT_IMAGE}:latest
+            image: ${APP_ASSESSMENT_IMAGE}
             env:
               - name: TARGET_NAMESPACE
                 value: ${LICENSE_PLATE}-${TARGET}
