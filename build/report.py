@@ -71,7 +71,7 @@ def getImageStreamSize(namespace='default'):
   for imagestream in imagestreams['items']:
     name = imagestream['metadata']['name']
     imagestream = json.loads(oc('get', f'--raw=/apis/image.openshift.io/v1/namespaces/{namespace}/imagestreams/{name}'))
-    if len(imagestream['status']['tags'] > 0):
+    if len(imagestream['status']['tags']) > 0:
       for tag in imagestream['status']['tags']:
         for item in tag['items']:
           image = item['image']
