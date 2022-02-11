@@ -184,7 +184,8 @@ objects:
       deploymentconfig: appassessment-web
     type: ClusterIP
     sessionAffinity: None
-- apiVersion: batch/v1beta1
+
+- apiVersion: batch/v1
   kind: CronJob
   metadata:
     name: appassessment-cj
@@ -212,7 +213,7 @@ objects:
                   claimName: appassessment-pvc
             containers:
               - name: appassessment-cron
-                image: ${APP_ASSESSMENT_IMAGE}
+                image: ${APP_ASSESSMENT_IMAGE}:latest
                 env:
                   - name: TARGET_NAMESPACE
                     value: ${LICENSE_PLATE}-${TARGET}
@@ -232,6 +233,7 @@ objects:
             schedulerName: default-scheduler
     successfulJobsHistoryLimit: 3
     failedJobsHistoryLimit: 1
+
 - apiVersion: batch/v1
   kind: Job
   metadata:
@@ -251,7 +253,7 @@ objects:
         securityContext: {}
         containers:
           - name: appassessment-cron
-            image: ${APP_ASSESSMENT_IMAGE}
+            image: ${APP_ASSESSMENT_IMAGE}:latest
             env:
               - name: TARGET_NAMESPACE
                 value: ${LICENSE_PLATE}-${TARGET}
