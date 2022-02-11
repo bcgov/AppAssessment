@@ -172,6 +172,11 @@ If you specify a memory limit, you can constrain the amount of memory the contai
 
 https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits
 
+#### CPU Limit:Request Ratio
+Provides a quick look at the ratio of configured CPU Limit and CPU Request for a quick look at whether or not best practices (typically a 3:1 ratio) have been met. 
+
+https://developer.gov.bc.ca/Resource-Tuning-Recommendations#setting-requests-and-limits
+
 #### Probes
 ##### Liveness 
 A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy.
