@@ -7,19 +7,7 @@
       <title>Report generated on {{ datetime }}</title>
    </head>
    <body>
-      <header class="header">
-         <nav class="navbar navbar-expand-lg navbar-dark">
-            <!-- Navbar content -->
-            <div class="container">
-               <a class="navbar-brand" href="https://www2.gov.bc.ca">
-                  <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
-               </a>
-               <div class="navbar-brand">
-                  {{ namespace }} OpenShift Config Check
-               </div>
-            </div>
-         </nav>
-      </header>
+      {% include 'header.j2' %}
       <main role="main">
          <div class="container">
             <h2>Config assessment report for the namespace {{ namespace }} in the {{ clusterName }} cluster</h2>
@@ -36,183 +24,12 @@
             </div>
             <hr>
             <div>
-               <div class="table-legend">
-                  <h3>Legend</h3>
-                  <table>
-                     <tr>
-                        <td>
-                           <div class="status-icon pass">
-                              &#10004
-                           </div>
-                        </td>
-                        <td>
-                           Setting is applicable and is correct
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           <div class="status-icon warning">
-                              !
-                           </div>
-                        </td>
-                        <td>
-                           Setting may or may not be applicable, or the value may or may not be correct. Refer to documentation for more detail.
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           <div class="status-icon fail">
-                              X
-                           </div>
-                        </td>
-                        <td>
-                           Either inapplicable or incorrect
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           N/A
-                        </td>
-                        <td>
-                           Setting is not applicable for this deployment type
-                        </td>
-                     </tr>
-                  </table>
-               </div>
+               {% include 'legend.j2' %}
             </div>
             <hr/>
             <h3>Details</h3>
             {% if jenkinsPods|length > 0 %}
-               <div id="jenkins-warning">
-                  <h4>Jenkins Pods</h4>
-                  It looks like one or more Jenkins instances has been found in your tools namespace. <strong>Use of Jenkins is highly discouraged on the Platform due to
-                  its high resource consumption.</strong> Please consider switching to other modern and more secure 
-                  <a href="https://developer.gov.bc.ca/CICD-with-Pipeline-Automation" target="_blank">automation technologies available on the
-                  Platform..</a>
-                  <p/><p/>
-               </div>
-               <div id=jenkins-best-practices>
-                  Your Jenkins instance(s) should be configured to match the resource settings recommended in the 
-                  <a href="https://developer.gov.bc.ca/Resource-Tuning-Recommendations#recommended-configuration"  target="_blank">Jenkins Resource Configuration 
-                  Best Practices</a>. Please refer to this <a href="https://www.youtube.com/watch?v=npMbAtJZSO0" target="_blank">how-to video</a> for step by step instructions for updating the Jenkins resource settings.
-               </div>
-               <h4>Pods: </h4>
-               {% for pod in jenkinsPods %}
-                  <h4>{{ pod['name'] }}</h4>
-                  <table class="table-bordered" id="{{ workloadName }}">
-                     <tr>
-                        <td>
-                           <h4>Config Setting</h4>
-                        </td>
-                        <td>
-                           <h4>Allocation</h4>
-                        </td>
-                        <td>
-                           <h4>Recommended</h4>
-                        </td>
-                        <td>
-                           <h4>Meets best pratices?</h4>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           CPU Limit
-                        </td>
-                        <td>
-                           {{ pod['cpuLimit'] }}
-                        </td>
-                        <td>
-                           1000m
-                        </td>
-                        <td>
-                        {% if pod['cpuLimitMeetsBP'] %}
-                           <div class="status-icon pass">
-                              &#10004
-                           </div>
-                           Yes
-                        {% else %}
-                           <div class="status-icon warning">
-                              !
-                           </div>
-                           No
-                        {% endif %}
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           Memory Limit
-                        </td>
-                        <td>
-                           {{ pod['memoryLimit'] }}
-                        </td>
-                        <td>
-                           1-2Gi
-                        </td>
-                         <td>
-                        {% if pod['memLimitMeetsBP'] %}
-                           <div class="status-icon pass">
-                              &#10004
-                           </div>
-                           Yes
-                        {% else %}
-                           <div class="status-icon warning">
-                              !
-                           </div>
-                           No
-                        {% endif %}
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           CPU Request
-                        </td>
-                        <td>
-                           {{ pod['cpuRequest'] }}
-                        </td>
-                        <td>
-                           100m
-                        </td>
-                         <td>
-                        {% if pod['cpuReqMeetsBP'] %}
-                           <div class="status-icon pass">
-                              &#10004
-                           </div>
-                           Yes
-                        {% else %}
-                           <div class="status-icon warning">
-                              !
-                           </div>
-                           No
-                        {% endif %}
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           Memory Request
-                        </td>
-                        <td>
-                           {{ pod['memoryRequest'] }}
-                        </td>
-                        <td>
-                           512Mi
-                        </td>
-                         <td>
-                        {% if pod['memReqMeetsBP'] %}
-                           <div class="status-icon pass">
-                              &#10004
-                           </div>
-                           Yes
-                        {% else %}
-                           <div class="status-icon warning">
-                              !
-                           </div>
-                           No
-                        {% endif %}
-                        </td>
-                     </tr>
-                  </table>
-                  <p/>
-               {% endfor %}
+               {% include 'jenkinsReport.j2' %}
             {% endif %}
             <div id="imagestream-info">
                <h4>Imagestreams</h4>
@@ -272,28 +89,6 @@
             {% endfor %} 
          </div>
       </main>
-      <footer class="footer">
-         <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container">
-               <ul class="navbar-nav">
-                  <li class="nav-item">
-                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=79F93E018712422FBC8E674A67A70535" target="_blank">Disclaimer</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=9E890E16955E4FF4BF3B0E07B4722932" target="_blank">Privacy</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=E08E79740F9C41B9B0C484685CC5E412" target="_blank">Accessibility</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=1AAACC9C65754E4D89A118B875E0FBDA" target="_blank">Copyright</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=6A77C17D0CCB48F897F8598CCC019111" target="_blank">Contact Us</a>
-                  </li>
-               </ul>
-            </div>
-         </nav>
-      </footer>
+      {% include 'footer.j2' %}
    </body>
 </html>

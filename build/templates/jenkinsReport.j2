@@ -1,0 +1,131 @@
+<div id="jenkins-warning">
+   <h4>Jenkins Pods</h4>
+   It looks like one or more Jenkins instances has been found in your tools namespace. <strong>Use of Jenkins is highly discouraged on the Platform due to
+   its high resource consumption.</strong> Please consider switching to other modern and more secure 
+   <a href="https://developer.gov.bc.ca/CICD-with-Pipeline-Automation" target="_blank">automation technologies available on the
+   Platform..</a>
+   <p/>
+   <p/>
+</div>
+<div id=jenkins-best-practices>
+   Your Jenkins instance(s) should be configured to match the resource settings recommended in the 
+   <a href="https://developer.gov.bc.ca/Resource-Tuning-Recommendations#recommended-configuration"  target="_blank">Jenkins Resource Configuration 
+   Best Practices</a>. Please refer to this <a href="https://www.youtube.com/watch?v=npMbAtJZSO0" target="_blank">how-to video</a> for step by step instructions for updating the Jenkins resource settings.
+</div>
+<h4>Pods: </h4>
+{% for pod in jenkinsPods %}
+<h4>{{ pod['name'] }}</h4>
+<table class="table-bordered" id="{{ workloadName }}">
+   <tr>
+      <td>
+         <h4>Config Setting</h4>
+      </td>
+      <td>
+         <h4>Allocation</h4>
+      </td>
+      <td>
+         <h4>Recommended</h4>
+      </td>
+      <td>
+         <h4>Meets best pratices?</h4>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         CPU Limit
+      </td>
+      <td>
+         {{ pod['cpuLimit'] }}
+      </td>
+      <td>
+         1000m
+      </td>
+      <td>
+         {% if pod['cpuLimitMeetsBP'] %}
+         <div class="status-icon pass">
+            &#10004
+         </div>
+         Yes
+         {% else %}
+         <div class="status-icon warning">
+            !
+         </div>
+         No
+         {% endif %}
+      </td>
+   </tr>
+   <tr>
+      <td>
+         Memory Limit
+      </td>
+      <td>
+         {{ pod['memoryLimit'] }}
+      </td>
+      <td>
+         1-2Gi
+      </td>
+      <td>
+         {% if pod['memLimitMeetsBP'] %}
+         <div class="status-icon pass">
+            &#10004
+         </div>
+         Yes
+         {% else %}
+         <div class="status-icon warning">
+            !
+         </div>
+         No
+         {% endif %}
+      </td>
+   </tr>
+   <tr>
+      <td>
+         CPU Request
+      </td>
+      <td>
+         {{ pod['cpuRequest'] }}
+      </td>
+      <td>
+         100m
+      </td>
+      <td>
+         {% if pod['cpuReqMeetsBP'] %}
+         <div class="status-icon pass">
+            &#10004
+         </div>
+         Yes
+         {% else %}
+         <div class="status-icon warning">
+            !
+         </div>
+         No
+         {% endif %}
+      </td>
+   </tr>
+   <tr>
+      <td>
+         Memory Request
+      </td>
+      <td>
+         {{ pod['memoryRequest'] }}
+      </td>
+      <td>
+         512Mi
+      </td>
+      <td>
+         {% if pod['memReqMeetsBP'] %}
+         <div class="status-icon pass">
+            &#10004
+         </div>
+         Yes
+         {% else %}
+         <div class="status-icon warning">
+            !
+         </div>
+         No
+         {% endif %}
+      </td>
+   </tr>
+</table>
+<p/>
+   {% endfor %}
