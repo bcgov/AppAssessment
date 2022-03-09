@@ -47,6 +47,7 @@ objects:
     name: appassessment-pvc
     labels:
       app: appassessment-app
+    namespace: ${LICENSE_PLATE}-tools
   spec:
     accessModes:
     - ReadWriteMany
