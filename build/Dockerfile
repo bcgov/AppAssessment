@@ -13,6 +13,10 @@ ENV HOME=/tmp/
 
 RUN mkdir templates
 ADD ./templates/reportTemplate.html.j2 ./templates
+ADD ./templates/footer.j2 ./templates
+ADD ./templates/header.j2 ./templates
+ADD ./templates/jenkinsReport.j2 ./templates
+ADD ./templates/legend.j2 ./templates
 RUN pip install -r ./requirements.txt
 # Install OC CLI
 RUN curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz --output ./oc.tar.gz
