@@ -251,11 +251,14 @@ pdbObjects = getObjects('poddisruptionbudgets', namespace)
 checks = {}
 checks["declarativeComponentCheck"] = declarativeComponentCheck
 #checks["RollingUpdateCheck"] = rollingUpdateCheck #not our business to tell people how to update (best practice for stateless)
+# resource requests
 checks["CPURequestCheck"] = cpuRequestCheck
 checks["MemoryRequestCheck"] = memoryRequestCheck
+#reource limits
 checks["CPULimitCheck"] = cpuLimitCheck
-checks["CPULimitRequestRatio"] = cpuLimitRequestRatio
 checks["MemoryLimitCheck"] = memoryLimitCheck
+checks["CPULimitRequestRatio"] = cpuLimitRequestRatio
+#probes
 checks["LivenessProbeCheck"] = livenessProbeCheck
 checks["ReadinessProbeCheck"] = readinessProbeCheck
 #checks["StatelessCheck"] = statelessCheck #lots of apps are not stateless, and presenting a warning everytime there is a persistent volume is not appropriate

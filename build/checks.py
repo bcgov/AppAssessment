@@ -3,7 +3,7 @@ import yaml
 from fractions import Fraction
 
 def notApplicableCheck(workloadData):
-  return {'status': 'notApplicable', 'text': ''}
+  return {'status': 'notApplicable', 'text': '', 'group': 'notApplicable'}
 #end
 
 def declarativeComponentCheck(workloadData):
@@ -32,7 +32,7 @@ def rollingUpdateCheck(workloadData):
 #end
 
 def cpuRequestCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'request'} 
   matches = parse('spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -49,7 +49,7 @@ def cpuRequestCheck(workloadData):
 #end
 
 def memoryRequestCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'request'}
   matches = parse('spec.template.spec.containers[*].resources.requests.memory').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -66,7 +66,7 @@ def memoryRequestCheck(workloadData):
 #end
 
 def cpuLimitCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'limit'}
   matches = parse('spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -83,7 +83,7 @@ def cpuLimitCheck(workloadData):
 #end
 
 def cpuLimitRequestRatio(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'ratioCheck'}
   matchesLimit = parse('spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
   matchesRequest  = parse('spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
 
@@ -106,7 +106,7 @@ def cpuLimitRequestRatio(workloadData):
 #def
 
 def memoryLimitCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'limit'}
   matches = parse('spec.template.spec.containers[*].resources.limits.memory').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -123,7 +123,7 @@ def memoryLimitCheck(workloadData):
 #end
 
 def cronjobCpuRequestCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'cronjobRequest'}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -140,7 +140,7 @@ def cronjobCpuRequestCheck(workloadData):
 #end
 
 def cronjobMemoryRequestCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'cronjobRequest'}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.requests.memory').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -157,7 +157,7 @@ def cronjobMemoryRequestCheck(workloadData):
 #end
 
 def cronjobCpuLimitCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'cronjobLimit'}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -174,7 +174,7 @@ def cronjobCpuLimitCheck(workloadData):
 #end
 
 def cronjobMemoryLimitCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'cronjobLimit'}
   matches = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.limits.memory').find(workloadData)
   numContainers = len(workloadData['spec']['jobTemplate']['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -191,7 +191,7 @@ def cronjobMemoryLimitCheck(workloadData):
 #end
 
 def cronjobCpuLimitRequestRatio(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'cronjobRatio'}
   matchesLimit = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.limits.cpu').find(workloadData)
   matchesRequest  = parse('spec.jobTemplate.spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
 
@@ -214,7 +214,7 @@ def cronjobCpuLimitRequestRatio(workloadData):
 #def
 
 def livenessProbeCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'probe'}
   matches = parse('spec.template.spec.containers[*].livenessProbe').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   noEmptyProbes = True
@@ -236,7 +236,7 @@ def livenessProbeCheck(workloadData):
 #end
 
 def readinessProbeCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'probe'}
   matches = parse('spec.template.spec.containers[*].readinessProbe').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   noEmptyProbes = True
@@ -258,7 +258,7 @@ def readinessProbeCheck(workloadData):
 #end
 
 def statelessCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': '', 'group' : 'probe'}
   matches = parse('spec.template.spec.volumes[*].persistentVolumeClaim').find(workloadData)
   if (len(matches) > 0):
     retval['status'] = 'warning'
