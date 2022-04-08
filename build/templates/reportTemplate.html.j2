@@ -51,13 +51,20 @@
             <table class="table-bordered" id="{{ workloadName }}">
                <tr>
                   <td>
-                     <h4>Config Setting</h4>
+                     <h3>Config Setting</h3>
                   </td>
                   <td>
-                     <h4>Pod: {{ workloadName }}</h4>
+                     <h3>Pod: {{ workloadName }}</h3>
                   </td>
                </tr>
                {% for checkName in results.keys() %} 
+               {% if  results[checkName][workloadName]['status'] == 'groupHeader' %}
+               <tr>
+                  <td class=sectionHeader>
+                     <h4>{{ results[checkName][workloadName]['title'] }}</h4>
+                  </td>
+               </tr>
+               {% else %}
                <tr>
                   <td class="tdWithInlineContent">
                      <div class="groupCode {{ results[checkName][workloadName]['group'] }}">
@@ -85,6 +92,7 @@
                      </div>
                   </td>
                </tr>
+               {% endif %}
                {% endfor %}
             </table>
             <hr/>

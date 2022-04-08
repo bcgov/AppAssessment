@@ -213,6 +213,15 @@ def cronjobCpuLimitRequestRatio(workloadData):
   return retval
 #def
 
+def probeHeader(workloadData):
+  retval = {'status': 'groupHeader', 'title': 'Readiness Probes', 'text': ''}
+  return retval
+  #end
+def resourceUtilizationHeader(workloadData):
+  retval = {'status': 'groupHeader', 'title': 'Resource Utilization', 'text': ''}
+  return retval
+
+#end
 def livenessProbeCheck(workloadData):
   retval = {'status': 'notApplicable', 'text': '', 'group' : 'probe'}
   matches = parse('spec.template.spec.containers[*].livenessProbe').find(workloadData)

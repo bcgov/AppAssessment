@@ -251,14 +251,14 @@ pdbObjects = getObjects('poddisruptionbudgets', namespace)
 checks = {}
 checks["declarativeComponentCheck"] = declarativeComponentCheck
 #checks["RollingUpdateCheck"] = rollingUpdateCheck #not our business to tell people how to update (best practice for stateless)
-# resource requests
+checks["ResourceUtilizationHeader"] = resourceUtilizationHeader
 checks["CPURequestCheck"] = cpuRequestCheck
 checks["MemoryRequestCheck"] = memoryRequestCheck
-#reource limits
 checks["CPULimitCheck"] = cpuLimitCheck
-checks["MemoryLimitCheck"] = memoryLimitCheck
 checks["CPULimitRequestRatio"] = cpuLimitRequestRatio
+checks["MemoryLimitCheck"] = memoryLimitCheck
 #probes
+checks["ProbeHeader"] = probeHeader
 checks["LivenessProbeCheck"] = livenessProbeCheck
 checks["ReadinessProbeCheck"] = readinessProbeCheck
 #checks["StatelessCheck"] = statelessCheck #lots of apps are not stateless, and presenting a warning everytime there is a persistent volume is not appropriate
@@ -269,11 +269,13 @@ checks["ReadinessProbeCheck"] = readinessProbeCheck
 cronjobChecks = {}
 cronjobChecks["declarativeComponentCheck"] = declarativeComponentCheck
 #cronjobChecks["RollingUpdateCheck"] = notApplicableCheck
+cronjobChecks["ResourceUtilizationHeader"] = resourceUtilizationHeader
 cronjobChecks["CPURequestCheck"] = cronjobCpuRequestCheck
 cronjobChecks["MemoryRequestCheck"] = cronjobMemoryRequestCheck
 cronjobChecks["CPULimitCheck"] = cronjobCpuLimitCheck
 cronjobChecks["MemoryLimitCheck"] = cronjobMemoryLimitCheck
 cronjobChecks["CPULimitRequestRatio"]  = cronjobCpuLimitRequestRatio
+cronjobChecks["ProbeHeader"] = probeHeader
 cronjobChecks["LivenessProbeCheck"] = notApplicableCheck
 cronjobChecks["ReadinessProbeCheck"] = notApplicableCheck
 #cronjobChecks["StatelessCheck"] = notApplicableCheck
@@ -328,6 +330,10 @@ checksInfo = {
   "CPULimitRequestRatio" : {
     "title" : "A 3:1 ratio or less of CPU Limit over Request is prefered where the requested CPU amount is the minimum of what your application needs. It may be appropriate to decrease the ratio based on what stage of development your application is in.",
     "href" : "https://developer.gov.bc.ca/Resource-Tuning-Recommendations#setting-requests-and-limits"
+  },
+  "ProbeHeader" : {
+  },
+  "ResourceUtilizationHeader" : {
   }
 }
 
