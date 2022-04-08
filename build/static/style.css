@@ -56,34 +56,7 @@ td {
 #jenkins-best-practices{
   margin-bottom: 8px;
 }
-.groupCode{
-  min-height: 12px;
-  display: inline-block;
-}
-.tdWithInlineContent a{
-  display: inline-block;
-}
-.probe{
-  background-color: aqua;
-}
-.cronjobRatio{
-  background-color: burlywood;
-}
-.cronjobLimit{
-  background-color: aquamarine;
-}
-.cronjobRequest{
-  background-color: cadetblue;
-}
-.limit{
-  background-color: cornflowerblue;
-}
-.ratioCheck{
-  background-color: hotpink;
-}
-.request{
-  background-color: darkcyan;
-}
-.notApplicable{
-  background-color: coral;
+.sectionHeader{
+  font-size: 1.1em;
+  font-weight: bold;
 }

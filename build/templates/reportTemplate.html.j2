@@ -61,7 +61,7 @@
                {% if  results[checkName][workloadName]['status'] == 'groupHeader' %}
                <tr>
                   <td class=sectionHeader>
-                     <h4>{{ results[checkName][workloadName]['title'] }}</h4>
+                     {{ results[checkName][workloadName]['title'] }}
                   </td>
                </tr>
                {% else %}
