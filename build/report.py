@@ -249,7 +249,6 @@ if len(workloadObjects) == 0:
 hpaObjects = getObjects('hpa', namespace)
 pdbObjects = getObjects('poddisruptionbudgets', namespace)
 checks = {}
-checks["declarativeComponentCheck"] = declarativeComponentCheck
 #checks["RollingUpdateCheck"] = rollingUpdateCheck #not our business to tell people how to update (best practice for stateless)
 checks["ResourceUtilizationHeader"] = resourceUtilizationHeader
 checks["CPURequestCheck"] = cpuRequestCheck
@@ -259,6 +258,7 @@ checks["CPULimitRequestRatio"] = cpuLimitRequestRatio
 checks["MemoryLimitCheck"] = memoryLimitCheck
 #probes
 checks["ProbeHeader"] = probeHeader
+checks["declarativeComponentCheck"] = declarativeComponentCheck
 checks["LivenessProbeCheck"] = livenessProbeCheck
 checks["ReadinessProbeCheck"] = readinessProbeCheck
 #checks["StatelessCheck"] = statelessCheck #lots of apps are not stateless, and presenting a warning everytime there is a persistent volume is not appropriate

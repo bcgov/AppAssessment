@@ -101,7 +101,7 @@ def cpuLimitRequestRatio(workloadData):
   
   else:
     retval['status'] = 'fail'
-    retval['text'] = "Could not find both a cpu limit and request limit"
+    retval['text'] = "could not find both a cpu limit and a cpu request"
   return retval
 #def
 
@@ -209,16 +209,16 @@ def cronjobCpuLimitRequestRatio(workloadData):
   
   else:
     retval['status'] = 'fail'
-    retval['text'] = "Could not find both a cpu limit and request limit"
+    retval['text'] = "could not find both a cpu limit and a cpu request"
   return retval
 #def
 
 def probeHeader(workloadData):
-  retval = {'status': 'groupHeader', 'title': 'Readiness Probes', 'text': ''}
+  retval = {'status': 'groupHeader', 'title': 'Application Health', 'text': ''}
   return retval
   #end
 def resourceUtilizationHeader(workloadData):
-  retval = {'status': 'groupHeader', 'title': 'Resource Utilization', 'text': ''}
+  retval = {'status': 'groupHeader', 'title': 'Resource Allocation', 'text': ''}
   return retval
 
 #end
