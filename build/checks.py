@@ -3,7 +3,7 @@ import yaml
 from fractions import Fraction
 
 def notApplicableCheck(workloadData):
-  return {'status': 'notApplicable', 'text': ''}
+  return {'status': 'notApplicable', 'text': '', 'group': 'notApplicable'}
 #end
 
 def declarativeComponentCheck(workloadData):
@@ -32,7 +32,7 @@ def rollingUpdateCheck(workloadData):
 #end
 
 def cpuRequestCheck(workloadData):
-  retval = {'status': 'notApplicable', 'text': ''}
+  retval = {'status': 'notApplicable', 'text': ''} 
   matches = parse('spec.template.spec.containers[*].resources.requests.cpu').find(workloadData)
   numContainers = len(workloadData['spec']['template']['spec']['containers'])
   if (len(matches) > 0) and (len(matches) == numContainers):
@@ -101,7 +101,7 @@ def cpuLimitRequestRatio(workloadData):
   
   else:
     retval['status'] = 'fail'
-    retval['text'] = "Could not find both a cpu limit and request limit"
+    retval['text'] = "could not find both a cpu limit and a cpu request"
   return retval
 #def
 
@@ -209,10 +209,19 @@ def cronjobCpuLimitRequestRatio(workloadData):
   
   else:
     retval['status'] = 'fail'
-    retval['text'] = "Could not find both a cpu limit and request limit"
+    retval['text'] = "could not find both a cpu limit and a cpu request"
   return retval
 #def
 
+def probeHeader(workloadData):
+  retval = {'status': 'groupHeader', 'title': 'Application Health', 'text': ''}
+  return retval
+  #end
+def resourceUtilizationHeader(workloadData):
+  retval = {'status': 'groupHeader', 'title': 'Resource Allocation', 'text': ''}
+  return retval
+
+#end
 def livenessProbeCheck(workloadData):
   retval = {'status': 'notApplicable', 'text': ''}
   matches = parse('spec.template.spec.containers[*].livenessProbe').find(workloadData)

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <link href="./static/style.css" rel="stylesheet">
+      <link href="./static/bootstrap-theme.min.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+      <title>Report generated on 2022-04-13-17:05:47</title>
+   </head>
+   <body>
+      <header class="header">
+   <nav class="navbar navbar-expand-lg navbar-dark">
+      <!-- Navbar content -->
+      <div class="container">
+         <a class="navbar-brand" href="https://www2.gov.bc.ca">
+         <img class="img-fluid d-none d-md-block" src="https://developer.gov.bc.ca/static/BCID_H_rgb_rev-20eebe74aef7d92e02732a18b6aa6bbb.svg" width="177" height="44" alt="B.C. Government Logo">
+         </a>
+         <div class="navbar-brand">
+            d9cbd8-tools OpenShift Config Check
+         </div>
+      </div>
+   </nav>
+</header>
+      <main role="main">
+         <div class="container">
+            <h2>Config assessment report for the namespace d9cbd8-tools in the silver cluster</h2>
+            <div class="report-explanation">
+               <p>The AppAssessment tool assesses configuration of pods within a specific Openshift namespace and identifies the misconfigured 
+               or missing settings based on what is considered best practices by RedHat and the Platform Services Team.
+               Checks are performed through the calls to Openshift API, and compared to expected values. Documentation on application health 
+               checks can be found <a href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html" target="_blank">here</a>. 
+               If your team is aware of additional checks that can be added to the list, please, ping us in #devops-operations channel in 
+               Rocketchat. Configuring applications pods in acccordance with best practices improves the resiliency, performance and security 
+               posture of the application.</p>
+
+               <strong>Note: The report produced by the AppAssessment tool provides recommendations only, it is the responsibility of the product team to review the recommendations and implement as necessary.</strong>
+            </div>
+            <hr>
+            <div>
+               <div class="table-legend">
+   <h3>Legend</h3>
+   <table>
+      <tr>
+         <td>
+            <div class="status-icon pass">
+               &#10004
+            </div>
+         </td>
+         <td>
+            Setting is applicable and is correct
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <div class="status-icon warning">
+               !
+            </div>
+         </td>
+         <td>
+            Setting may or may not be applicable, or the value may or may not be correct. Refer to documentation for more detail.
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <div class="status-icon fail">
+               X
+            </div>
+         </td>
+         <td>
+            Either inapplicable or incorrect
+         </td>
+      </tr>
+      <tr>
+         <td>
+            N/A
+         </td>
+         <td>
+            Setting is not applicable for this deployment type
+         </td>
+      </tr>
+   </table>
+</div>
+            </div>
+            <hr/>
+            <h3>Details</h3>
+            
+            <div id="imagestream-info">
+               <h4>Imagestreams</h4>
+               There is 1 
+               imagestream running in namespace d9cbd8-tools <p/>
+               Total size of imagestreams: 584.72 MB
+            </div>
+            <div id="quick-links">
+            
+               <h4>Jump to pods with errors or warnings:</h4>
+               
+                  <a href="#appassessment-cj">appassessment-cj </a>
+               
+                  <a href="#appassessment-web">appassessment-web </a>
+               
+            
+            </div>
+             
+            <table class="table-bordered" id="appassessment-cj">
+               <tr>
+                  <td>
+                     <h3>Config Setting</h3>
+                  </td>
+                  <td>
+                     <h3>Pod: appassessment-cj</h3>
+                  </td>
+               </tr>
+                
+               
+               <tr>
+                  <td class=sectionHeader>
+                     Resource Allocation
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests"> CPURequestCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>0 of 1 containers have CPU requests specified.  All container specifications should include CPU requests</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests"> MemoryRequestCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>0 of 1 containers have memory requests specified.  All container specifications should include memory requests</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits"> CPULimitCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>0 of 1 containers have CPU limits specified.  All container specifications should include CPU limits</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A 3:1 ratio or less of CPU Limit over Request is prefered where the requested CPU amount is the minimum of what your application needs. It may be appropriate to decrease the ratio based on what stage of development your application is in." href="https://developer.gov.bc.ca/Resource-Tuning-Recommendations#setting-requests-and-limits"> CPULimitRequestRatio</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>could not find both a cpu limit and a cpu request</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits"> MemoryLimitCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>0 of 1 containers have memory limits specified.  All container specifications should include memory limits</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td class=sectionHeader>
+                     Application Health
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob." href="https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html"> declarativeComponentCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon pass">
+                           &#10004
+                        </div>
+                        
+                        <div class="check-detail"a>CronJob</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> LivenessProbeCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        N/A
+                        
+                        <div class="check-detail"a></div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> ReadinessProbeCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        N/A
+                        
+                        <div class="check-detail"a></div>
+                     </div>
+                  </td>
+               </tr>
+               
+               
+            </table>
+            <hr/>
+             
+            <table class="table-bordered" id="appassessment-web">
+               <tr>
+                  <td>
+                     <h3>Config Setting</h3>
+                  </td>
+                  <td>
+                     <h3>Pod: appassessment-web</h3>
+                  </td>
+               </tr>
+                
+               
+               <tr>
+                  <td class=sectionHeader>
+                     Resource Allocation
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="The CPU request represents a minimum amount of CPU that your container may consume, but if there is no contention for CPU, it can use all available CPU on the node. If there is CPU contention on the node, CPU requests provide a relative weight across all containers on the system for how much CPU time the container may use." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-requests"> CPURequestCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>1 of 2 containers have CPU requests specified.  All container specifications should include CPU requests</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="By default, a container is able to consume as much memory on the node as possible. In order to improve placement of pods in the cluster, specify the amount of memory required for a container to run. The scheduler will then take available node memory capacity into account prior to binding your pod to a node. A container is still able to consume as much memory on the node as possible even when specifying a request." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-requests"> MemoryRequestCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>1 of 2 containers have memory requests specified.  All container specifications should include memory requests</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="Each container in a pod can specify the amount of CPU it is limited to use on a node. CPU limits control the maximum amount of CPU that your container may use independent of contention on the node. If a container attempts to exceed the specified limit, the system will throttle the container. This allows the container to have a consistent level of service independent of the number of pods scheduled to the node." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-cpu-limits"> CPULimitCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>1 of 2 containers have CPU limits specified.  All container specifications should include CPU limits</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A 3:1 ratio or less of CPU Limit over Request is prefered where the requested CPU amount is the minimum of what your application needs. It may be appropriate to decrease the ratio based on what stage of development your application is in." href="https://developer.gov.bc.ca/Resource-Tuning-Recommendations#setting-requests-and-limits"> CPULimitRequestRatio</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>could not find both a cpu limit and a cpu request</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="If you specify a memory limit, you can constrain the amount of memory the container can use. For example, if you specify a limit of 200Mi, a container will be limited to using that amount of memory on the node. If the container exceeds the specified memory limit, it will be terminated and potentially restarted dependent upon the container restart policy." href="https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-memory-limits"> MemoryLimitCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>1 of 2 containers have memory limits specified.  All container specifications should include memory limits</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td class=sectionHeader>
+                     Application Health
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A declarative approach to deploy the workload using either a Deployment(Config), StatefulSet, DaemonSet, or CronJob." href="https://docs.openshift.com/container-platform/4.9/applications/deployments/what-deployments-are.html"> declarativeComponentCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon pass">
+                           &#10004
+                        </div>
+                        
+                        <div class="check-detail"a>Deployment</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A liveness probe determines if a container is still running. If the liveness probe fails due to a condition such as a deadlock, the kubelet kills the container. The pod then responds based on its restart policy." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> LivenessProbeCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>0 of 2 containers have a liveness probe defined.  All containers should have one.</div>
+                     </div>
+                  </td>
+               </tr>
+               
+                
+               
+               <tr>
+                  <td>
+                     </div>
+                     <a target="_blank" title="A readiness probe determines if a container is ready to accept service requests. If the readiness probe fails for a container, the kubelet removes the pod from the list of available service endpoints." href="https://docs.openshift.com/container-platform/4.9/applications/application-health.html#application-health-about_application-health"> ReadinessProbeCheck</a>
+                  </td>
+                  <td>
+                     <div class="check-details">
+                        
+                        <div class="status-icon fail">
+                           X
+                        </div>
+                        
+                        <div class="check-detail"a>0 of 2 containers have a readiness probe defines.  All containers should have one.</div>
+                     </div>
+                  </td>
+               </tr>
+               
+               
+            </table>
+            <hr/>
+             
+         </div>
+      </main>
+      <footer class="footer">
+   <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+         <ul class="navbar-nav">
+            <li class="nav-item">
+               <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=79F93E018712422FBC8E674A67A70535" target="_blank">Disclaimer</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=9E890E16955E4FF4BF3B0E07B4722932" target="_blank">Privacy</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=E08E79740F9C41B9B0C484685CC5E412" target="_blank">Accessibility</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=1AAACC9C65754E4D89A118B875E0FBDA" target="_blank">Copyright</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="https://www2.gov.bc.ca/gov/content?id=6A77C17D0CCB48F897F8598CCC019111" target="_blank">Contact Us</a>
+            </li>
+         </ul>
+      </div>
+   </nav>
+</footer>
+   </body>
+</html>

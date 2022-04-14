@@ -51,15 +51,23 @@
             <table class="table-bordered" id="{{ workloadName }}">
                <tr>
                   <td>
-                     <h4>Config Setting</h4>
+                     <h3>Config Setting</h3>
                   </td>
                   <td>
-                     <h4>Pod: {{ workloadName }}</h4>
+                     <h3>Pod: {{ workloadName }}</h3>
                   </td>
                </tr>
                {% for checkName in results.keys() %} 
+               {% if  results[checkName][workloadName]['status'] == 'groupHeader' %}
+               <tr>
+                  <td class=sectionHeader>
+                     {{ results[checkName][workloadName]['title'] }}
+                  </td>
+               </tr>
+               {% else %}
                <tr>
                   <td>
+                     </div>
                      <a target="_blank" title="{{ checksInfo[checkName].title }}" href="{{ checksInfo[checkName].href }}"> {{ checkName }}</a>
                   </td>
                   <td>
@@ -83,6 +91,7 @@
                      </div>
                   </td>
                </tr>
+               {% endif %}
                {% endfor %}
             </table>
             <hr/>
